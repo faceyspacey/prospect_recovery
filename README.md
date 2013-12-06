@@ -7,7 +7,7 @@ http://prospect_recovery.meteor.com/prospect_recovery-faceyspacey-december-5-201
 The static sample site of what will be built and made to become dynamic can be viewed here:
 http://prospect_recovery.meteor.com
 
-The quote is accurate as of deployment to github and prospect_recovery.meteor.com at 9:10am on 12/6/13:
+The quote is accurate as of deployment to github and prospect_recovery.meteor.com at 9:25am on 12/6/13:
 https://github.com/faceyspacey/prospect_recovery/blob/master/public/prospect_recovery-faceyspacey-december-5-2013-invoice-320.html
 
 
