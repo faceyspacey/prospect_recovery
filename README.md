@@ -2,12 +2,13 @@ The full quote & written specs can be viewed & commented on here:
 https://docs.google.com/spreadsheet/ccc?key=0AoURnKZh8J-SdG8ySlB5bkhLdDMwOGFUVEFDbU1lUnc#gid=0
 
 The invoice is located here:
-https://github.com/faceyspacey/prospect_recovery/blob/master/prospect_recovery-faceyspacey-december-5-2013-invoice-320.html
+http://prospect_recovery.meteor.com/prospect_recovery-faceyspacey-december-5-2013-invoice-320.html
 
 The static sample site of what will be built and made to become dynamic can be viewed here:
 http://prospect_recovery.meteor.com
 
-The quote is accurate as of deployment to github and prospect_recovery.meteor.com at 9:00am on 12/6/13.
+The quote is accurate as of deployment to github and prospect_recovery.meteor.com at 9:10am on 12/6/13:
+https://github.com/faceyspacey/prospect_recovery/blob/master/public/prospect_recovery-faceyspacey-december-5-2013-invoice-320.html
 
 
 ---------
