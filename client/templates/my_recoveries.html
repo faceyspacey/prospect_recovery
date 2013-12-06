@@ -1,0 +1,68 @@
+<template name="my_recoveries">
+	<div class="widget">
+      <h3 class="section-title first-title"><i class="icon-table"></i> My Campaigns</h3>
+      <div class="widget-content-white glossed">
+        <div class="padded">
+        <table class="table table-striped table-bordered table-hover datatable">
+          <thead>
+            <tr>
+              <th>First Name</th>
+			  <th>Last Name</th>
+              <th>Campaign</th>
+              <th>Email</th>
+		   	  <th>City</th>
+			  <th>State</th>
+		   	  <th>Date/Time</th>
+			  <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+				{{#each triplets}}
+					<tr>
+	                  <td>James</td>
+	                  <td>Gillmore</td>
+					  <td>Metabotone</td>
+					  <td>james@faceyspacey.com</td>
+					
+					  <td>New York</td>
+					  <td>NY</td>
+					
+					  <td>12/05/2013 - 7:33pm</td>
+	                  <td><span class="label label-success">Recovered</span></td>
+	                </tr>
+	
+	                <tr>
+	                  <td>Zach</td>
+	                  <td>Hurst</td>
+					  <td>Vitaltone</td>
+					  <td>zhurst@gmail.com</td>
+					
+					  <td>Kansas City</td>
+					  <td>MO</td>
+					
+	                  <td>11/28/2013 - 11:10am</td>
+	                  <td><span class="label label-danger">On Site!</span></td>
+	                </tr>
+	
+	                <tr>
+	                  <td>Stephen</td>
+	                  <td>Blazick</td>
+					  <td>Vitaltone</td>
+	  				  <td>stephen@vortextraffic.com</td>
+	
+					  <td>Las Vegas</td>
+					  <td>NV</td>
+					
+	                  <td>12/04/2013 - 2:25pm</td>
+	                  <td><span class="label label-warning">Delivered</span></td>
+	                </tr>
+				{{/each}}
+           
+           
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+</template>

@@ -1,0 +1,83 @@
+<template name="my_campaigns">
+	<div class="widget">
+      <h3 class="section-title first-title"><i class="icon-table"></i> My Campaigns</h3>
+      <div class="widget-content-white glossed">
+        <div class="padded">
+        <table class="table table-striped table-bordered table-hover datatable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>URL</th>
+              <th>Reply Email</th>
+              <th>Deliveries</th>
+		   	  <th>Returns</th>
+			  <th>Recoveries</th>
+		   	  <th>Status</th>
+              <th style="width: 120px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+           
+				{{#each triplets}}
+					<tr>
+	                  <td><a href="/realtime-metrics"> Vitaltone</a></td>
+	                  <td>www.vitaltone.com</td>
+					  <td>sales@vitaltone.com</td>
+					
+	                  <td class="text-right">75</td>
+					  <td class="text-right">50</td>
+					  <td class="text-right">17</td>
+					
+	                  <td><span class="label label-success">Active</span></td>
+	
+	                  <td class="text-right">
+						<a href="#" class="btn btn-default btn-xs"><i class="icon-pause"></i></a>
+	                    <a href="/campaign/edit" class="btn btn-default btn-xs"><i class="icon-pencil"></i> edit</a>
+	                    <a href="#" class="btn btn-danger btn-xs"><i class="icon-remove"></i></a>
+	                  </td>
+	                </tr>
+	
+	                <tr>
+	                  <td><a href="/realtime-metrics"> Green Coffee</a>r</td>
+	                  <td>www.green-coffee.com</td>
+					  <td>go@green-coffee.com</td>
+					
+	                  <td class="text-right">75</td>
+					  <td class="text-right">50</td>
+					  <td class="text-right">17</td>
+					
+	                  <td><span class="label label-success">Active</span></td>
+	
+	                  <td class="text-right">
+						<a href="#" class="btn btn-default btn-xs"><i class="icon-pause"></i></a>
+	                    <a href="/campaign/edit" class="btn btn-default btn-xs"><i class="icon-pencil"></i> edit</a>
+	                    <a href="#" class="btn btn-danger btn-xs"><i class="icon-remove"></i></a>
+	                  </td>
+	                </tr>
+	
+	                <tr>
+	                  <td><a href="/realtime-metrics"> Metabotone</a></td>
+	                  <td>www.metabotone.com</td>
+	  				  <td>john@metabotone.com</td>
+	
+	                  <td class="text-right">75</td>
+					  <td class="text-right">50</td>
+					  <td class="text-right">17</td>
+					
+	                  <td><span class="label label-warning">Paused</span></td>
+	
+	                  <td class="text-right">
+						<a href="#" class="btn btn-default btn-xs"><i class="icon-play"></i></a>
+	                    <a href="/campaign/edit" class="btn btn-default btn-xs"><i class="icon-pencil"></i> edit</a>
+	                    <a href="#" class="btn btn-danger btn-xs"><i class="icon-remove"></i></a>
+	                  </td>
+	                </tr>
+				{{/each}}
+           
+           
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+</template>

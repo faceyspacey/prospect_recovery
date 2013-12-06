@@ -1,0 +1,123 @@
+<template name="dashboard">
+	{{>widget_metric_boxes}}
+	{{>widget_area_graph}}
+</template>
+
+
+<template name="widget_metric_boxes">
+	<div class="widget">
+
+	              <h3 class="section-title first-title"><i class="icon-tasks"></i> Overview for the Month</h3>
+	              <div class="row">
+	                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
+	                  <div class="widget-content-blue-wrapper changed-up">
+	                    <div class="widget-content-blue-inner padded">
+	                      <div class="pre-value-block"><i class="icon-dashboard"></i> Total Emails</div>
+	                      <div class="value-block">
+	                        <div class="value-self">10,520</div>
+	                        <div class="value-sub">This Month</div>
+	                      </div>
+	                      <span class="dynamicsparkline"><canvas width="84" height="19" style="display: inline-block; width: 84px; height: 19px; vertical-align: top;"></canvas></span>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
+	                  <div class="widget-content-blue-wrapper changed-up">
+	                    <div class="widget-content-blue-inner padded">
+	                      <div class="pre-value-block"><i class="icon-user"></i> Total Returns</div>
+	                      <div class="value-block">
+	                        <div class="value-self">1,120</div>
+	                        <div class="value-sub">This Month</div>
+	                      </div>
+	                      <span class="dynamicsparkline"><canvas width="84" height="19" style="display: inline-block; width: 84px; height: 19px; vertical-align: top;"></canvas></span>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="col-lg-3 col-md-4 col-sm-6 text-center hidden-md">
+	                  <div class="widget-content-blue-wrapper changed-up">
+	                    <div class="widget-content-blue-inner padded">
+	                      <div class="pre-value-block"><i class="icon-signin"></i> Total Recoveries</div>
+	                      <div class="value-block">
+	                        <div class="value-self">275</div>
+	                        <div class="value-sub">This Month</div>
+	                      </div>
+	                      <span class="dynamicsparkline"><canvas width="84" height="19" style="display: inline-block; width: 84px; height: 19px; vertical-align: top;"></canvas></span>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
+	                  <div class="widget-content-blue-wrapper changed-up">
+	                    <div class="widget-content-blue-inner padded">
+	                      <div class="pre-value-block"><i class="icon-money"></i> Recovery %</div>
+	                      <div class="value-block">
+	                        <div class="value-self">2.61%</div>
+	                        <div class="value-sub">This Month</div>
+	                      </div>
+	                      <span class="dynamicbars"><canvas width="79" height="19" style="display: inline-block; width: 79px; height: 19px; vertical-align: top;"></canvas></span>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+</template>
+
+
+
+
+
+<template name="widget_area_graph">
+	<div class="widget">
+
+	              <h3 class="section-title"><i class="icon-bar-chart"></i> Statistics</h3>
+	              <ul class="nav nav-pills">
+	                <li class="active"><a href="#">Hour</a></li>
+	                <li><a href="#">Day</a></li>
+					<li><a href="#">Week</a></li>
+	                <li class="hidden-xs"><a href="#">Month</a></li>
+	              </ul>
+	              <div class="widget-content-white">
+	                <div class="shadowed-bottom bottom-margin">
+	                  <div class="row">
+	                    <div class="col-lg-4 col-md-5 col-sm-6 bordered">
+	                      <div class="value-block value-bigger changed-up some-left-padding">
+	                        <div class="value-self">
+	                          55,450
+	                          <span class="changed-icon"><i class="icon-caret-up"></i></span>
+	                          <span class="changed-value">+5.00%</span>
+	                        </div>
+	                        <div class="value-sub">Average of 450.35 Emails Per Day</div>
+	                      </div>
+	                    </div>
+	                    <div class="col-lg-2 col-md-3 visible-md visible-lg bordered">
+	                      <div class="value-block text-center">
+	                        <div class="value-self">5200</div>
+	                        <div class="value-sub">Total Returns</div>
+	                      </div>
+	                    </div>
+	                    <div class="col-lg-2 bordered visible-lg">
+	                      <div class="value-block text-center">
+	                        <div class="value-self">1,120</div>
+	                        <div class="value-sub">Total Recoveries</div>
+	                      </div>
+	                    </div>
+	                    <div class="col-lg-4 col-md-4 col-sm-6">
+	                      <form class="form-inline form-period-selector">
+	                        <label class="control-label">Time Period:</label><br>
+	                        <input type="text" placeholder="01/12/2011" class="form-control input-sm">
+	                        <input type="text" placeholder="01/12/2011" class="form-control input-sm">
+	                      </form>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="padded">
+	                  <div id="areachart" style="height: 250px; position: relative;"><svg height="250" version="1.1" width="827" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.5px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="26.5" y="210.984375" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.1640625">0</tspan></text><path fill="none" stroke="#aaaaaa" d="M39,210.984375H802" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="26.5" y="164.48828125" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.16015625">10</tspan></text><path fill="none" stroke="#aaaaaa" d="M39,164.48828125H802" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="26.5" y="117.9921875" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.15625">20</tspan></text><path fill="none" stroke="#aaaaaa" d="M39,117.9921875H802" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="26.5" y="71.49609375" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.16015625">30</tspan></text><path fill="none" stroke="#aaaaaa" d="M39,71.49609375H802" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="26.5" y="25" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.1640625">40</tspan></text><path fill="none" stroke="#aaaaaa" d="M39,25H802" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="802" y="223.484375" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7.0078)"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.1640625">2011-12</tspan></text><text x="662.5545159680639" y="223.484375" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7.0078)"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.1640625">2011-10</tspan></text><text x="523.2042165668663" y="223.484375" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7.0078)"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.1640625">2011-08</tspan></text><text x="452.3868512974052" y="223.484375" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7.0078)"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.1640625">2011-07</tspan></text><text x="313.0365518962076" y="223.484375" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7.0078)"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.1640625">2011-05</tspan></text><text x="173.7814371257485" y="223.484375" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7.0078)"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.1640625">2011-03</tspan></text><text x="39" y="223.484375" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7.0078)"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="4.1640625">2011-01</tspan></text><path fill="#fdf6f6" stroke="#000000" d="M39,141.240234375C56.70434131736527,128.45380859375,92.1130239520958,93.75905389300847,109.81736526946108,90.09453125C125.80838323353294,86.78463983050848,157.79041916167665,116.65480869037103,173.7814371257485,113.342578125C191.46198228542914,109.68039462787102,226.82307260479044,58.654845165114494,244.50361776447107,62.196875000000006C261.6368512974052,65.6292592276145,295.90331836327346,137.81019467213116,313.0365518962076,141.240234375C330.74089321357286,144.78460873463115,366.1495758483034,91.86671842981558,383.8539171656687,90.09453125C400.9871506986028,88.37951139856558,435.2536177644711,133.00813908811475,452.3868512974052,127.29140625000001C470.0911926147705,121.38411565061476,505.49987524950103,41.85483398437502,523.2042165668663,43.59843750000002C540.9085578842315,45.342041015625014,576.3172405189621,135.33294377561475,594.0215818363273,141.240234375C611.1548153692614,146.95696721311475,645.4212824351298,97.52628393954919,662.5545159680639,90.09453125C680.2588572854291,82.4150534707992,715.6675399201597,86.69857081911262,733.3718812375249,80.7953125C750.5289109281437,75.07454738161262,784.8429703093813,52.89765625000001,802,43.59843750000002L802,210.984375L39,210.984375Z" fill-opacity="0.8" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 0.8;"></path><path fill="none" stroke="#f9c1c1" d="M39,141.240234375C56.70434131736527,128.45380859375,92.1130239520958,93.75905389300847,109.81736526946108,90.09453125C125.80838323353294,86.78463983050848,157.79041916167665,116.65480869037103,173.7814371257485,113.342578125C191.46198228542914,109.68039462787102,226.82307260479044,58.654845165114494,244.50361776447107,62.196875000000006C261.6368512974052,65.6292592276145,295.90331836327346,137.81019467213116,313.0365518962076,141.240234375C330.74089321357286,144.78460873463115,366.1495758483034,91.86671842981558,383.8539171656687,90.09453125C400.9871506986028,88.37951139856558,435.2536177644711,133.00813908811475,452.3868512974052,127.29140625000001C470.0911926147705,121.38411565061476,505.49987524950103,41.85483398437502,523.2042165668663,43.59843750000002C540.9085578842315,45.342041015625014,576.3172405189621,135.33294377561475,594.0215818363273,141.240234375C611.1548153692614,146.95696721311475,645.4212824351298,97.52628393954919,662.5545159680639,90.09453125C680.2588572854291,82.4150534707992,715.6675399201597,86.69857081911262,733.3718812375249,80.7953125C750.5289109281437,75.07454738161262,784.8429703093813,52.89765625000001,802,43.59843750000002" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="39" cy="141.240234375" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="109.81736526946108" cy="90.09453125" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="173.7814371257485" cy="113.342578125" r="7" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="244.50361776447107" cy="62.196875000000006" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="313.0365518962076" cy="141.240234375" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="383.8539171656687" cy="90.09453125" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="452.3868512974052" cy="127.29140625000001" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="523.2042165668663" cy="43.59843750000002" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="594.0215818363273" cy="141.240234375" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="662.5545159680639" cy="90.09453125" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="733.3718812375249" cy="80.7953125" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="802" cy="43.59843750000002" r="4" fill="#f9c1c1" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><path fill="#f6f9fd" stroke="#000000" d="M39,178.437109375C56.70434131736527,181.92431640625,92.1130239520958,199.1042290121822,109.81736526946108,192.3859375C125.80838323353294,186.3178032309322,157.79041916167665,135.01994423586572,173.7814371257485,127.29140625000001C191.46198228542914,118.74631142336574,226.82307260479044,120.79768488604324,244.50361776447107,127.29140625000001C261.6368512974052,133.58411066729323,295.90331836327346,170.43368340163934,313.0365518962076,178.437109375C330.74089321357286,186.70731621413935,366.1495758483034,196.52104091956969,383.8539171656687,192.3859375C400.9871506986028,188.38422451331968,435.2536177644711,149.89155673668034,452.3868512974052,145.88984375C470.0911926147705,141.75474033043034,505.49987524950103,158.67626953125,523.2042165668663,159.838671875C540.9085578842315,161.00107421874998,576.3172405189621,151.05395908043033,594.0215818363273,155.1890625C611.1548153692614,159.19077548668034,645.4212824351298,191.81426421618855,662.5545159680639,192.3859375C680.2588572854291,192.97666655993854,715.6675399201597,165.7419301941126,733.3718812375249,159.838671875C750.5289109281437,154.11790675661263,784.8429703093813,149.37705078125,802,145.88984375L802,210.984375L39,210.984375Z" fill-opacity="0.8" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 0.8;"></path><path fill="none" stroke="#c1daf9" d="M39,178.437109375C56.70434131736527,181.92431640625,92.1130239520958,199.1042290121822,109.81736526946108,192.3859375C125.80838323353294,186.3178032309322,157.79041916167665,135.01994423586572,173.7814371257485,127.29140625000001C191.46198228542914,118.74631142336574,226.82307260479044,120.79768488604324,244.50361776447107,127.29140625000001C261.6368512974052,133.58411066729323,295.90331836327346,170.43368340163934,313.0365518962076,178.437109375C330.74089321357286,186.70731621413935,366.1495758483034,196.52104091956969,383.8539171656687,192.3859375C400.9871506986028,188.38422451331968,435.2536177644711,149.89155673668034,452.3868512974052,145.88984375C470.0911926147705,141.75474033043034,505.49987524950103,158.67626953125,523.2042165668663,159.838671875C540.9085578842315,161.00107421874998,576.3172405189621,151.05395908043033,594.0215818363273,155.1890625C611.1548153692614,159.19077548668034,645.4212824351298,191.81426421618855,662.5545159680639,192.3859375C680.2588572854291,192.97666655993854,715.6675399201597,165.7419301941126,733.3718812375249,159.838671875C750.5289109281437,154.11790675661263,784.8429703093813,149.37705078125,802,145.88984375" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="39" cy="178.437109375" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="109.81736526946108" cy="192.3859375" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="173.7814371257485" cy="127.29140625000001" r="7" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="244.50361776447107" cy="127.29140625000001" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="313.0365518962076" cy="178.437109375" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="383.8539171656687" cy="192.3859375" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="452.3868512974052" cy="145.88984375" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="523.2042165668663" cy="159.838671875" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="594.0215818363273" cy="155.1890625" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="662.5545159680639" cy="192.3859375" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="733.3718812375249" cy="159.838671875" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="802" cy="145.88984375" r="4" fill="#c1daf9" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle></svg><div class="morris-hover morris-default-style" style="left: 142.7814371257485px; top: 42px;"><div class="morris-hover-row-label">2011-03</div><div class="morris-hover-point" style="color: #f9c1c1">
+	  Y:
+	  21
+	</div><div class="morris-hover-point" style="color: #c1daf9">
+	  Z:
+	  18
+	</div></div></div>
+	                </div>
+	              </div>
+	            </div>
+</template>
