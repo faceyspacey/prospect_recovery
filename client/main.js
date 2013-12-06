@@ -8,9 +8,10 @@ PanelController = RouteController.extend({
   	before: function () {
 		Session.set('current_page', this.route.name);
 		
-		if(this.route.name == 'home') Session.set('current_page', 'dashboard'); //delete this eventually
-		
 		this.template = this.route.name;
+		
+		if(this.route.name == 'home') Session.set('current_page', 'dashboard'); //delete this eventually
+		if(this.route.name == 'home') this.template = 'dashboard'; //delete this eventually
 	},
 	after: function () {},
 	waitOn: function () {
