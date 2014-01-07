@@ -5,6 +5,9 @@ UserModel = function(doc) {
 		return this.emails[0].address;
 	};
 
+	this.loginToLimelight = function(domain, username, password) {
+		
+	};
 	
     _.extend(this, Model);
 	this.extend(doc);
