@@ -4,6 +4,13 @@
     "branch": "master"
   },
   "packages": {
-    "iron-router": {}
+    "iron-router": {},
+    "roles": {},
+    "moment": {},
+    "flash-messages": {},
+    "cron": {},
+    "bootstrap-3": {},
+    "accounts-ui-bootstrap-3": {},
+    "cheerio": {}
   }
 }

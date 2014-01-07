@@ -9,3 +9,13 @@ insecure
 preserve-inputs
 less
 iron-router
+roles
+spiderable
+http
+email
+moment
+flash-messages
+cron
+accounts-ui-bootstrap-3
+accounts-password
+cheerio

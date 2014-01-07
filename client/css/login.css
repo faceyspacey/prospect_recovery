@@ -1,0 +1,26 @@
+#login-dropdown-list .dropdown-menu {
+	width: 100%;
+	top: 18px;
+	
+	-webkit-box-shadow: 0px 2px 60px 10px rgba(0, 0, 0, 0.8);
+	box-shadow: 0px 2px 60px 10px rgba(0, 0, 0, 0.8);
+}
+
+
+
+#login-dropdown-list .dropdown-menu input {
+	display: block;
+	width: 100%;
+	height: 34px;
+	margin-bottom: 15px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.428571429;
+	color: #555;
+	vertical-align: middle;
+	background-color: #fff;
+	border: 1px solid #c1bdb8;
+	border-top: 1px solid #a9a49d;
+	border-radius: 4px;
+
+}

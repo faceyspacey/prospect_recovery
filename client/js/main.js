@@ -25,7 +25,7 @@ Router.map(function () {
     	path: '/',
 		template: 'dashboard',
 		controller: PanelController
-  	});
+  	}); 
 	this.route('login', {
     	path: '/login',
 		template: 'login',
@@ -33,6 +33,12 @@ Router.map(function () {
   	});
 
 	/** PanelController **/
+	this.route('limelight_account_info', {
+    	path: '/limelight',
+		template: 'limelight_account_info',
+		controller: LoginController
+  	});
+
 	this.route('dashboard', {
     	path: '/dashboard',
 		controller: PanelController
@@ -65,6 +71,18 @@ Router.map(function () {
     	path: '/my-account',
 		controller: PanelController
   	});
+});
+
+loginCallback = function(user) {
+	if(user.step == 1) Router.go('limelight_account_info');
+	else Router.go('dashboard');
+};
+
+
+//meteor really needs a way to specify a login callback as part of the accounts-password package so we dont need to do this:
+Deps.autorun(function() {
+    if (Meteor.user()) loginCallback(Meteor.user());
+	else Router.go('login');
 });
 
 
