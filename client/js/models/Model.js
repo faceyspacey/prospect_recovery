@@ -3,42 +3,66 @@ Model = {
 	collection: function(){
 		switch(this.collectionName) {
             	case 'Users':           return Meteor.users;
-            	case 'Campaigns':          return Campaigns;
+            	case 'Campaigns':       return Campaigns;
+				case 'Delays': 			return Delays;
         }
     },
-	save: function(attributes){
-        if(this._id) this.collection().update(this._id, {$set: attributes});
-        else {
-            var insertValues = this.prepareDefaults(attributes);
-			this._id = this.collection().insert(insertValues);
-				
-            if(this._id) this.afterInsert();
-        }
-        return this._id;
+	db: function() {
+		if(this._local) return this.collection()._collection;
+		else return this.collection();
+	},
+	save: function(){
+		var attributes = this.getMongoAttributes();
+		return this.upsert(attributes);	
     },
+	upsert: function(attributes) {
+		if(this._id) return this.update(attributes);
+		else return this.insert(attributes);
+	},
+	insert: function(attributes) {
+		attributes = this.prepareDefaults(attributes);
+		this._id = this.db().insert(attributes);
+		
+		if(this._id) this.afterInsert();
+		else return false;
+		
+		return this._id;
+	},
+	update: function(attributes) {
+		this.db().update(this._id, {$set: attributes});
+		this.refresh();
+		return this._id;
+	},
     refresh: function(){
         this.extend(this.collection().findOne(this._id));
     },
-	afterInsert: function() {
-		
-	},
+	afterInsert: function() {},
 	prepareDefaults: function(attributes){
 		var object = {};
 		_.extend(object, this.defaultValues, attributes); 
 		return object;
     },
-	getMongoValues: function() {
+	getMongoAttributes: function(includeId) {
 		var mongoValues = {};
 		for(var prop in this) {
-			if(!_.isFunction(this[prop])) mongoValues[prop] = this[prop];
+			if(this.isMongoAttribute(prop)) mongoValues[prop] = this[prop];
 		}
-		delete mongoValues.errors;
+		
+		if(includeId) mongoValues._id = this[_id];
+		
 		return mongoValues;
+	},
+	isMongoAttribute: function(prop) {
+		if(_.isFunction(this[prop])) return false;
+		if(prop == '_id' || prop == 'errors') return false;
+		return true;
 	},
 	time: function(field) {
 		return moment(this[field]).format("ddd, MMM Do, h:mm a");
 	},
 	extend: function(doc) {
+		doc = doc != undefined && _.isObject(doc) ? doc : {};
+		
 		_.extend(this, doc);
 	}
 };

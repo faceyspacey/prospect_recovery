@@ -5,9 +5,7 @@ Accounts.onCreateUser(function (options, user) {
 	else user.profile = {};
 	
 	if(_.contains(adminUsers, user.emails[0].address)) user.roles = ['admin', 'user'];
-	else user.roles = ['user2'];
-	
-	user.step = 1;
+	else user.roles = ['user'];
 	
 	return user;
 });

@@ -20,19 +20,12 @@ CampaignModel = function(doc){
         status: 'paused'
     };
 
-	/**
-    this.usage = function(){
-        return Venues.find({usedFlavors: {$in: [this._id]}}).count();
-    };
-	
-	this.oneOffQuantityAvailable = function() {
-		return this.one_off_quantity_available || 0;
-	};
-	**/
-
 	_.extend(this, Model);
 	this.extend(doc);
 	
     return this;
 };
 
+CampaignModel.current = function() {
+	return Campaigns.findOne(Session.get('current_campaign_id'));
+};

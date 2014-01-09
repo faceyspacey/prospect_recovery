@@ -1,6 +1,7 @@
 LoginController = RouteController.extend({
-	layoutTemplate: 'login_layout',
-});
+	layoutTemplate: 'login_layout'
+}); 
+
 
 PanelController = RouteController.extend({
 	layoutTemplate: 'main_layout',
@@ -8,15 +9,24 @@ PanelController = RouteController.extend({
   	before: function () {
 		Session.set('current_page', this.route.name);
 		
-		this.template = this.route.name;
+		if(!this.template) this.template = this.route.name;
 		
 		if(this.route.name == 'home') Session.set('current_page', 'dashboard'); //delete this eventually
 		if(this.route.name == 'home') this.template = 'dashboard'; //delete this eventually
+		
+		if(!Meteor.user()) {
+			Deps.afterFlush(function() {
+				Router.go('login');
+			});
+		}
+		if(Meteor.user() && !Meteor.user().limelight_login_configured) {
+			Deps.afterFlush(function() {
+				Router.go('limelight_account_info');
+			});
+		}
 	},
 	after: function () {},
-	waitOn: function () {
-		
-	}
+	waitOn: function () {}
 });
 
 Router.map(function () {
@@ -55,6 +65,16 @@ Router.map(function () {
     	path: '/realtime-metrics',
 		controller: PanelController
   	});
+	this.route('update_campaign_step_1', {
+    	path: '/campaign/update/step-1',
+		template: 'step_1',
+		controller: PanelController
+  	});
+	this.route('update_campaign_step_2', {
+    	path: '/campaign/update/step-2',
+		template: 'step_2',
+		controller: PanelController
+  	});
 	this.route('create_campaign', {
     	path: '/campaign/create',
 		controller: PanelController
@@ -73,19 +93,21 @@ Router.map(function () {
   	});
 });
 
-loginCallback = function(user) {
-	if(user.step == 1) Router.go('limelight_account_info');
-	else Router.go('dashboard');
-};
 
 
 //meteor really needs a way to specify a login callback as part of the accounts-password package so we dont need to do this:
 Deps.autorun(function() {
-    if (Meteor.user()) loginCallback(Meteor.user());
+    if(Meteor.user()) {
+		try {
+			if(Router.current().route.name == 'login') Router.go('dashboard');
+		}
+		catch(error) {} //Router.current() undefined at first, and therefore errs
+	}
 	else Router.go('login');
 });
 
 
-Handlebars.registerHelper('isCurrent', function(tab){
+
+Handlebars.registerHelper('isCurrent', function(tab) {
 	return tab == Session.get('current_page') ? 'current' : '';
 });

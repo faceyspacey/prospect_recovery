@@ -12,20 +12,29 @@
 	            <form action="" role="form">
 	              <h3 class="form-title form-title-first"><i class="icon-lock"></i> LimeLight Credentials</h3>
 
-				  <div class="form-group">
-	                <label>Limelight Domain</label>
-	                <input id="limelight_domain" type="text" class="form-control" placeholder="e.g: http://www.mylimelightpanel.com" value="https://www.productssecure.com">
-	              </div>
-	
-	              <div class="form-group">
-	                <label>Limelight Username</label>
-	                <input id="limelight_username" type="text" class="form-control" placeholder="Enter username" value="zachhurst">
-	              </div>
+				   {{> flashMessages}}
+				
+				  {{#if loading}}
+					<div style="height: 200px;">
+						<img src="/images/loading.gif" style="height: 100px;margin-top: 30px;margin-left: 100px" />
+					</div>
+				  {{else}}
+					<div class="form-group">
+		                <label>Limelight Domain</label>
+		                <input id="limelight_domain" type="text" class="form-control" placeholder="e.g: http://www.mylimelightpanel.com" value="{{currentUser.domain}}">
+		              </div>
 
-	              <div class="form-group">
-	                <label>Limelight Password</label>
-	                <input id="limelight_password" type="password" class="form-control" placeholder="Password" value="vulture123agagH">
-	              </div>
+		              <div class="form-group">
+		                <label>Limelight Username</label>
+		                <input id="limelight_username" type="text" class="form-control" placeholder="Enter username" value="{{currentUser.limelight_username}}">
+		              </div>
+
+		              <div class="form-group">
+		                <label>Limelight Password</label>
+		                <input id="limelight_password" type="password" class="form-control" placeholder="Password" value="{{currentUser.limelight_password}}">
+		              </div>
+				  {{/if}}
+				  
 
 
 	              <a id="limelight_proceed" href="#" class="btn btn-primary btn-lg">PROCEED</a>
