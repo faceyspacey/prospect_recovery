@@ -9,15 +9,10 @@
 	  </a>
 	
 	
-	  <div class="search-box">
-	    <input type="text" placeholder="SEARCH CAMPAIGNS" class="form-control">
-	  </div>
-	
-	
 	  <ul class="side-menu side-menu-green-sea">
 	    <li>
 	      <a href="/my-recoveries">
-	        <span class="badge badge-notifications pull-right alert-animated">5</span>
+	        <span class="badge badge-notifications pull-right alert-animated">{{todaysRecoveries}}</span>
 	        <i class="icon-flag"></i> Today's Recoveries
 	      </a>
 	    </li>
@@ -44,14 +39,14 @@
 	      <li class="{{isCurrent 'my_recoveries'}}">
 	        <a href="/my-recoveries">
 	          <span class="badge pull-right">24</span>
-	          <i class="icon-code-fork"></i> My Recoveries
+	          <i class="icon-gear"></i> My Recoveries
 	        </a>
 	      </li>
 
-	   	 <li class="{{isCurrent 'realtime_metrics'}}">
-	        <a href="/realtime-metrics">
+	   	 <li class="{{isCurrent 'my_account'}}">
+	        <a href="/my-account">
 	          <span class="badge pull-right"></span>
-	          <i class="icon-bar-chart"></i> Metrics
+	          <i class="icon-bar-chart"></i> My Account
 	        </a>
 	      </li>
 	

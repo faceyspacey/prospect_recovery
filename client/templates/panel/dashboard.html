@@ -1,0 +1,138 @@
+<template name="dashboard">
+	{{>widget_metric_boxes}}
+	{{>widget_area_graph}}
+</template>
+
+
+<template name="widget_metric_boxes">
+	<div class="widget">
+
+	              <h3 class="section-title first-title"><i class="icon-tasks"></i> Overview for the Month</h3>
+	              <div class="row">
+		
+	                <div class="col-lg-3 col-md-4 col-sm-6 text-center" style="width:25%; padding:4px">
+	                  <div class="widget-content-blue-wrapper changed-up">
+	                    <div class="widget-content-blue-inner padded">
+	                      <div class="pre-value-block"><i class="icon-dashboard"></i> Total Emails</div>
+	                      <div class="value-block">
+	                        <div class="value-self">{{stats.user.deliveries}}</div>
+	                        <div class="value-sub">Past 30 Days</div>
+	                      </div>
+	                      <span class="dynamicsparkline"><canvas width="84" height="19" style="display: inline-block; width: 84px; height: 19px; vertical-align: top;"></canvas></span>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="col-lg-3 col-md-4 col-sm-6 text-center" style="width:25%; padding:4px">
+	                  <div class="widget-content-blue-wrapper changed-up">
+	                    <div class="widget-content-blue-inner padded">
+	                      <div class="pre-value-block"><i class="icon-user"></i> Total Returns</div>
+	                      <div class="value-block">
+	                        <div class="value-self">{{stats.user.returns}}</div>
+	                        <div class="value-sub">Past 30 Days</div>
+	                      </div>
+	                      <span class="dynamicsparkline"><canvas width="84" height="19" style="display: inline-block; width: 84px; height: 19px; vertical-align: top;"></canvas></span>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="col-lg-3 col-md-4 col-sm-6 text-center hidden-md" style="width:25%; padding:4px">
+	                  <div class="widget-content-blue-wrapper changed-up">
+	                    <div class="widget-content-blue-inner padded">
+	                      <div class="pre-value-block"><i class="icon-signin"></i> Total Recoveries</div>
+	                      <div class="value-block">
+	                        <div class="value-self">{{stats.user.recoveries}}</div>
+	                        <div class="value-sub">Past 30 Days</div>
+	                      </div>
+	                      <span class="dynamicsparkline"><canvas width="84" height="19" style="display: inline-block; width: 84px; height: 19px; vertical-align: top;"></canvas></span>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="col-lg-3 col-md-4 col-sm-6 text-center" style="width:25%; padding:4px">
+	                  <div class="widget-content-blue-wrapper changed-up">
+	                    <div class="widget-content-blue-inner padded">
+	                      <div class="pre-value-block"><i class="icon-money"></i> Recovery %</div>
+	                      <div class="value-block">
+	                        <div class="value-self">{{stats.user.recoveryPercentage}}%</div>
+	                        <div class="value-sub">Past 30 Days</div>
+	                      </div>
+	                      <span class="dynamicbars"><canvas width="79" height="19" style="display: inline-block; width: 79px; height: 19px; vertical-align: top;"></canvas></span>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+</template>
+
+
+
+
+
+<template name="widget_area_graph">
+	<div class="widget">  
+		<h3 class="section-title"><i class="icon-bar-chart"></i> Statistics</h3>
+		
+		  {{#isolate}}
+             <ul class="nav nav-pills">
+               <li class="{{active_pill 7}}" id="chart_week"><a href="#" id="chart_week">Week</a></li>
+               <li class="{{active_pill 14}}" id="chart_2_weeks"><a href="#">2 Weeks</a></li>
+				<li class="{{active_pill 30}}" id="chart_month"><a href="#">Month</a></li>
+             </ul>
+		  {{/isolate}}
+		
+             <div class="widget-content-white">
+               <div class="shadowed-bottom bottom-margin">
+                 <div class="row">
+
+				{{#isolate}}
+                   <div class="col-lg-4 col-md-5 col-sm-6 bordered">
+                     <div class="value-block value-bigger changed-up some-left-padding">
+
+                       <div class="value-self">
+                         {{totalDeliveries}}
+                         <span class="changed-icon"><i class="icon-caret-{{upDown}}"></i></span>
+                         <span class="changed-value" style="{{upDownColor}}">{{upDownValue}}%</span>
+                       </div>
+
+                       <div class="value-sub">Average of {{averageDeliveriesPerDay}} Emails Per Day</div>
+
+                     </div>
+                   </div>
+
+
+                   <div class="col-lg-2 col-md-3 visible-md visible-lg bordered">
+                     <div class="value-block text-center">
+                       <div class="value-self">{{totalReturns}}</div>
+                       <div class="value-sub">Total Returns</div>
+                     </div>
+                   </div>
+
+
+                   <div class="col-lg-2 bordered visible-lg">
+                     <div class="value-block text-center">
+                       <div class="value-self">{{totalRecoveries}}</div>
+                       <div class="value-sub">Total Recoveries</div>
+                     </div>
+                   </div>
+
+
+                   <div class="col-lg-4 col-md-4 col-sm-6">
+                     	<select style="width: 100%;font-size: 20px;margin-top: 12px;">
+							<option value="all" {{selected 'all'}}>All Campaigns</option>
+							{{#each currentUser.campaigns}}
+								<option value="{{_id}}" {{selected _id}}>{{name}}</option>
+							{{/each}}
+					 </select>
+                   </div>
+
+				{{/isolate}}
+
+                 </div>
+               </div>	 
+
+          	{{#isolate}}
+				<div class="padded" id="chart_holder">
+               		<div id="areachart" style="height: 250px; position: relative;"></div>
+             	</div>
+  			{{/isolate}}
+		</div>
+	</div>
+</template>

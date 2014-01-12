@@ -79,8 +79,9 @@
 	        		<div class="content-inner content-inner-grey">	
 	          			{{>page_header}}
 						{{>breadcrumbs}}
-						
-	          			<div class="main-content" style="overflow:hidden;">
+		
+	          			<div class="main-content" style="overflow:hidden; min-height:650px;">
+							{{> flashMessages}}
 	            			{{yield}}
 		      			</div>
 	        		</div>

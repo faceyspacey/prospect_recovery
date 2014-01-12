@@ -1,0 +1,53 @@
+<template name="my_recoveries">
+	<div class="widget" style="margin-bottom: -20px; min-height:500px;">
+		
+      <h3 class="section-title first-title">
+		<i class="icon-table"></i> 
+		My Recovered Prospects
+		<select style="float:right; font-size: 16px;">
+			<option value="all" {{selected 'all'}}>All Campaigns</option>
+			{{#each currentUser.campaigns}}
+				<option value="{{_id}}" {{selected _id}}>{{name}}</option>
+			{{/each}}
+		</select>
+	  </h3>
+	
+      <div class="widget-content-white glossed">
+        <div class="padded">
+        <table class="table table-striped table-bordered table-hover datatable">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Campaign</th>
+			  <th style="width:52px;">State</th>
+		   	  <th style="width:118px;">Date/Time</th>
+			  <th style="width:88px;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+				{{#each currentUser.prospects my_recoveries_campaign_id}}
+					<tr>
+	                  <td>{{email}}</td>
+					  <td><a href="/campaign/update/step-3/{{campaign_id}}">{{campaign_name}}</a></td>
+					
+					  <td>{{state}}</td>
+					
+					  <td>{{time 'updated_at'}}</td>
+	                  <td><span class="label label-{{getStatusClass}}">{{getStatus}}</span></td>
+	                </tr>
+				{{/each}}
+           
+           
+          </tbody>
+        </table>
+        </div>
+		
+      </div>
+
+	 {{#if displayLoadMoreProspects}}
+		<a href="#" id="load_more_prospects" class="btn btn-primary btn-lg" style="width: 100%; margin-top:10px;">LOAD MORE PROSPECTS</a>
+	 {{/if}}
+	
+    </div>
+</template>

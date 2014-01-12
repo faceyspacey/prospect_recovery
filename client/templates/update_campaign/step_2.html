@@ -1,0 +1,73 @@
+<template name="step_2">
+	<div class="widget" id="campaign_step_2" style="position: relative; left: 110%;">
+		
+      <h3 class="section-title first-title">
+		<i class="icon-table"></i> 
+		Select a Limelight Campaigns 	
+		
+		<a id="create_new_limelight_campaign" href="{{currentUser.createLimelightCampaignUrl}}" target="_blank" class="btn btn-primary btn-lg" style="float:right; position: relative; top: -16px; margin-left: 6px;">Create New Limelight Campaign</a>
+		
+		<a id="refresh_list" class="btn btn-primary btn-lg" style="float:right; position: relative; top: -16px;">Refresh List</a>
+		
+		
+	  </h3>
+	
+		<p>Please check campaigns in the left column whose prospects you want directed to the campaign you select in the right column.</p>
+      <div class="widget-content-white glossed">
+        <div class="padded">
+	
+        <table class="table table-striped table-bordered table-hover datatable">
+	
+          <thead>
+            <tr>
+              <th>
+					<input id="check_all" type="checkbox" style="margin-left:6px;"/>
+				</th>
+              <th>ID</th>
+              <th>Limelight Campaign</th>
+			  <th>Open in Limelight</th>
+              <th style="width: 170px;">Destination Campaign</th>
+            </tr>
+          </thead>
+
+          <tbody>
+           
+				{{#each currentUser.limelightCampaigns}}
+					<tr style="height:48px;">
+	                  <td>
+							{{#if displayCheckbox}}
+								<input id="{{_id}}" class="recipient_campaign" type="checkbox" style="margin-left:6px;" {{isChecked}}/>
+							{{/if}}
+					  </td>
+	                  <td>{{id}}</td>
+					  <td>{{name}}</td>
+					
+	                  <td>
+	                    <a href="{{url}}" target="_blank">open in limelight</a>
+	                  </td>
+	
+					  <td>
+							{{#if displayRadioButton}}
+								{{#if isCurrentDestinationCampaign current_campaign}}
+									<button type="button" class="btn btn-primary" style="background: black; width: 155px;">Campaign Selected</button>
+								{{else}}
+									<button type="button" class="btn btn-primary select_destination_campaign" style="background: #16a085; width: 155px;">Select Destination</button>
+								{{/if}}
+							{{/if}}
+					  </td>
+	                </tr>   
+				{{/each}}
+           
+           
+          </tbody>
+        </table>
+		<p style="float:left; position:relative; top:24px;">Note: you will be able to edit your campaign info again on the final step</p>
+		<a href="#" class="btn btn-primary btn-lg next-step" style="float:right; margin-top: 12px;">NEXT STEP</a>
+		<div style="clear:both;"></div>
+        </div>
+
+		
+      </div>
+		
+    </div>
+</template>
