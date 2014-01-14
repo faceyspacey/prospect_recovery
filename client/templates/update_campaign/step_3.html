@@ -34,7 +34,7 @@ Replace TRANSACTION_ID on the completion page as you would other Limelight token
 		                          </div>
 		                        </div>
 		
-								<p>NEXT: view an example of how to embed this javascript and the benefits it provides: <a target="_blank" href="/example/page-1">example destination page</a>.</p>
+								<p style="font-size:20px; text-align:right;"><b>TUTORIAL</b>: embed javascript into <a target="_blank" href="/example/page-1">example destination page</a>.</p>
 							</h3>
 							
 							
@@ -43,7 +43,7 @@ Replace TRANSACTION_ID on the completion page as you would other Limelight token
 								<div class="form-group">
 		                          <label class="col-md-4 control-label">Directions</label>
 		                          <div class="col-md-8">
-		                            <textarea class="form-control" disabled="disabled" style="height: 70px;">Fill out the below email subject and message fields. You must use the following tokens to personalize your emails: [FIRST_NAME], [LAST_NAME], [EMAIL], [PHONE], [ADDRESS], [ADDRESS_2], [CITY], [STATE], [ZIP], [COUNTRY], [IP_ADDRESS]
+		                            <textarea class="form-control" disabled="disabled" style="height:90px;">Fill out the below email subject and message fields. You must use the following tokens to personalize your emails: [FIRST_NAME], [LAST_NAME], [EMAIL], [PHONE], [ADDRESS], [ADDRESS_2], [CITY], [STATE], [ZIP], [COUNTRY], [IP_ADDRESS], and most importantly [DESTINATION_URL], which is required.
 									</textarea> 
 		                          </div>
 		                        </div>
@@ -52,21 +52,21 @@ Replace TRANSACTION_ID on the completion page as you would other Limelight token
 								<div class="form-group">
 						            <label class="col-md-4 control-label">Subject:</label>
 						            <div class="col-md-8">
-						              <input id="campaign_email_subject" type="text" class="form-control" placeholder="EXAMPLE: [FIRST_NAME], order now and receive a 5% discount" value="{{name}}">
+						              <input id="campaign_email_subject" type="text" class="form-control" placeholder="EXAMPLE: [FIRST_NAME], order now and receive a 5% discount" value="{{email_subject}}">
 						            </div>
 						          </div>
 						
 								<div class="form-group">
 		                          <label class="col-md-4 control-label">HTML EMAIL:</label>
 		                          <div class="col-md-8">
-		                           <textarea id="campaign_email_html" class="form-control" style="height: 200px;" placeholder="Paste your plain HTML email template here">{{email_html}}</textarea>
+		                           <textarea id="campaign_email_html" class="form-control" style="height: 200px;" placeholder="Paste your plain HTML email template here. Make sure to include [DESTINATION_URL]">{{email_html}}</textarea>
 		                          </div>
 		                        </div>
 		
 								<div class="form-group">
 		                          <label class="col-md-4 control-label">PLAIN TEXT EMAIL:</label>
 		                          <div class="col-md-8">
-		                            <textarea id="campaign_email_plain" class="form-control" style="height: 200px;" placeholder="Paste your plain text email template here">{{email_plain}}</textarea>
+		                            <textarea id="campaign_email_plain" class="form-control" style="height: 200px;" placeholder="Paste your plain text email template here. Make sure to include [DESTINATION_URL]">{{email_plain}}</textarea>
 		                          </div>
 		                        </div>
 		
@@ -114,7 +114,7 @@ Replace TRANSACTION_ID on the completion page as you would other Limelight token
 					            </div>
 					          </div>
 	
-	                        <div class="form-group" style="display:none;">
+	                        <div class="form-group">
 	                          <div class="col-md-offset-4 col-md-8">
 	                            <div class="checkbox">
 	                              <label>

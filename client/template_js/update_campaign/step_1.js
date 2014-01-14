@@ -4,6 +4,11 @@ Template.step_1.created = function() {
 	});
 };
 
+
+Template.step_1.rendered = function() {
+	$('#campaign_step_1').css({left: '0%'});
+};
+
 Template.step_1.events({
 	'click .next-step': function() {
 		campaign = new CampaignModel();

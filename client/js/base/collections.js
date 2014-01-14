@@ -39,12 +39,18 @@ Stats = new Meteor.Collection("stats");
 
 
 Deps.autorun(function() {
-	var campaignId = Session.get('chart_campaign_id') || 'all',
-		days = Session.get('chart_days') || 7;
+	if(Router.current() && Router.current().route.name == 'dashboard') {
+		var campaignId = Session.get('chart_campaign_id') || 'all',
+			days = Session.get('chart_days') || 7;
+
+		console.log('stats subscription autorun');
+		Meteor.subscribe('stats', campaignId, days);
+	}
+	else {
+		console.log('stats subscription turned off');
+		Meteor.subscribe('stats', null);
+	}
 	
-	console.log('stats subscription autorun');
-		
-	Meteor.subscribe('stats', campaignId, days);
 });
 
 Stats.find().observeChanges({

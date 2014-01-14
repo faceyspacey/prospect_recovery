@@ -5,6 +5,11 @@ Template.step_2.created = function() {
 	});
 };
 
+Template.step_2.rendered = function() {
+	console.log('step 2 rendered');
+		$('#campaign_step_2').css({left: '0%'});
+}
+
 Template.step_2.helpers({
 	displayCheckbox: function() {
 		return !this.isRecipientCampaign() || this.recipient_campaign_id == CampaignModel.current()._id;

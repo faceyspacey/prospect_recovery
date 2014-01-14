@@ -1,4 +1,6 @@
 Meteor.publish("stats", function(campaignId, days) {
+	if(!campaignId) this.stop();
+	
   	var self = this,
 		userId = this.userId,
 		stats = new Stats(this.userId, campaignId, days),
@@ -13,9 +15,9 @@ Meteor.publish("stats", function(campaignId, days) {
   	self.added("stats", userId, stats.getAllStats());
   	self.ready();
 
-	console.log('started stats subscription');
+	//console.log('started stats subscription');
   	self.onStop(function () {
-		console.log('stopped stats subscription');
+		//console.log('stopped stats subscription');
     	handle.stop();
   	});
 });
@@ -24,7 +26,7 @@ Meteor.publish("stats", function(campaignId, days) {
 
 
 Stats = function(userId, campaignId, days) {
-	console.log('arguments', arguments);
+	//console.log('arguments', arguments);
 	this.userId = userId;
 	this.userSelector = Roles.userIsInRole(this.userId, ['admin']) ? {} : {user_id: this.userId};
 	this.campaign_id = campaignId;
@@ -86,17 +88,17 @@ Stats.prototype = {
 	
 	findDeliveryCounts: function(selector, dateSelector) {
 		selector.status = {$gte: 1};
-		if(dateSelector) selector.updated_at = dateSelector; //enhance to delivered_at
+		if(dateSelector) selector.delivered_at = dateSelector; 
 		return this._findCounts(selector);
 	},
 	findReturnCounts: function(selector, dateSelector) {
 		selector.status = {$gte: 2};
-		if(dateSelector) selector.updated_at = dateSelector; //enhance to returned_at
+		if(dateSelector) selector.returned_at = dateSelector; 
 		return this._findCounts(selector);
 	},
 	findRecoveryCounts: function(selector, dateSelector) {
 		selector.status = {$gte: 3};
-		if(dateSelector) selector.updated_at = dateSelector; //enhance to recovered_at
+		if(dateSelector) selector.recovered_at = dateSelector;
 		return this._findCounts(selector);
 	},
 	_findCounts: function(selector) {

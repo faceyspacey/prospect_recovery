@@ -32,31 +32,33 @@
 
           <tbody>
            
-				{{#each currentUser.limelightCampaigns}}
-					<tr style="height:48px;">
-	                  <td>
-							{{#if displayCheckbox}}
-								<input id="{{_id}}" class="recipient_campaign" type="checkbox" style="margin-left:6px;" {{isChecked}}/>
-							{{/if}}
-					  </td>
-	                  <td>{{id}}</td>
-					  <td>{{name}}</td>
-					
-	                  <td>
-	                    <a href="{{url}}" target="_blank">open in limelight</a>
-	                  </td>
-	
-					  <td>
-							{{#if displayRadioButton}}
-								{{#if isCurrentDestinationCampaign current_campaign}}
-									<button type="button" class="btn btn-primary" style="background: black; width: 155px;">Campaign Selected</button>
-								{{else}}
-									<button type="button" class="btn btn-primary select_destination_campaign" style="background: #16a085; width: 155px;">Select Destination</button>
+				{{#isolate}}
+					{{#each currentUser.limelightCampaigns}}
+						<tr style="height:48px;">
+		                  <td>
+								{{#if displayCheckbox}}
+									<input id="{{_id}}" class="recipient_campaign" type="checkbox" style="margin-left:6px;" {{isChecked}}/>
 								{{/if}}
-							{{/if}}
-					  </td>
-	                </tr>   
-				{{/each}}
+						  </td>
+		                  <td>{{id}}</td>
+						  <td>{{name}}</td>
+
+		                  <td>
+		                    <a href="{{url}}" target="_blank">open in limelight</a>
+		                  </td>
+
+						  <td>
+								{{#if displayRadioButton}}
+									{{#if isCurrentDestinationCampaign current_campaign}}
+										<button type="button" class="btn btn-primary" style="background: black; width: 155px;">Campaign Selected</button>
+									{{else}}
+										<button type="button" class="btn btn-primary select_destination_campaign" style="background: #16a085; width: 155px;">Select Destination</button>
+									{{/if}}
+								{{/if}}
+						  </td>
+		                </tr>   
+					{{/each}}
+				{{/isolate}}
            
            
           </tbody>

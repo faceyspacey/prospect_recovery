@@ -7,7 +7,6 @@ standard-app-packages
 insecure
 preserve-inputs
 less
-iron-router
 roles
 spiderable
 http
@@ -18,3 +17,4 @@ cron
 accounts-ui-bootstrap-3
 accounts-password
 cheerio
+iron-router

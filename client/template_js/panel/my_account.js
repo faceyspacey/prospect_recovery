@@ -2,7 +2,8 @@ Template.my_account.events({
 	'click #update_account_button': function() {
 			var email = $('#my_email').val(),
 				oldPassword = $('#old_password').val(),
-				newPassword = $('#new_password').val();
+				newPassword = $('#new_password').val(),
+				timezone = $('#timezone').val();
 
 			if(!isValidEmail(email)) return FlashMessages.sendError("You entered an invalid email address");
 			
@@ -12,7 +13,8 @@ Template.my_account.events({
 				else {
 					Meteor.users.update(Meteor.userId(), {
 						$set: {
-							emails: [{address: email}]  
+							emails: [{address: email}],
+							timezone: timezone
 						}
 					});
 					FlashMessages.sendSuccess('You Successfully updated your info.')

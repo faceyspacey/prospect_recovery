@@ -8,11 +8,11 @@
             <tr>
               <th>Name</th>
               <th>URL</th>
-              <th title="Email Deliveries">Dels</th>
-		   	  <th title="Prospect Returns">Rets</th>
-			  <th title="Prospect/Customer Recoveries">Recs</th>
+              <th title="Email Deliveries" style="width: 50px;">Dels</th>
+		   	  <th title="Prospect Returns" style="width: 50px;">Rets</th>
+			  <th title="Prospect/Customer Recoveries" style="width: 50px;">Recs</th>
 		   	  <th>Status</th>
-              <th style="width: 120px;">Actions</th>
+              <th style="width: 170px;">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -28,9 +28,10 @@
 					
 	                  <td><span class="label label-{{statusClass}}">{{statusName}}</span></td>
 	
-	                  <td class="text-right">
+	                  <td class="text-right">				
 						<a href="#" class="btn btn-default btn-xs pause_play"><i class="icon-{{statusText}}"></i></a>
 	                    <a href="/campaign/update/step-3/{{_id}}" class="btn btn-default btn-xs"><i class="icon-pencil"></i> edit</a>
+						<a href="/campaign/test/{{_id}}" class="btn btn-info btn-xs"><i class="icon-envelope"></i> test</a>
 	                    <a href="#" class="btn btn-danger btn-xs remove_campaign"><i class="icon-remove"></i></a>
 	                  </td>
 	                </tr>

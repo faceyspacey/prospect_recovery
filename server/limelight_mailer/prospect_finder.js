@@ -70,7 +70,7 @@ ProspectFinder = {
 			last_name: prospect.last_name,
 			email: decodeURIComponent(prospect.email),
 			phone: prospect.phone,
-			limelight_campaign_id: prospect.campaign_id,
+			limelight_actual_campaign_id: prospect.campaign_id,
 			address: prospect.address,
 			address_2: prospect.address_2,
 			city: prospect.city,

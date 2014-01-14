@@ -37,7 +37,7 @@ ProspectMailer = {
 		
 		return Prospects.find({
 			status: 0, 
-			limelight_campaign_id: {$in: limelightCampaignIds},
+			limelight_actual_campaign_id: {$in: limelightCampaignIds},
 			discovered_at: {$lte: moment().subtract(campaign.minutes_delay, 'minutes').toDate() } //this is key to actualizing campaign.minutes_delay
 		});
 	},
@@ -45,10 +45,10 @@ ProspectMailer = {
 		return LimelightCampaigns.find({
 			recipient_campaign_id: campaignId
 		}, {
-			fields: {_id: 1}
+			fields: {id: 1} //we actually need the IDs that limelight uses since that what we stored in prospect.limelight_campaign_id when discovered
 		})
 		.map(function(lc) {
-			return lc._id;
+			return lc.id;
 		});
 	}
 }

@@ -4,3 +4,11 @@ getParameterByName = function(url, name) {
         results = regex.exec(url);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
+
+getCurrentHost = function() {
+	return window.location.protocol + '//' + window.location.host;
+};
+
+getCurrentUrl = function() {
+	return getCurrentHost()  + window.location.pathname;
+};

@@ -10,17 +10,29 @@ Template.limelight_account_info.helpers({
 });
 
 Template.limelight_account_info.events({
-	'click #limelight_proceed': function() {
+	'click #limelight_proceed': function() {	
 		Session.set('loading_limelight_login', true);
 		
 		var domain = $('#limelight_domain').val(),
 			username = $('#limelight_username').val(),
 			password = $('#limelight_password').val();
-			
-		Meteor.user().loginToLimelight(domain, username, password, function(cookieToken) {
+		
+		
+		if(domain.substring(0, 12) != "https://www.") {
 			Session.set('loading_limelight_login', false);
-			if(cookieToken) Router.go('dashboard');
-			else FlashMessages.sendError('Your Limelight credentials are incorrect.', {autoHide: false});
+			return FlashMessages.sendError('Please enter your domain starting with "https://www."');
+		}
+		
+		
+		var alreadyDomain = Meteor.users.findOne({limelight_domain: domain, _id: {$not: Meteor.userId()}});
+		if(alreadyDomain) {
+			Session.set('loading_limelight_login', false);
+			return FlashMessages.sendError('That Limelight Domain is already in use. Only one user per domain please.');
+		}
+			
+			
+		Meteor.user().loginToLimelight(domain, username, password, function(success) {
+			Session.set('loading_limelight_login', false);
 		});
 	}
 });

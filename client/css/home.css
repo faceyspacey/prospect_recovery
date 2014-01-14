@@ -1,5 +1,5 @@
 header {
-	background-color: #263946;
+	background-color: #2D302F;
 	height: 78px;
 	width: 100%;
 	border-bottom: 1px solid #31D1AB;
@@ -17,11 +17,32 @@ font-family: "Oswald", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 24px;
 font-weight: 400;
 height: 40px;
-width: 200px;
+width: 250px;
+position: relative;
+top: -4px;
+text-shadow: 1px 1px 1px rgb(0, 99, 79);
 }
 
 a#nav_logo:hover {
 	text-decoration:none;
+}
+
+a#nav_logo i {
+	font-size: 40px;
+	margin-right: 10px;
+	position:relative;
+	top:1px;
+}
+
+a#nav_logo span.con {
+color: rgb(217, 243, 238);
+
+}
+
+a#nav_logo span.vert {
+color: rgb(158, 163, 162);
+text-shadow: 1px 1px 1px black;
+font-weight: bold;
 }
 
 ul.nav_links {
@@ -48,15 +69,20 @@ ul.nav_links a {
 	display:block;
 }
 
+
 ul.nav_links a:hover {
 	text-decoration: none;
+	color: rgba(255, 255, 255, .85);
 }
 
+ul.nav_links a.active:hover {
+	color: rgba(255, 255, 255, .85);
+}
 ul.nav_links a.active {
 	color: #fff;
 text-decoration: none;
 
-	background-color: #6BADCC;
+	background-color: #5D8F85;
 -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
@@ -72,14 +98,15 @@ border-radius: 18px;
 border-bottom: none;
 }
 
-.main_content{
+.main_content {
 	background: url("/images/triangles.png") -20px 0px;
-	height: 600px;
+	height: 690px;
 	padding-top: 30px;
 	-webkit-box-shadow: inset 0px -22px 4px -10px rgba(0,0,0,0.16);
 	-moz-box-shadow: inset 0px -22px 4px -10px rgba(0,0,0,0.16);
 	box-shadow: inset 0px -22px 4px -10px rgba(0,0,0,0.16);
 }
+
 
 .main_content h1 {
 	color: rgb(255, 255, 255);
@@ -98,6 +125,7 @@ border-bottom: none;
 	width: 1045px;
 }
 
+
 .main_content h2 {
 	color: rgb(202, 224, 223);
 	display: block;
@@ -106,12 +134,13 @@ border-bottom: none;
 	font-weight: 300;
 	height: 43px;
 	line-height: 43.1875px;
-	margin: 12px auto 30px;
+	margin: 2px auto 20px;
 	text-align: center;
 	text-rendering: optimizelegibility;
 }
 
-.call_to_action {
+
+.main_content .call_to_action {
 	text-decoration:none;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 2px 5px 0px, rgb(255, 255, 255) 0px 2px 2px 0px inset;
 	background-color: rgb(232, 230, 224);
@@ -142,7 +171,7 @@ border-bottom: none;
 	color: rgb(85, 85, 85);
 	cursor: pointer;
 	font-family: Oswald, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-size: 28px;
+	font-size: 32px;
 	font-weight: 300;
 	height: 74px;
 	line-height: 32px;
@@ -154,22 +183,58 @@ border-bottom: none;
 	vertical-align: middle;
 	width: 280px;
 	display:block;
+	text-shadow: 1px 1px 1px white;
 }
-.call_to_action:hover {
+
+.main_content .call_to_action:hover {
 	text-decoration:none;
 	color: rgb(85, 85, 85);
 	box-shadow: none;
 }
+
+.main_content #site_images {
+	height: 280px;
+	width: 1045px;
+	margin: 60px auto 0px;
+}
+
+#site_images img {
+	width: 320px;
+	box-shadow: 0px 0px 30px 0px black;
+	border-radius: 5px;
+	float:left;
+	margin-left: 25px;
+	position: relative;
+}
+
+#site_image_drop_shadows {
+	height: 50px;
+	width: 1045px;
+	margin: 30px auto 0px;
+}
+
+#site_image_drop_shadows .drop_shadow {
+	width: 320px;
+	height: 1px;
+	background: rgba(0, 0, 0, .42);
+	display: block;
+	box-shadow: 0px 0px 40px 7px black;
+	float:left;
+	margin-left: 25px;
+	position: relative;
+}
+
+
 
 footer {
 	position: relative;
 	border-top: 2px solid #4b5866;
 	border-bottom: 2px solid #4b5866;
 	background-color:#556270;
-	height: 340px;
+	height: 370px;
 	
-	-webkit-box-shadow: inset 0px 22px 4px -10px rgba(0,0,0,0.16);
-	-moz-box-shadow: inset 0px -22px 4px -10px rgba(0,0,0,0.16);
+	-webkit-box-shadow: inset 0px 10px 4px -10px rgba(255,255,255, .4);
+	-moz-box-shadow: inset 0px 10px 4px -10px rgba(255,255,255, .4);
 	box-shadow: inset 0px 10px 4px -10px rgba(255,255,255, .4);
 }
 
@@ -220,3 +285,14 @@ text-shadow: 1px 1px 1px #2B3239;
 text-align: center;
 }
 
+#footer_copyright {
+color: rgb(29, 39, 34);
+text-shadow: 1px 1px 1px rgb(109, 109, 109);
+text-align: center;
+margin-top: 55px;
+}
+
+#footer_copyright a {
+color: rgb(175, 207, 193);
+text-shadow: 1px 1px 1px black;
+}

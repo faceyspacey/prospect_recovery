@@ -1,10 +1,14 @@
 Template.step_3.created = function() {
 	Deps.afterFlush(function() {
-		var embedCode = Template.embed_code({host: window.location.protocol + '//' + window.location.host});
+		var embedCode = Template.embed_code({host: getCurrentHost()});
 		$('#copy_paste_code').text(embedCode);
 		
 		$('#campaign_step_3').animate({left: '0%'}, 800, 'easeOutBack');
 	});
+};
+
+Template.step_3.rendered = function() {
+	$('#campaign_step_3').css({left: '0%'});
 };
 
 Template.step_3.helpers({
@@ -19,12 +23,21 @@ Template.step_3.helpers({
 Template.step_3.events({
 	'click .next-step': function() {
 		var campaign = CampaignModel.current(),
-			email = $('#campaign_email').val();
+			email = $('#campaign_email').val(),
+			html = $('#campaign_email_html').val(),
+			plain = $('#campaign_email_plain').val();
 		
 		//confirm email, which must be valid to configure mailgun domain, etc	
 		if(!isValidEmailBasic(email)) {
 			FlashMessages.sendError("You entered an invalid email address. Please fix it. It's key to this whole thing :)");
-			$('html,body').animate({scrollTop: 0}, 500, 'easeInBack');
+			$('html,body').animate({scrollTop: 0}, 750, 'easeInExpo');
+			return;
+		}
+		
+		//confirm campaign has [DESTINATION_URL]
+		if(html.indexOf('[DESTINATION_URL]') === -1 || plain.indexOf('[DESTINATION_URL]') === -1) {
+			FlashMessages.sendError("Oops! You forgot the most important part. Please provide a [DESTINATION_URL] token for both HTML and PLAIN emails.");
+			$('html,body').animate({scrollTop: 0}, 750, 'easeInExpo');
 			return;
 		}
 				
@@ -34,7 +47,7 @@ Template.step_3.events({
 		campaign.email_plain = $('#campaign_email_plain').val();	
 		campaign.name = $('#campaign_name').val();
 		campaign.url = $('#campaign_url').val();
-		campaign.from_email = email;
+		campaign.from_email = $('#campaign_email').val();
 		campaign.domain = campaign.getDomain();
 		campaign.from_name = $('#from_name').val();
 		campaign.minutes_delay = parseInt($('#email_delay').val());

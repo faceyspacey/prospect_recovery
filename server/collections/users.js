@@ -5,7 +5,7 @@ Meteor.publish("users", function () {
 
 Meteor.users.allow({
     insert: function(userId, doc) {
-            return true;
+        return true;
     },
     update: function(userId, doc, fields, modifier) {
         return (doc._id == userId || Roles.userIsInRole(userId, ['admin']));

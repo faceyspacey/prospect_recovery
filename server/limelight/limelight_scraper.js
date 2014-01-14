@@ -104,8 +104,14 @@ Limelight.prototype = {
 	
 	
 	
+	/** scrape Limelight API page and create & retreive api username and password **/
+	
 	createLimelightApiAccount: function() {		
+		
 		try {
+			var credentials = this._haveApiAccountAlready();
+			if(credentials) return credentials;
+			
 			this._visitApiPage();
 			
 			var content = 'input_name='+this._apiUsername(),
@@ -122,8 +128,7 @@ Limelight.prototype = {
 			
 			return {
 				limelight_api_username: this._apiUsername(),
-				limelight_api_password: this._getLimelightApiPassword(),
-				limelight_api_time: this._now()
+				limelight_api_password: this._getLimelightApiPassword()
 			};
 		} 
 		catch (error) {
@@ -134,7 +139,7 @@ Limelight.prototype = {
 		return false;
 	},
 	_visitApiPage: function() {
-		this._$(this.domain+'/admin/integration/index.php'); //visit the page naturall so the referrer is accurate
+		this._$(this.domain+'/admin/integration/index.php'); //visit the page naturally so the referrer is accurate
 	},
 	_getLimelightApiPassword: function() {
 		var $ = this._$(this.domain+'/admin/integration/index.php'),
@@ -145,18 +150,44 @@ Limelight.prototype = {
 			var username = $(this).find('td:nth-child(2)').text(),
 				password = $(this).find('td:nth-child(3)').text();
 				
-			if(username == _this._apiUsername()) apiPassword = password;
+			if(username.substring(0,7) == 'vortex_') apiPassword = password;
 		});
 		
-		console.log('createLimelightApiAccount SUCCESS!!! -- apiUsername: '+this._apiUsername()+', apiPassword: '+apiPassword);
+		if(apiPassword) {
+			console.log('createLimelightApiAccount SUCCESS!!! -- apiPassword: '+apiPassword);
+			return apiPassword;
+		}
 		
-		return apiPassword;
+		return false;
+	},
+	_haveApiAccountAlready: function() {
+		var $ = this._$(this.domain+'/admin/integration/index.php'),
+			apiUsername = undefined,
+			apiPassword = undefined,
+			_this = this;
+		
+		$('#list_integration tr').each(function() { 
+			var username = $(this).find('td:nth-child(2)').text(),
+				password = $(this).find('td:nth-child(3)').text();
+				
+			if(username.substring(0,7) == 'vortex_') {
+				apiUsername = username;
+				apiPassword = password;
+			}
+		});
+		
+		if(apiPassword) {
+			console.log('_haveApiAccountAlready SUCCESS!! ', apiUsername, apiPassword);
+			return {
+				limelight_api_username: apiUsername,
+				limelight_api_password: apiPassword
+			};
+		}
+			
+		return false;
 	},
 	_apiUsername: function() {
-		return 'vortex_'+this.user_id + '_' + this._now();
-	},
-	_now: function() {
-		return this.__now || (this.__now = Date.now());
+		return 'vortex_'+this.user_id;
 	},
 	_$: function(url) {
 		var response = HTTP.get(url, {headers: {cookie: this.cookieToken}}),

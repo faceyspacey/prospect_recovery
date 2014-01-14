@@ -22,7 +22,7 @@ LimelightApiCampaigns.prototype = {
 			}
 		}
 		catch(error) {
-			console.log('LimelightApi.updateCampaigns ERROR!', error)
+			console.log('LimelightApi.updateCampaigns ERROR!', error);
 			return false;
 		}
 		return true;
@@ -43,14 +43,15 @@ LimelightApiCampaigns.prototype = {
 		return campaigns;
 	},
 	_storeLimelightCampaigns: function(campaigns) {
-		var highestId = this.user.highest_limelight_campaign_id;
+		var highestId = this.user.highest_limelight_campaign_id,
+			self = this;
 
 		_.each(campaigns, function(campaign) {
 			var id = parseInt(campaign.id);
-			console.log(id,  this.user.highest_limelight_campaign_id, campaign);
+			console.log(id,  self.user.highest_limelight_campaign_id, campaign);
 			
-			if(id > this.user.highest_limelight_campaign_id) {
-				campaign.user_id = this.user._id;
+			if(id > self.user.highest_limelight_campaign_id) {
+				campaign.user_id = self.user._id;
 				LimelightCampaigns.insert(campaign);
 				
 				if(id > highestId) highestId = id;

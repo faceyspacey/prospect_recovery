@@ -37,5 +37,5 @@ Handlebars.registerHelper('todaysRecoveries', function() {
 
 
 Handlebars.registerHelper('unapprovedCampaigns', function() {
-	return Campaigns.find({$or: [{approved: undefined}, {approved: false}]}).count()
+	return Campaigns.find({complete: true, $or: [{approved: undefined}, {approved: false}]}).count()
 });

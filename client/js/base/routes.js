@@ -3,7 +3,21 @@ PublicController = RouteController.extend({
 });
 
 LoginController = RouteController.extend({
-	layoutTemplate: 'login_layout'
+	layoutTemplate: 'login_layout',
+	before: function() {
+		if(Router.current() && Router.current().route.name == 'limelight_account_info') {
+			if(!Meteor.user()) {
+				Deps.afterFlush(function() {
+					Router.go('login');
+				});
+			}
+			else if(Meteor.user().limelight_login_configured) {
+				Deps.afterFlush(function() {
+					Router.go('dashboard');
+				});
+			}
+		}
+	}
 }); 
 
 ExampleSiteController = RouteController.extend({
@@ -29,6 +43,11 @@ PanelController = RouteController.extend({
 				Router.go('limelight_account_info');
 			});
 		}
+		console.log('before triggered');
+	},
+	action: function() {
+		console.log('controller action render');
+		this.render();
 	},
 	after: function () {},
 	waitOn: function () {}
@@ -44,8 +63,23 @@ Router.map(function () {
 	this.route('login', {
     	path: '/login',
 		template: 'login',
+		before: function() {
+			Session.set('Meteor.loginButtons.inSignupFlow', false);
+		},
 		controller: LoginController
   	});
+
+	this.route('signup', {
+    	path: '/signup',
+		template: 'login',
+		before: function() {
+			Session.set('Meteor.loginButtons.inSignupFlow', true);
+		},
+		controller: LoginController
+  	});
+
+
+
 
 	/** PanelController **/
 	this.route('limelight_account_info', {
@@ -58,14 +92,17 @@ Router.map(function () {
     	path: '/dashboard',
 		controller: PanelController
   	});
-	this.route('my_campaigns', {
-    	path: '/my-campaigns',
-		controller: PanelController
-  	});
+
 	this.route('my_recoveries', {
     	path: '/my-recoveries',		
 		controller: PanelController
   	});
+
+	this.route('my_campaigns', {
+    	path: '/my-campaigns',
+		controller: PanelController
+  	});
+
 	this.route('update_campaign_step_1', {
     	path: '/campaign/update/step-1',
 		template: 'step_1',
@@ -92,6 +129,15 @@ Router.map(function () {
 		},
 		controller: PanelController
   	});
+	this.route('update_campaign_step_3', {
+    	path: '/campaign/test/:id',
+		template: 'test_email_form',
+		before: function() {
+			Session.set('current_campaign_id', this.params.id);
+		},
+		controller: PanelController
+  	});
+
 	this.route('my_account', {
     	path: '/my-account',
 		controller: PanelController

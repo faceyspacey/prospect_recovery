@@ -20,7 +20,7 @@ displayChart = function() {
 		    lineColors: ["#f9c1c1", "#c1daf9", "#16a085", "#2c3e50", "#1abc9c", "#34495e", "#9b59b6", "#e74c3c"]
 		  };
 
-		  Morris.Area(morris_area_options);
+		if($('#areachart').length !== 0) Morris.Area(morris_area_options);
 	});
 };
 

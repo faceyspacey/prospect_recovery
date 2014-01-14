@@ -19,9 +19,9 @@
             <tr>
               <th>Email</th>
               <th>Campaign</th>
-			  <th style="width:52px;">State</th>
 		   	  <th style="width:118px;">Date/Time</th>
 			  <th style="width:88px;">Status</th>
+			<th style="width:52px;">Test</th>
             </tr>
           </thead>
           <tbody>
@@ -31,10 +31,13 @@
 	                  <td>{{email}}</td>
 					  <td><a href="/campaign/update/step-3/{{campaign_id}}">{{campaign_name}}</a></td>
 					
-					  <td>{{state}}</td>
-					
 					  <td>{{time 'updated_at'}}</td>
 	                  <td><span class="label label-{{getStatusClass}}">{{getStatus}}</span></td>
+					  <td>
+						{{#if campaign_id}}
+							<a href="/example/page-1?p={{_id}}&c={{campaign_id}}" target="_blank" onclick="alert('You are about to follow the link the prospect received via email. Doing this affects your stats. Do so sparingly to quickly test that your recovery funnel is working.')" class="btn btn-info btn-xs">test</a>
+						{{/if}}
+					  </td>
 	                </tr>
 				{{/each}}
            

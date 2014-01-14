@@ -50,7 +50,7 @@ CustomerFinder = {
 						var customer = customerObjects[customerId]
 							email = customer.email;
 						
-						Prospects.update({email: email, status: {$gte: 2}}, {$set: {status: 3, signedup_at: Date.now(), not_via_link: true}}, 	
+						Prospects.update({email: email, status: {$gte: 2}}, {$set: {status: 3, recovered_at: Date.now(), not_via_link: true}}, 	
 							function(error, docCountUpdated) {
 								console.log('customer found', error, docCountUpdated);
 								if(!docCountUpdated) Prospects.remove({email: email, status: 0}, function() {});
