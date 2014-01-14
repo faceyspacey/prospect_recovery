@@ -71,13 +71,13 @@ Template.widget_area_graph.helpers({
 	upDown: function() {
 		if(!Stats.findOne()) return 0;
 		
-		var up = Stats.findOne().days[1].recoveryPercentage >= Stats.findOne().days[2].deliveries;
+		var up = Stats.findOne().days[1].deliveries >= Stats.findOne().days[2].deliveries;
 		return up ? 'up' : 'down';
 	},
 	upDownColor: function() {
 		if(!Stats.findOne()) return 0;
 		
-		var up = Stats.findOne().days[1].recoveryPercentage >= Stats.findOne().days[2].deliveries;
+		var up = Stats.findOne().days[1].deliveries >= Stats.findOne().days[2].deliveries;
 		return up ? '' : 'background-color: rgb(235, 132, 132)';
 	},
 	upDownValue: function() {

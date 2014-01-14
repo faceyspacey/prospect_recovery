@@ -4,7 +4,8 @@
  *  name                        		Str
  *  campaign_id                  		Str
  *  user_id	  							Str
- *
+ *  recipient_campaign_id				Str
+ *	destination_campaign_id				Str
  */
 
 LimelightCampaignModel = function(doc) {

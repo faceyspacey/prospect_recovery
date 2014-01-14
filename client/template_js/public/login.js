@@ -19,12 +19,7 @@ Template.limelight_account_info.events({
 			
 		Meteor.user().loginToLimelight(domain, username, password, function(cookieToken) {
 			Session.set('loading_limelight_login', false);
-			if(cookieToken) {
-				Meteor.user().saveLimelightCredentials(domain, username, password);
-				Meteor.user().createLimelightApiAccount();
-				Meteor.user().updateLimelightCampaigns();
-				Router.go('dashboard');
-			}
+			if(cookieToken) Router.go('dashboard');
 			else FlashMessages.sendError('Your Limelight credentials are incorrect.', {autoHide: false});
 		});
 	}

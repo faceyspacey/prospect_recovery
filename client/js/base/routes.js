@@ -1,6 +1,14 @@
+PublicController = RouteController.extend({
+	layoutTemplate: 'public_layout'
+});
+
 LoginController = RouteController.extend({
 	layoutTemplate: 'login_layout'
 }); 
+
+ExampleSiteController = RouteController.extend({
+	layoutTemplate: 'example_site_layout'
+});
 
 
 PanelController = RouteController.extend({
@@ -11,15 +19,12 @@ PanelController = RouteController.extend({
 		
 		if(!this.template) this.template = this.route.name;
 		
-		if(this.route.name == 'home') Session.set('current_page', 'dashboard'); //delete this eventually
-		if(this.route.name == 'home') this.template = 'dashboard'; //delete this eventually
-		
 		if(!Meteor.user()) {
 			Deps.afterFlush(function() {
 				Router.go('login');
 			});
 		}
-		if(Meteor.user() && !Meteor.user().limelight_login_configured) {
+		if(Meteor.user() && !Meteor.user().limelightCredentialsWorking()) {
 			Deps.afterFlush(function() {
 				Router.go('limelight_account_info');
 			});
@@ -33,8 +38,8 @@ Router.map(function () {
 	/** Public **/
 	this.route('home', {
     	path: '/',
-		template: 'dashboard',
-		controller: PanelController
+		template: 'home',
+		controller: PublicController
   	}); 
 	this.route('login', {
     	path: '/login',
@@ -90,5 +95,36 @@ Router.map(function () {
 	this.route('my_account', {
     	path: '/my-account',
 		controller: PanelController
+  	});
+
+
+	/** ADMIN **/
+	this.route('admin_campaign_approval', {
+    	path: '/admin/campaign-approval',
+		controller: PanelController
+  	});
+	this.route('admin_campaign_dns', {
+    	path: '/campaign/admin/dns/:id',
+		before: function() {
+			Session.set('current_campaign_id', this.params.id);
+		},
+		controller: PanelController
+  	});
+	this.route('admin_campaign_pixel', {
+    	path: '/campaign/admin/pixel/:id',
+		before: function() {
+			Session.set('current_campaign_id', this.params.id);
+		},
+		controller: PanelController
+  	});
+
+	/** EXAMPLE SITE **/
+	this.route('page_1', {
+    	path: '/example/page-1',
+		controller: ExampleSiteController
+  	});
+	this.route('page_2', {
+    	path: '/example/page-2',
+		controller: ExampleSiteController
   	});
 });

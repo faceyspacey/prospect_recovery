@@ -13,6 +13,6 @@ Deps.autorun(function() {
 });
 
 loginCallback = function() {
-	if(!Meteor.user().limelight_login_configured) Meteor.user().updateLimelightCampaigns();
+	
 };
 

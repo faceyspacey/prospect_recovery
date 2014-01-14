@@ -1,4 +1,5 @@
 Template.step_2.created = function() {
+	Meteor.user().updateLimelightCampaigns();
 	Deps.afterFlush(function() {
 		$('#campaign_step_2').animate({left: '0%'}, 800, 'easeOutBack');
 	});
@@ -18,11 +19,16 @@ Template.step_2.helpers({
 
 Template.step_2.events({
 	'click .select_destination_campaign': function() {
-		var currentCampaign = CampaignModel.current();
+		var currentCampaign = CampaignModel.current(),
+			currentCampaignId = CampaignModel.current()._id;
+			
 		currentCampaign.limelight_destination_campaign_id = this._id;
 		currentCampaign.save();
 		
-		this.destination_campaign_id = CampaignModel.current()._id;
+		//remove old limelight campaign who the current campaign as destination
+		LimelightCampaigns.update({destination_campaign_id: currentCampaignId}, {$set: {destination_campaign_id: undefined}}, {multi: true});
+		
+		this.destination_campaign_id = currentCampaignId;
 		this.save();
 	},
 	'click #check_all': function(e) {

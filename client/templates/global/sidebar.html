@@ -31,22 +31,22 @@
 	     
 	      <li class="{{isCurrent 'my_campaigns'}}">
 	        <a href="/my-campaigns">
-	          <span class="badge pull-right">12</span>
+	          <span class="badge pull-right">{{currentUser.totalCampaigns}}</span>
 	          <i class="icon-th"></i> My Campaigns
 	        </a>
 	      </li>
 
 	      <li class="{{isCurrent 'my_recoveries'}}">
 	        <a href="/my-recoveries">
-	          <span class="badge pull-right">24</span>
-	          <i class="icon-gear"></i> My Recoveries
+	          <span class="badge pull-right">{{stats.user.recoveries}}</span>
+	          <i class="icon-user"></i> My Recoveries
 	        </a>
 	      </li>
 
 	   	 <li class="{{isCurrent 'my_account'}}">
 	        <a href="/my-account">
 	          <span class="badge pull-right"></span>
-	          <i class="icon-bar-chart"></i> My Account
+	          <i class="icon-cog"></i> My Account
 	        </a>
 	      </li>
 	
@@ -58,6 +58,18 @@
 	      </li>
 	    </ul>
 	  </div>
+	
+	
+	{{#if isAdmin}}
+	 <ul class="side-menu side-menu-green-sea">
+	    <li>
+	      <a href="/admin/campaign-approval">
+	        <span class="badge badge-notifications pull-right" style="background-color:rgb(255, 60, 60); color:white;">{{unapprovedCampaigns}}</span>
+	        <i class="icon-check"></i> Campaign Approval
+	      </a>
+	    </li>
+	  </ul>
+	 {{/if}}
 	
 	
 	</div>

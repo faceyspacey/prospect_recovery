@@ -10,6 +10,10 @@ Handlebars.registerHelper('isCurrent', function(tab) {
 	return tab == Session.get('current_page') ? 'current' : '';
 });
 
+Handlebars.registerHelper('isAdmin', function() {
+	return Roles.userIsInRole(Meteor.userId(), ['admin']);
+});
+
 Handlebars.registerHelper('stats', function() {
 	return Stats.findOne();
 });
@@ -32,3 +36,6 @@ Handlebars.registerHelper('todaysRecoveries', function() {
 });
 
 
+Handlebars.registerHelper('unapprovedCampaigns', function() {
+	return Campaigns.find({$or: [{approved: undefined}, {approved: false}]}).count()
+});

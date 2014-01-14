@@ -1,3 +1,17 @@
+/** UserModel attributes:
+ *
+ *  _id                         			Str
+ *  limelight_username                      Str
+ *  limelight_password                      Str
+ *  limelight_login_configured              Bool
+ *  cookie_token                      		Str
+ *  limelight_domain                  		Str
+ *	limelight_api_username					Str
+ *  limelight_api_password                 	Str
+ *
+**/
+
+
 UserModel = function(doc) { 
     this.collectionName = 'Users';
 
@@ -12,26 +26,44 @@ UserModel.prototype = {
 	getEmail: function() {
 		return this.emails[0].address;
 	},
+	totalCampaigns: function() {
+		return Campaigns.find({user_id: this._id, complete: true}).count();
+	},
+	limelightCredentialsWorking: function() {
+		
+	},
+	
+	/** LIMELIGHT METHODS **/
 	loginToLimelight: function(domain, username, password, callback) {
 		Meteor.call('getLimelightCookieToken', this._id, domain, username, password, function(error, cookieToken) {
 			console.log("COOKIE TOKEN IS:", cookieToken);
 
-			if(cookieToken) this.update({cookie_token: cookieToken, limelight_login_configured: true});
+			if(cookieToken) this.refreshLimelight(domain, username, password, cookieToken, callback);
 			else this.update({limelight_login_configured: false});
 			
 			callback(cookieToken);
 		}.bind(this));
 	},
-	saveLimelightCredentials: function(domain, username, password) {	
+	refreshLimelight: function(domain, username, password, cookieToken, callback) {
+		this.saveLimelightCredentials(domain, username, password, cookieToken);
+		this.createLimelightApiAccount(callback);
+		this.updateLimelightCampaigns();
+	},
+	saveLimelightCredentials: function(domain, username, password, cookieToken) {	
 		this.update({
 			limelight_domain: domain,
 			limelight_username: username,
-			limelight_password: password
+			limelight_password: password,
+			cookie_token: cookieToken,
+			limelight_login_configured: true
 		});
 	},
-	createLimelightApiAccount: function() {
+	createLimelightApiAccount: function(callback) {
 		Meteor.call('createLimelightApiAccount', function(error, limeApiCredentialsObj) {
-			if(limeApiCredentialsObj) this.update(limeApiCredentialsObj);
+			if(limeApiCredentialsObj) {
+				callback(); //i.e. logging in
+				this.update(limeApiCredentialsObj);
+			}
 			else console.log('error create limelight api account')
 		}.bind(this));
 	},
@@ -44,6 +76,8 @@ UserModel.prototype = {
 			else console.log('something failed with the updating your limelight campaigns');
 		}.bind(this));
 	},
+	/** END LIMELIGHT METHODS **/
+	
 	limelightCampaigns: function() {
 		return LimelightCampaigns.find({user_id: this._id}, {sort: {id: -1}});
 	},

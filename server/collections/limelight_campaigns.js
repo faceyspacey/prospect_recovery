@@ -28,14 +28,7 @@ Meteor.methods({
 	setRecipientLimelightCampaigns: function(ids, campaignId) {
 		console.log('setRecipientLimelightCampaigns', ids, campaignId);
 		
-		var result = LimelightCampaigns.update({
-			_id: {$in: ids}
-			}, {
-				$set: {
-					recipient_campaign_id: campaignId
-				}
-			}, {multi: true});
-			
-			console.log(result);
+		LimelightCampaigns.update({recipient_campaign_id: campaignId}, {$set: {recipient_campaign_id: undefined}}, {multi: true});
+		LimelightCampaigns.update({_id: {$in: ids}}, {$set: {recipient_campaign_id: campaignId}}, {multi: true});
 	}
 });

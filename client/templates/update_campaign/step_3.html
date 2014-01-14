@@ -9,7 +9,7 @@
 	                      <form action="" role="form" class="form-horizontal">
 	                        
 	                        <h3 class="form-title form-title-first">
-								<i class="icon-th-list"></i> 
+								<i class="icon-edit"></i> 
 								EDIT CAMPAIGN
 								<a id="edit_limelight_campaigns" href="/campaign/update/step-2/{{current_campaign._id}}" class="btn btn-primary btn-lg" style="float:right; position: relative; top: -12px; margin-left: 6px;">Edit Limelight Campaigns</a>
 		
@@ -17,23 +17,45 @@
 	
 							<h3 class="form-title"></i> 
 								<div class="form-group">
-		                          <label class="col-md-4 control-label">Javascript:</label>
+		                          <label class="col-md-4 control-label">Directions</label>
 		                          <div class="col-md-8">
-		                            <input type="text" class="form-control" onclick="this.select()" value='<script src="http://www.prospectrecovery.com/embed/conversion.js"></script>'>
+		                            <textarea class="form-control" disabled="disabled" style="height: 50px;">Copy paste the below code to both your payment page and completion page.
+Replace TRANSACTION_ID on the completion page as you would other Limelight tokens.
+									</textarea>
 		                          </div>
 		                        </div>
 		
 								<div class="form-group">
-		                          <label class="col-md-4 control-label">Directions</label>
+		                          <label class="col-md-4 control-label">Javascript:</label>
 		                          <div class="col-md-8">
-		                            <textarea class="form-control" disabled="disabled" style="height: 100px;">Copy paste this code to the head tag of your site. etc. Copy paste this code to the head tag of your site. etc. Copy paste this code to the head tag of your site. etc. Copy paste this code to the head tag of your site. etc. Copy paste this code to the head tag of your site. etc. Copy paste this code to the head tag of your site. etc.
+		                            <textarea id="copy_paste_code" type="text" class="form-control" onclick="this.select()" style="height: 150px;">
+										
 									</textarea>
 		                          </div>
 		                        </div>
+		
+								<p>NEXT: view an example of how to embed this javascript and the benefits it provides: <a target="_blank" href="/example/page-1">example destination page</a>.</p>
 							</h3>
 							
 							
 							<h3 class="form-title"></i> 
+								
+								<div class="form-group">
+		                          <label class="col-md-4 control-label">Directions</label>
+		                          <div class="col-md-8">
+		                            <textarea class="form-control" disabled="disabled" style="height: 70px;">Fill out the below email subject and message fields. You must use the following tokens to personalize your emails: [FIRST_NAME], [LAST_NAME], [EMAIL], [PHONE], [ADDRESS], [ADDRESS_2], [CITY], [STATE], [ZIP], [COUNTRY], [IP_ADDRESS]
+									</textarea> 
+		                          </div>
+		                        </div>
+		
+		
+								<div class="form-group">
+						            <label class="col-md-4 control-label">Subject:</label>
+						            <div class="col-md-8">
+						              <input id="campaign_email_subject" type="text" class="form-control" placeholder="EXAMPLE: [FIRST_NAME], order now and receive a 5% discount" value="{{name}}">
+						            </div>
+						          </div>
+						
 								<div class="form-group">
 		                          <label class="col-md-4 control-label">HTML EMAIL:</label>
 		                          <div class="col-md-8">
@@ -48,13 +70,7 @@
 		                          </div>
 		                        </div>
 		
-								<div class="form-group">
-		                          <label class="col-md-4 control-label">Directions</label>
-		                          <div class="col-md-8">
-		                            <textarea class="form-control" disabled="disabled" style="height: 100px;">The following custom tags are available: [FIRST_NAME], [LAST_NAME] ,[EMAIL],	[CITY], [STATE]
-									</textarea> 
-		                          </div>
-		                        </div>
+								
 							</h3>
 							
 							
@@ -72,17 +88,18 @@
 					            </div>
 					          </div>
 					
-							<div class="form-group">
-					            <label class="col-md-4 control-label">Completion Campaign URL</label>
-					            <div class="col-md-8">
-					              <input id="completion_campaign_url" type="text" class="form-control" placeholder="e.g: http://www.recoverydomain.com/step-3.php" value="{{completion_url}}" />
-					            </div>
-					          </div>
 
 							<div class="form-group">
 					            <label class="col-md-4 control-label">From Address</label>
 					            <div class="col-md-8">
-					              <input id="campaign_email" type="email" class="form-control" placeholder="Enter email address" value="{{email}}" />
+					              <input id="campaign_email" type="email" class="form-control" placeholder="Enter email address" value="{{from_email}}" />
+					            </div>
+					          </div>
+					
+							<div class="form-group">
+					            <label class="col-md-4 control-label">From Name</label>
+					            <div class="col-md-8">
+					              <input id="from_name" type="text" class="form-control" placeholder="Enter email from name" value="{{from_name}}" />
 					            </div>
 					          </div>
 
@@ -97,7 +114,7 @@
 					            </div>
 					          </div>
 	
-	                        <div class="form-group">
+	                        <div class="form-group" style="display:none;">
 	                          <div class="col-md-offset-4 col-md-8">
 	                            <div class="checkbox">
 	                              <label>

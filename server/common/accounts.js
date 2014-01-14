@@ -8,6 +8,7 @@ Accounts.onCreateUser(function (options, user) {
 	else user.roles = ['user'];
 	
 	user.highest_limelight_campaign_id = -1;
+	user.timezone = 5; //provide a way to edit this on my account some time
 	
 	return user;
 });

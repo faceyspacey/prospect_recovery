@@ -1,24 +1,25 @@
 /** CampaignModel attributes:
  *
- *  collectionName              		'Campaigns'
- *  _id                         		Str
- *  name                        		Str
- *  url                        			Str
- *  name                        		Str
- *  reply_email                  		Bool
- *  one_off_quantity_available  		deliveries
- *  one_off_quantity_available  		returns
- *  one_off_quantity_available  		recoveries
- *  created_at                  		Date
- *  updated_at                  		Date
+ *  _id                         			Str
+ *  name                        			Str
+ *  url                        				Str
+ *  from_email                  			Str
+ *  from_name                  				Str
+ *  email_plain                  			Str
+ *  email_html                  			Str
+ *	limelight_destination_campaign_id		Str
+ *  minutes_delay                  			Int
+ *  continue_Recovery                  		Bool
+ *  complete		                  		Bool
+ *  approved		                  		Bool
+ *  play			                  		Bool
+ *	tracking_pixel							Str
  *
- */
+ **/
 
 CampaignModel = function(doc){
 	this.collectionName = 'Campaigns';
-    this.defaultValues = {
-        status: 'pause'
-    };
+    this.defaultValues = {};
 
 	_.extend(this, Model);
 	this.extend(doc);
@@ -27,25 +28,43 @@ CampaignModel = function(doc){
 };
 
 CampaignModel.prototype = {
+	user: function() {
+		return Meteor.users.findOne({_id: this.user_id});
+	},
+	getDomain: function() {
+		return this.from_email.split('@')[1];
+	},
 	statusClass: function() {
-		if(this.status == 'pause') return 'warning';
-		if(this.status == 'play') return 'success';
+		if(!this.play) return 'warning';
+		if(this.play) return 'success';
 	},
 	statusName: function() {
-		if(this.status == 'pause') return 'paused';
-		if(this.status == 'play') return 'playing';
+		if(!this.play) return 'paused';
+		if(this.play) return 'playing';
 	},
-	statusIcon: function() {
-		if(this.status == 'pause') return 'play';
-		if(this.status == 'play') return 'pause';
+	statusText: function() {
+		if(!this.play) return 'play';
+		if(this.play) return 'pause';
+	},
+	approvalClass: function() {
+		return this.approved ? 'success' : 'danger';
+	},
+	approvalName: function() {
+		return this.approved ? 'approved' : 'pending';
+	},
+	approvalText: function() {
+		return this.approved ? 'disapprove' : 'approve';
 	},
 	deliveries: function() {
+		if(!Stats.findOne()) return;
 		return Stats.findOne().campaigns[this._id].deliveries;
 	},
 	returns: function() {
+		if(!Stats.findOne()) return;
 		return Stats.findOne().campaigns[this._id].returns;
 	},
 	recoveries: function() {
+		if(!Stats.findOne()) return;
 		return Stats.findOne().campaigns[this._id].recoveries;
 	}
 };
