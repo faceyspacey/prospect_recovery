@@ -1,0 +1,46 @@
+Router.map(function () {
+  	this.route('recovery', {
+		where: 'server',
+    	path: '/recovery',
+
+    	action: function () {
+			var res;
+			
+			if(this.params.t && this.params.t != 'TRANSACTION_ID') res = ServerPages.renderCompletionPage(this.params);
+			else res = ServerPages.renderPaymentPage(this.params);
+				
+      		this.response.writeHead(200, {'Content-Type': 'application/javascript'});
+      		this.response.end('$(function() {'+res+'});');
+    	}
+  	});
+});
+
+ServerPages = {
+	renderPaymentPage: function(params) {
+		Prospects.update(params.p, {$set: {status: 2, returned_at: Date.now()}}, function() {
+			
+		});
+		
+		var prospect = Prospects.findOne(params.p),
+			js = 'var p = ' + JSON.stringify(prospect) +';';
+		
+		js += 'var att;';
+		js += 'for(att in p) $(".vortex_"+att).text(p[att]).val(p[att]);';
+		
+		return js;
+		
+	},
+	renderCompletionPage: function(params) {
+		Prospects.update(params.p, {$set: {status: 3, transaction_id: params.t, signedup_at: Date.now()}}, function() {
+			
+		});
+		
+		var pixel = Campaigns.findOne(params.c, {fields: {tracking_pixel: 1}})
+			campaign = JSON.stringify(pixel)
+			js = 'var c = ' + campaign + ';';		
+		
+		js += '$("body").append(c.tracking_pixel.replace("[TRANSACTION_ID]", "'+params.t+'"));';
+		
+		return js;
+	}
+};

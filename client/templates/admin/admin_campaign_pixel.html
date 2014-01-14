@@ -1,0 +1,44 @@
+<template name="admin_campaign_pixel">
+		<div class="row">
+
+		              <div class="col-md-6" style="width: 100%;">
+		                <div class="widget">
+		                  <div class="widget-content-white glossed">
+		                    <div class="padded">
+							  {{#with current_campaign}}
+		                        <h3 class="form-title form-title-first">
+									<i class="icon-money"></i> 
+									Iframe Tracking Pixel
+									<a id="edit_limelight_campaigns" href="/admin/campaign-approval" class="btn btn-primary btn-lg" style="float:right; position: relative; top: -12px; margin-left: 6px;">BACK</a>
+
+								</h3>
+
+
+									<p>Paste cake marketing or other tracking pixel iframes below. Use the token <i>[TRANSACTION_ID]</i> for where you want the transaction id inserted on the completion page.</p>
+								
+								
+										<div class="form-group">
+				                          <textarea id="tracking_pixel" class="form-control" style="height: 200px;" placeholder="Paste your iframe tracking pixel here">{{tracking_pixel}}</textarea>
+				                        </div>
+									
+									
+								
+								
+								<div class="form-group">
+		                          <div class="col-md-offset-4 col-md-8">
+		                            <a id="submit_pixel"class="btn btn-primary btn-lg next-step" href="#">Submit Tracking Pixel</a>
+		                          </div>
+		                        </div>
+		
+		<div style="clear:both;"></div>
+		   					  {{/with}}
+
+		                    </div>
+		                    <div class="col-md-6">
+		                    </div>
+		                  </div>
+		                </div>
+		              </div>
+
+	</div>
+</template>

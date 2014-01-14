@@ -1,0 +1,42 @@
+<template name="admin_campaign_approval">
+	<div class="widget" style="min-height: 500px;">
+      <h3 class="section-title first-title"><i class="icon-table"></i> Administration - Campaign Approval</h3>
+      <div class="widget-content-white glossed">
+        <div class="padded">
+        <table class="table table-striped table-bordered table-hover datatable">
+          <thead>
+            <tr>
+			  <th>Client</th>
+              <th>Campaign Name</th>
+              <th>URL</th>
+
+		   	  <th>Approved</th>
+              <th style="width: 188px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+				{{#each campaigns}}
+					<tr>
+					  <td>{{user.getEmail}}</td>
+	                  <td><a href="/campaign/update/step-3/{{_id}}"> {{name}}</a></td>
+	                  <td>{{url}}</td>
+					
+	                  <td><span class="label label-{{approvalClass}}">{{approvalName}}</span></td>
+	
+	                  <td class="text-right">
+						<a href="/campaign/admin/dns/{{_id}}" class="btn btn-default btn-xs dns"><i class="icon-wrench"></i> dns</a>
+						<a href="/campaign/admin/pixel/{{_id}}"  class="btn btn-default btn-xs pixel"><i class="icon-dollar"></i> pixel</a>
+						
+						<a href="#" class="btn btn-{{approvalClass}} btn-xs approve_campaign">{{approvalText}}</a>        
+	                  </td>
+	                </tr>
+				{{/each}}
+           
+           
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+</template>

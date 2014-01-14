@@ -1,0 +1,80 @@
+#example_site_container {
+	width:800px; margin: 0 auto; 
+	background-color: #f0f1f5; 
+	border-left: 1px solid rgb(4, 199, 113);
+	border-right: 1px solid rgb(4, 199, 113);	
+	height: 1000px;
+	padding: 10px 80px;
+	box-shadow: 0px 0px 88px -5px rgb(4, 199, 113);
+	
+	
+	-webkit-animation-name: glowz;
+	-webkit-animation-duration: 1.85s;
+	-webkit-animation-timing-function: ease-in-out;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-delay: 0;
+	-webkit-animation-fill-mode: none;
+
+	-moz-animation-name: glowz;
+	-moz-animation-duration: 1.85s;
+	-moz-animation-timing-function: ease-in-out;
+	-moz-animation-iteration-count: infinite;
+	-mozkit-animation-direction: alternate;
+	-moz-animation-delay: 0;
+	-moz-animation-fill-mode: none;
+
+	animation-name: glowz;
+	animation-duration: 1.85s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-delay: 0;
+	animation-fill-mode: none;
+}
+
+@-webkit-keyframes glowz {
+    0% {-webkit-box-shadow: 0px 0px 50px -5px rgb(4, 199, 113);}
+    100% {-webkit-box-shadow: 0px 0px 125px -5px rgb(4, 199, 113);}
+}
+
+@-moz-keyframes glowz {
+    0% {-webkit-box-shadow: 0px 0px 50px -5px rgb(4, 199, 113);}
+    100% {-webkit-box-shadow: 0px 0px 125px -5px rgb(4, 199, 113);}
+}
+
+
+@keyframes glowz {
+    0% {-webkit-box-shadow: 0px 0px 50px -5px rgb(4, 199, 113);}
+    100% {-webkit-box-shadow: 0px 0px 125px -51px rgb(4, 199, 113);}
+}
+
+
+
+
+#example_site_container  h1 {
+	font-size: 26px;
+	font-weight: bold;
+	color: rgb(71, 69, 69);
+	text-shadow: 1px 1px 1px white;
+	margin-bottom: 25px;
+}
+
+#html_holder {
+	margin-bottom: 40px;
+	text-shadow: 1px 1px 1px rgb(236, 255, 246);
+}
+
+#inputs_holder input {
+	width: 70%;
+	height: 36px;
+	font-size: 24px;
+	margin-bottom: 20px;
+	float:right;
+}
+
+#inputs_holder label {
+	float:left;
+	margin-bottom: 20px;
+}
+
