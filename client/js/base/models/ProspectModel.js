@@ -45,5 +45,28 @@ ProspectModel.prototype = {
 	},
 	getStatusClass: function() {
 		return this.statuseClasses[this.status];
+	},
+	
+	
+	displayNotification: function() {
+		document.body.appendChild(Meteor.render(Template.notification_box(this)));
+	},
+	getSubject: function() {
+		return this._tokenReplacer().getSubject();
+	},
+	getPlain: function() {
+		return this._tokenReplacer().getPlain();
+	},
+	getHtml: function() {
+		return this._tokenReplacer().getHtml();
+	},
+	getLink: function() {
+		return this._tokenReplacer().getLink();
+	},
+	_tokenReplacer: function(campaign) {
+		return this.__tokenReplacer || (this.__tokenReplacer = new TokenReplacer(this, this.getCampaign()));
+	},
+	getCampaign: function() {
+		return this._campaign || (this._campaign = Campaigns.findOne({_id: this.campaign_id}));
 	}
 };

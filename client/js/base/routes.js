@@ -60,6 +60,12 @@ Router.map(function () {
 		template: 'home',
 		controller: PublicController
   	}); 
+	this.route('faq', {
+    	path: '/faq',
+		template: 'faq',
+		controller: PublicController
+  	});
+
 	this.route('login', {
     	path: '/login',
 		template: 'login',
@@ -68,7 +74,6 @@ Router.map(function () {
 		},
 		controller: LoginController
   	});
-
 	this.route('signup', {
     	path: '/signup',
 		template: 'login',
@@ -77,17 +82,14 @@ Router.map(function () {
 		},
 		controller: LoginController
   	});
-
-
-
-
-	/** PanelController **/
 	this.route('limelight_account_info', {
     	path: '/limelight',
 		template: 'limelight_account_info',
 		controller: LoginController
   	});
 
+
+	/** PanelController **/
 	this.route('dashboard', {
     	path: '/dashboard',
 		controller: PanelController

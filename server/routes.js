@@ -18,10 +18,9 @@ Router.map(function () {
 
 ServerPages = {
 	renderPaymentPage: function(params) {
-		Prospects.update(params.p, {$set: {status: 2, returned_at: Date.now()}}, function() {
-			
-		});
+		Prospects.update(params.p, {$set: {status: 2, returned_at: Date}}, function() {});
 		
+		//inject prospect values into page
 		var prospect = Prospects.findOne(params.p),
 			js = 'var p = ' + JSON.stringify(prospect) +';';
 		
@@ -33,10 +32,9 @@ ServerPages = {
 		
 	},
 	renderCompletionPage: function(params) {
-		Prospects.update(params.p, {$set: {status: 3, transaction_id: params.t, recovered_at: Date.now()}}, function() {
-			
-		});
+		Prospects.update(params.p, {$set: {status: 3, transaction_id: params.t, recovered_at: Date}}, function() {});
 		
+		//inject vortex-provided tracking pixel into page
 		var pixel = Campaigns.findOne(params.c, {fields: {tracking_pixel: 1}})
 			campaign = JSON.stringify(pixel)
 			js = 'var c = ' + campaign + ';';		

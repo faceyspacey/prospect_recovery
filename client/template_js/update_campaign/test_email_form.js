@@ -24,7 +24,7 @@ Template.test_email_form.events({
 		prospect.zip = $('.vortex_zip').val();
 		prospect.ip_address = $('.vortex_ip_address').val();
 		prospect.status = 0;
-		prospect.discovered_at = Date.now();
+		prospect.discovered_at = moment().toDate();
 
 
 		var campaign = CampaignModel.current();

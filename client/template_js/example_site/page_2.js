@@ -1,6 +1,6 @@
 Template.page_2.created = function() {
 	Deps.afterFlush(function() {
-		$('#example_site_container').css('height', '860px');
+		$('#example_site_container').css('height', '940px');
 		
 		$('body').append(Template.embed_code_step_2());
 		

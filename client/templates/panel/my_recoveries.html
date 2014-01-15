@@ -19,7 +19,7 @@
             <tr>
               <th>Email</th>
               <th>Campaign</th>
-		   	  <th style="width:118px;">Date/Time</th>
+		   	  <th style="width:124px;">Date/Time</th>
 			  <th style="width:88px;">Status</th>
 			<th style="width:52px;">Test</th>
             </tr>
@@ -29,13 +29,16 @@
 				{{#each currentUser.prospects my_recoveries_campaign_id}}
 					<tr>
 	                  <td>{{email}}</td>
-					  <td><a href="/campaign/update/step-3/{{campaign_id}}">{{campaign_name}}</a></td>
+					  <td><a href="/campaign/update/step-3/{{campaign_id}}">{{getCampaign.name}}</a></td>
 					
 					  <td>{{time 'updated_at'}}</td>
 	                  <td><span class="label label-{{getStatusClass}}">{{getStatus}}</span></td>
 					  <td>
-						{{#if campaign_id}}
-							<a href="/example/page-1?p={{_id}}&c={{campaign_id}}" target="_blank" onclick="alert('You are about to follow the link the prospect received via email. Doing this affects your stats. Do so sparingly to quickly test that your recovery funnel is working.')" class="btn btn-info btn-xs">test</a>
+						{{#if canBeTested}}
+							<a href="/example/page-1?p={{_id}}&c={{campaign_id}}" target="_blank" title="Click to Test visiting the link this prospect receives via email. It will affect your stats so you can verify, but you can undo it." onclick="alert('Careful. You are about to follow the link the prospect received via email. Doing this affects your stats. Click the resulting UNDO button to turn the stats back.')" class="btn btn-default btn-xs">TEST</a>
+							
+						{{else}}
+						   <a href="#" class="btn btn-default btn-xs undo" title="Click to undo the affect of this prospect visiting the email link.">UNDO</a>
 						{{/if}}
 					  </td>
 	                </tr>

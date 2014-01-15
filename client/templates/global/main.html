@@ -1,5 +1,5 @@
 <head>
-  <title>Prospect Recovery</title>
+  <title>VORTEX CONVERT</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,6 +90,7 @@
 	    	</div>
 	
 	  </div>
+
 	</div>
 </template>
 
@@ -121,7 +122,9 @@
 
 
 <template name="public_layout">
+	{{>header}}
 	<div id="public_container">
 		{{yield}}
 	</div>
+	{{>footer}}
 </template>

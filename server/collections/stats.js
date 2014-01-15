@@ -28,6 +28,7 @@ Meteor.publish("stats", function(campaignId, days) {
 Stats = function(userId, campaignId, days) {
 	//console.log('arguments', arguments);
 	this.userId = userId;
+	this.timezone = Meteor.users.findOne(userId).timezone;
 	this.userSelector = Roles.userIsInRole(this.userId, ['admin']) ? {} : {user_id: this.userId};
 	this.campaign_id = campaignId;
 	this.days = days || 7;
@@ -69,7 +70,7 @@ Stats.prototype = {
 		var days = [],
 			self = this;
 
-		_.each(getDateSelectors(this.days), function(date) {
+		_.each(getDateSelectors(this.days, this.timezone), function(date) {
 			var day = {},
 				selector = {};
 			
@@ -103,6 +104,6 @@ Stats.prototype = {
 	},
 	_findCounts: function(selector) {
 		if(!Roles.userIsInRole(this.userId, ['admin'])) selector.user_id = this.userId;
-		return Prospects.find(selector).count()
+		return Prospects.find(selector).count();
 	}
 };

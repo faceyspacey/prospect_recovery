@@ -7,6 +7,9 @@ Template.my_recoveries.helpers({
 	selected: function(val) {
 		return val == Session.get('my_recoveries_campaign_id') ? 'selected="selected"' : '';
 	},
+	canBeTested: function() {
+		return this.campaign_id && this.status < 2;
+	},
 	my_recoveries_campaign_id: function() {
 		return Session.get('my_recoveries_campaign_id');
 	},
@@ -28,5 +31,12 @@ Template.my_recoveries.events({
 	},
 	'click #load_more_prospects': function() {
 		Session.set('prospects_page', Session.get('prospects_page') + 1);
+	},
+	'click .undo': function() {
+		this.status = 1;
+		this.delivered_at = Date;
+		this.returned_at = undefined;
+		this.recovered_at = undefined;
+		this.save();
 	}
 });

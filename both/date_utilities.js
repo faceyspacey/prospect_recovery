@@ -1,10 +1,10 @@
-getDateSelectors = function(endDay) {
+getDateSelectors = function(endDay, timezone) {
 	return _.map(_.range(0, endDay), function(day) {
 		return {
-			name: startOfDay(day).format("YYYY-MM-DD"),
+			name: startOfDay(day, timezone).format("YYYY-MM-DD"),
 			selector: {
-				$gte: startOfDay(day).toDate(),
-				$lt: endOfDay(day).toDate()
+				$gte: startOfDay(day, timezone).toDate(),
+				$lt: endOfDay(day, timezone).toDate()
 			}
 		};
 	});
@@ -13,16 +13,16 @@ getDateSelectors = function(endDay) {
 
 getMonthSelector = function() {
 	return {
-		$gte: startOfDay(29).toDate(),
-		$lt: endOfDay(0).toDate()
+		$gte: startOfDay(29, 5).toDate(),
+		$lt: endOfDay(0, 5).toDate()
 	}
 };
 
-startOfDay = function(day) {
-	return moment().startOf('day').subtract(day, 'day');
+startOfDay = function(day, timezone) {
+	return moment().zone(timezone).startOf('day').subtract(day, 'day');
 };
 
-endOfDay = function(day) {
-	return moment().endOf('day').subtract(day, 'day');
+endOfDay = function(day, timezone) {
+	return moment().zone(timezone).endOf('day').subtract(day, 'day');
 };
 
