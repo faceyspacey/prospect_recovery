@@ -34,12 +34,12 @@ a#nav_logo i {
 	top:1px;
 }
 
-a#nav_logo span.con {
+span.con {
 color: rgb(217, 243, 238);
 
 }
 
-a#nav_logo span.vert {
+span.vert {
 color: rgb(158, 163, 162);
 text-shadow: 1px 1px 1px black;
 font-weight: bold;

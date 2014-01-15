@@ -6,7 +6,7 @@ Deps.autorun(function() {
 	
     if(Meteor.user()) {
 		try {
-			if(Router.current().route.name == 'login') {
+			if(Router.current().route.name == 'login' || Router.current().route.name == 'signup') {
 				Router.go('dashboard');
 				loginCallback();
 			}
