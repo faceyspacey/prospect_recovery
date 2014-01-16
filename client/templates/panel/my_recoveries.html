@@ -12,6 +12,8 @@
 		</select>
 	  </h3>
 	
+		<p><i>Below are your latest prospects. Click the TEST buttons to see what they see when they follow your links in the recovery emails we send.</i></p>
+		
       <div class="widget-content-white glossed">
         <div class="padded">
         <table class="table table-striped table-bordered table-hover datatable">
@@ -35,7 +37,7 @@
 	                  <td><span class="label label-{{getStatusClass}}">{{getStatus}}</span></td>
 					  <td>
 						{{#if canBeTested}}
-							<a href="/example/page-1?p={{_id}}&c={{campaign_id}}" target="_blank" title="Click to Test visiting the link this prospect receives via email. It will affect your stats so you can verify, but you can undo it." onclick="alert('Careful. You are about to follow the link the prospect received via email. Doing this affects your stats. Click the resulting UNDO button to turn the stats back.')" class="btn btn-default btn-xs">TEST</a>
+							<a href="/example/page-1?p={{_id}}&c={{campaign_id}}" target="_blank" title="Click to Test visiting the link this prospect receives via email. It will affect your stats so you can verify, but you can undo it." onclick="alert('Careful. You are about to follow the link the prospect received via email. Doing this affects your stats. Click the resulting UNDO button to turn the stats back.')" class="btn btn-default btn-xs test">TEST</a>
 							
 						{{else}}
 						   <a href="#" class="btn btn-default btn-xs undo" title="Click to undo the affect of this prospect visiting the email link.">UNDO</a>

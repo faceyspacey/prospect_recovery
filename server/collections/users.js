@@ -5,9 +5,12 @@ Meteor.publish("users", function () {
 
 Meteor.users.allow({
     insert: function(userId, doc) {
+		doc.created_at = moment().toDate();
+        doc.updated_at = moment().toDate();
         return true;
     },
     update: function(userId, doc, fields, modifier) {
+		doc.updated_at = moment().toDate();
         return (doc._id == userId || Roles.userIsInRole(userId, ['admin']));
     },
     remove: function() {

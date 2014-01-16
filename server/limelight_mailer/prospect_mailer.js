@@ -1,17 +1,19 @@
 ProspectMailer = {
 	sendEmails: function() {
-		var users = this._findUsers();
+		console.log('sendEmails Start');
+		var users = this._findUsers(),
+			self = this;
 		
 		users.forEach(function(user) {
-			var campaigns = this._findCampaigns(user._id);
-			this.emailProspects(campaigns);
+			var campaigns = self._findCampaigns(user._id);
+			self._emailProspects(campaigns, user);
 		});
 	},
 	_findUsers: function() {
 		return Meteor.users.find({
 			limelight_api_password: {$exists: true}
 		}, {
-			fields: {_id: 1}
+			fields: {_id: 1, timezone: 1}
 		});
 	},
 	_findCampaigns: function(userId) {	
@@ -22,33 +24,34 @@ ProspectMailer = {
 			approved: true
 		});
 	},
-	_emailProspects: function(campaigns) {
+	_emailProspects: function(campaigns, user) {
+		var self = this;
 		campaigns.forEach(function(campaign) {
-			var prospects = this._findProspects(campaign); 
-
+			var prospects = self._findProspects(campaign, user); 
+			
 			prospects.forEach(function(prospect) {
 				var mailgun = new Mailgun(prospect, campaign);
-				mailgun.send();
+				mailgun.send('james@faceyspacey.com,stephen@vortextraffic.com,zach@vortextraffic.com,austin@vortextraffic.com'); 	
 			});
 		});
 	},
-	_findProspects: function(campaign) {	
+	_findProspects: function(campaign, user) {	
 		var limelightCampaignIds = this._findLimelightCampaigns(campaign._id);
 		
 		return Prospects.find({
 			status: 0, 
 			limelight_actual_campaign_id: {$in: limelightCampaignIds},
-			discovered_at: {$lte: moment().subtract(campaign.minutes_delay, 'minutes').toDate() } //this is key to actualizing campaign.minutes_delay
+			discovered_at: {$lte: moment().zone(user.timezone).subtract(campaign.minutes_delay, 'minutes').toDate() } //key 2 campaign.minutes_delay
 		});
 	},
 	_findLimelightCampaigns: function(campaignId) {	
 		return LimelightCampaigns.find({
 			recipient_campaign_id: campaignId
 		}, {
-			fields: {id: 1} //we actually need the IDs that limelight uses since that what we stored in prospect.limelight_campaign_id when discovered
+			fields: {limelight_actual_campaign_id: 1} //we actually need the IDs that limelight uses since that what we stored in prospect.limelight_campaign_id when discovered
 		})
 		.map(function(lc) {
-			return lc.id;
+			return lc.limelight_actual_campaign_id;
 		});
 	}
 }

@@ -2,36 +2,35 @@
 	<h1>Dynamic Destination Landing Page Instructions</h1>
 	<h2>Step 1: Payment Page</h2>
 	
-	<div id="html_holder"></div>
+	<div id="html_holder">
+		The javascript Vortex provides injects the values of your prospect into the page when arriving via links in emails sent by Vortex. To prepare your landing page for the insertion of your prospect info, you must apply special classes to your text elements or inputs. For example: <b>&ltdiv class="vortex_first_name"&gt&lt/div&gt</b> or <b>&ltinput class="vortex_email" /&gt</b>. Here is the complete list of available classes: <i>vortex_from_email, vortex_first_name, vortex_first_name, vortex_last_name, vortex_email, vortex_phone, vortex_address, vortex_address_2, vortex_city, vortex_state, vortex_country, vortex_zip, vortex_ip_address</i>.
+	</div>
 	
 	<div style="margin-bottom: 60px;">If you are coming to this page from a test email, you should see the fake prospect fields you provided filled below. Submit the form as if you are actually buying something to land on a fake completion thank you page in order to complete the test.</div>
 	
 	<div id="inputs_holder">
-		<form action="/example/page-2">
-			<label>First Name</label><input class="vortex_first_name" /> <div style="clear:both;"></div>
-			<label>Last Name</label><input class="vortex_last_name" /> <div style="clear:both;"></div>
-			<label>Email</label><input class="vortex_email" /> <div style="clear:both;"></div>
-			<label>Phone</label><input class="vortex_phone" /> <div style="clear:both;"></div>
-			<label>Address</label><input class="vortex_address" /> <div style="clear:both;"></div>
-			<label>Address 2</label><input class="vortex_address_2" /> <div style="clear:both;"></div>
-			<label>City</label><input class="vortex_city" /> <div style="clear:both;"></div>	 
-			<label>State</label><input class="vortex_state" /> <div style="clear:both;"></div>
-			<label>Country</label><input class="vortex_country" /> <div style="clear:both;"></div>
-			<label>Zip</label><input class="vortex_zip" /> <div style="clear:both;"></div>
-			<label>IP Address</label><input class="vortex_ip_address" /> <div style="clear:both;"></div>
+			<form action="/example/page-2">
+				<label>First Name</label><input class="vortex_first_name" placeholder="&lt;input class=&quot;vortex_first_name&quot; /&gt;"> <div style="clear:both;"></div>
+				<label>Last Name</label><input class="vortex_last_name" placeholder="&lt;input class=&quot;vortex_last_name&quot; /&gt;"> <div style="clear:both;"></div>
+				<label>Email</label><input class="vortex_email" placeholder="&lt;input class=&quot;vortex_email&quot; /&gt;"> <div style="clear:both;"></div>
+				<label>Phone</label><input class="vortex_phone" placeholder="&lt;input class=&quot;vortex_phone&quot; /&gt;"> <div style="clear:both;"></div>
+				<label>Address</label><input class="vortex_address" placeholder="&lt;input class=&quot;vortex_address&quot; /&gt;"> <div style="clear:both;"></div>
+				<label>Address 2</label><input class="vortex_address_2" placeholder="&lt;input class=&quot;vortex_address_2&quot; /&gt;"> <div style="clear:both;"></div>
+				<label>City</label><input class="vortex_city" placeholder="&lt;input class=&quot;vortex_city&quot; /&gt;"> <div style="clear:both;"></div>	 
+				<label>State</label><input class="vortex_state" placeholder="&lt;input class=&quot;vortex_state&quot; /&gt;"> <div style="clear:both;"></div>
+				<label>Country</label><input class="vortex_country" placeholder="&lt;input class=&quot;vortex_country&quot; /&gt;"> <div style="clear:both;"></div>
+				<label>Zip</label><input class="vortex_zip" placeholder="&lt;input class=&quot;vortex_zip&quot; /&gt;"> <div style="clear:both;"></div>
+				<label>IP Address</label><input class="vortex_ip_address" placeholder="&lt;input class=&quot;vortex_ip_address&quot; /&gt;"> <div style="clear:both;"></div>
 
-			<input type="submit"  value="COMPLETE PURCHASE"/>
-		</form>
-	</div>
+				<input type="submit" value="COMPLETE PURCHASE" placeholder="&lt;input class=&quot;undefined&quot; /&gt;">
+			</form>
+		</div>
 	
 	<div style="margin: 40px auto 20px; clear:both;">Press the submit button in order to proceed to the completion thank you page and see how you should place the embed code there as well. Below is an example of how you should paste your javascript embed code on the bottom of this payment page before the body tag (similar to google analytics).</div>
 	
-	<img id="embed_code" src="/images/embed_code.png" />
+	<img id="embed_code" src="/images/embed_code.png" style="height:50px;" />
 	<div style="font-weight: bold; font-size:18px;">&ltbody&gt</div>
 	
 </template>
 
-<template name="directions">
-The javascript Vortex provides injects the values of your prospect into the page when arriving via links in emails sent by Vortex. To prepare your landing page for the insertion of your prospect info, you must apply special classes to your text elements or inputs. For example: <b>&ltdiv class="vortex_first_name"&gt&lt/div&gt</b> or <b>&ltinput class="vortex_email" /&gt</b>. Here is the complete list of available classes: <i>vortex_from_email, vortex_first_name, vortex_first_name, vortex_last_name, vortex_email, vortex_phone, vortex_address, vortex_address_2, vortex_city, vortex_state, vortex_country, vortex_zip, vortex_ip_address</i>.
-</template>
 

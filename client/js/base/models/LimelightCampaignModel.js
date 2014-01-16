@@ -1,11 +1,11 @@
 /** LimelightCampaignModel attributes:
  *
- *  minutes                        		int
- *  name                        		Str
- *  campaign_id                  		Str
- *  user_id	  							Str
- *  recipient_campaign_id				Str
- *	destination_campaign_id				Str
+ *  minutes                        						int
+ *  name                        						Str
+ *  limelight_actual_campaign_id      					Int
+ *  user_id	  											Str
+ *  recipient_campaign_id								Str
+ *	destination_campaign_id								Str
  */
 
 LimelightCampaignModel = function(doc) {

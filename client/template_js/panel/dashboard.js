@@ -1,5 +1,9 @@
 Template.dashboard.created = function() {
 	displayChart();
+	
+	Deps.afterFlush(function() {
+		$('html,body').animate({scrollTop: 0}, 300, 'easeOutExpo');
+	});
 };
 
 displayChart = function() {
@@ -14,10 +18,10 @@ displayChart = function() {
 		    element: "areachart",
 		    behaveLikeLine: true,
 		    data: stats.days,
-		    xkey: 'date',
-		    ykeys: ['deliveries', 'returns', 'recoveries'],
-		    labels: ['Deliveries', 'Returns', 'Recoveries'],
-		    lineColors: ["#f9c1c1", "#c1daf9", "#16a085", "#2c3e50", "#1abc9c", "#34495e", "#9b59b6", "#e74c3c"]
+		    xkey: 'date', 
+		    ykeys: ['discoveries', 'deliveries', 'returns', 'recoveries'],
+		    labels: ['Discoveries', 'Deliveries', 'Returns', 'Recoveries'],
+		    lineColors: ["#f9c1c1", '#FFDB75', "#c1daf9", "#16a085", "#2c3e50", "#1abc9c", "#34495e", "#9b59b6", "#e74c3c"]
 		  };
 
 		if($('#areachart').length !== 0) Morris.Area(morris_area_options);

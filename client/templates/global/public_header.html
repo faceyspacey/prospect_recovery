@@ -1,0 +1,24 @@
+<template name="header">
+	<header>
+		<div class="nav_container">
+				<a href="/" id="nav_logo" style="font-size:34px;">
+					<img src="/images/logo_bright.png" style="height: 45px;position: relative;top: -6px;" /> VORTEX <span class="con">CON</span><span class="vert">VERT</span>
+				</a>
+
+				<ul class="nav_links">
+					<li class="menu-item">
+						<a href="/login" class="{{activeTab 'login'}}">Login</a>
+					</li>
+					<li class="menu-item">
+						<a href="/signup" class="{{activeTab 'signup'}}">Signup</a>
+					</li>
+					<li class="menu-item">
+						<a href="/faq" class="{{activeTab 'faq'}}">FAQ</a>
+					</li>
+					<li class="menu-item">
+						<a href="/" class="{{activeTab 'home'}}">Home</a>
+					</li>
+				</ul>
+		</div>	
+	</header>
+</template>

@@ -1,14 +1,21 @@
 Template.step_3.created = function() {
 	Deps.afterFlush(function() {
-		var embedCode = Template.embed_code({host: getCurrentHost()});
-		$('#copy_paste_code').text(embedCode);
-		
-		$('#campaign_step_3').animate({left: '0%'}, 800, 'easeOutBack');
+		Meteor.setTimeout(function() {
+			var embedCode = Template.embed_code({host: getCurrentHost()});
+			$('#copy_paste_code').text(embedCode);
+
+			$('#campaign_step_3').animate({left: '0%'}, 800, 'easeOutBack');
+			Template.step_3.is_created = true;
+		}, 100);
 	});
 };
 
+Template.step_3.destroyed = function() {
+	Template.step_3.is_created = false;
+};
+
 Template.step_3.rendered = function() {
-	$('#campaign_step_3').css({left: '0%'});
+	if(Template.step_3.is_created) $('#campaign_step_3').css({left: '0%'});
 };
 
 Template.step_3.helpers({
@@ -29,14 +36,14 @@ Template.step_3.events({
 		
 		//confirm email, which must be valid to configure mailgun domain, etc	
 		if(!isValidEmailBasic(email)) {
-			FlashMessages.sendError("You entered an invalid email address. Please fix it. It's key to this whole thing :)");
+			FlashMessages.sendError("You entered an invalid email address. Please fix it. It's key to this whole thing :)", {hideDelay: 10000});
 			$('html,body').animate({scrollTop: 0}, 750, 'easeInExpo');
 			return;
 		}
 		
 		//confirm campaign has [DESTINATION_URL]
 		if(html.indexOf('[DESTINATION_URL]') === -1 || plain.indexOf('[DESTINATION_URL]') === -1) {
-			FlashMessages.sendError("Oops! You forgot the most important part. Please provide a [DESTINATION_URL] token for both HTML and PLAIN emails.");
+			FlashMessages.sendError("Oops! You forgot the most important part. Please provide a [DESTINATION_URL] token for both HTML and PLAIN emails.", {hideDelay: 10000});
 			$('html,body').animate({scrollTop: 0}, 750, 'easeInExpo');
 			return;
 		}
@@ -69,7 +76,7 @@ Template.step_3.events({
 		//allow recovery of prospects even from destination campaign (i.e. deliver 2nd emails to the same user)
 		var destId = campaign.limelight_destination_campaign_id;
 		if(campaign.continue_recovery) LimelightCampaigns.update(destId, {$set: {recipient_campaign_id: campaign._id}});
-		else LimelightCampaigns.update(destId, {$set: {recipient_campaign_id: undefined}});
+		else LimelightCampaigns.update(destId, {$set: {recipient_campaign_id: null}});
 		
 		//on to the next one...
 		Router.go('my_campaigns');
@@ -81,5 +88,10 @@ Template.step_3.events({
 		campaign.save();
 		
 		Router.go('my_campaigns');
+	},
+	'click #edit_limelight_campaigns': function() {
+		$('#campaign_step_3').animate({left: '-100%'}, 800, 'easeInBack', function() {
+			Router.go('update_campaign_step_2', {id: CampaignModel.current()._id});
+		});
 	}
 });

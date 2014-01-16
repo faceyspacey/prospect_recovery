@@ -1,3 +1,10 @@
+Template.my_campaigns.created = function() {
+	Deps.afterFlush(function() {
+		$('html,body').animate({scrollTop: 0}, 0);
+	});
+};
+
+
 Template.my_campaigns.helpers({
 	campaigns: function() {
 		return Campaigns.find({complete: true});
@@ -13,8 +20,7 @@ Template.my_campaigns.events({
 		console.log(this._id);
 		if(yes) {
 			Campaigns.update(this._id, {$set: {complete: false}});
-			LimelightCampaigns.update({recipient_campaign_id: this._id}, {$set: {recipient_campaign_id: undefined}}, {multi: true});
-			LimelightCampaigns.update({destination_campaign_id: this._id}, {$set: {destination_campaign_id: undefined}}, {multi: true});
+			Meteor.call('unsetLimelightCampaigns', this._id);
 		}
 	}
 });

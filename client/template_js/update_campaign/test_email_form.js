@@ -1,14 +1,21 @@
-Template.test_email_form.created = function() {
+Template.test_email.created = function() {
 	Deps.afterFlush(function() {
-		$('#test_email_form').animate({right: '0%'}, 800, 'easeOutBack');
+		setTimeout(function() {
+			$('#test_email_form').animate({right: '0%'}, 800, 'easeOutBack');
+			Template.test_email.is_created = true;
+		}, 100);
 	});
 };
 
-Template.test_email_form.rendered = function() {
-	$('#test_email_form').css({right: '0%'});
+Template.test_email.destroyed = function() {
+	Template.test_email.is_created = false;
 };
 
-Template.test_email_form.events({
+Template.test_email.rendered = function() {
+	if(Template.test_email.is_created) $('#test_email_form').css({right: '0%'});
+};
+
+Template.test_email.events({
 	'click .next-step': function() {
 		var prospect = new ProspectModel();
 		
@@ -25,7 +32,9 @@ Template.test_email_form.events({
 		prospect.ip_address = $('.vortex_ip_address').val();
 		prospect.status = 0;
 		prospect.discovered_at = moment().toDate();
-
+		prospect.created_at = moment().toDate();
+		prospect.updated_at = moment().toDate();
+		prospect.user_id = Meteor.userId();
 
 		var campaign = CampaignModel.current();
 		

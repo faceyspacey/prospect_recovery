@@ -6,6 +6,10 @@ Handlebars.registerHelper('current_campaign', function() {
 	return CampaignModel.current();
 });
 
+Handlebars.registerHelper('getCurrentHost', function() {
+	return getCurrentHost();
+});
+
 Handlebars.registerHelper('isCurrent', function(tab) {
 	return tab == Session.get('current_page') ? 'current' : '';
 });
@@ -36,9 +40,9 @@ Handlebars.registerHelper('breadCrumbs', function() {
 	return '<li><a href="#">'+route.replace(/_/g, ' ')+'</a></li>';
 });
 
-Handlebars.registerHelper('todaysRecoveries', function() {
+Handlebars.registerHelper('todaysDiscoveries', function() {
 	if(!Stats.findOne()) return 0;
-	return Stats.findOne().days[0].recoveries;
+	return Stats.findOne().days[0].discoveries;
 });
 
 

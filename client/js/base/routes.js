@@ -28,22 +28,20 @@ ExampleSiteController = RouteController.extend({
 PanelController = RouteController.extend({
 	layoutTemplate: 'main_layout',
 
-  	before: function () {
-		Session.set('current_page', this.route.name);
-		
+  	before: function () {	
+		Session.set('current_page', this.route.name);	
 		if(!this.template) this.template = this.route.name;
-		
-		if(!Meteor.user()) {
-			Deps.afterFlush(function() {
-				Router.go('login');
-			});
-		}
-		if(Meteor.user() && !Meteor.user().limelightCredentialsWorking()) {
-			Deps.afterFlush(function() {
-				Router.go('limelight_account_info');
-			});
-		}
+
 		console.log('before triggered');
+		
+		var user = Meteor.user();
+		Deps.afterFlush(function() {
+			if(user) {
+				if(!user.limelightCredentialsWorking()) Router.go('limelight_account_info');
+				else RT.redirectIf(user.isNewUser(), 'update_campaign_step_1');
+			}
+			else Router.go('login');
+		});
 	},
 	action: function() {
 		console.log('controller action render');
@@ -131,9 +129,8 @@ Router.map(function () {
 		},
 		controller: PanelController
   	});
-	this.route('update_campaign_step_3', {
+	this.route('test_email', {
     	path: '/campaign/test/:id',
-		template: 'test_email_form',
 		before: function() {
 			Session.set('current_campaign_id', this.params.id);
 		},

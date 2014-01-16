@@ -1,13 +1,25 @@
 Meteor.startup(function() {
 	Meteor.setTimeout(function() {
-		//Meteor.setInterval(ProspectFinder.findAllProspects, 60 * 1000);
-	}, 0);
+		ProspectFinder.findAllProspects();
+		Meteor.setInterval(function() {
+			ProspectFinder.findAllProspects();
+		}, 60 * 1000);
+	}, 10);
 	
 	Meteor.setTimeout(function() {
-		//Meteor.setInterval(CustomerFinder.findAllCustomers, 60 * 1000);
+		CustomerFinder.findAllCustomers();
+		Meteor.setInterval(function() {
+			CustomerFinder.findAllCustomers();
+		}, 60 * 1000);
 	}, 333);
 	
+	
 	Meteor.setTimeout(function() {
-		//Meteor.setInterval(ProspectMailer.sendEmails, 60 * 1000);
+		ProspectMailer.sendEmails();
+		Meteor.setInterval(function() {
+			ProspectMailer.sendEmails();
+		}, 60 * 1000);
 	}, 666);
+
+
 });

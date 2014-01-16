@@ -24,6 +24,9 @@ loginCallback = function() {
 	//here we will find out what's going on and end up marking user.limelight_login_configured = false if need be. i.e. each login, we make sure
 	//limelight is working.
 	console.log('logging in');
-	if(Meteor.user().limelightCredentialsWorking()) Meteor.user().updateLimelightCampaigns();
+	if(Meteor.user().limelightCredentialsWorking()) {
+		Meteor.user().updateLimelightCampaigns();
+		setupNotificationsObservation();
+	}
 };
 

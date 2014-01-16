@@ -45,6 +45,7 @@ Stats.prototype = {
 	
 	getUserStats: function() {
 		var user = {};
+		user.discoveries = this.findDiscoveryCounts({updated_at: getMonthSelector()});
 		user.deliveries = this.findDeliveryCounts({updated_at: getMonthSelector()});
 		user.returns = this.findReturnCounts({updated_at: getMonthSelector()});
 		user.recoveries = this.findRecoveryCounts({updated_at: getMonthSelector()});
@@ -59,6 +60,7 @@ Stats.prototype = {
 			var c = campaigns[campaign._id] = {}
 				selector = {campaign_id: campaign._id};
 				
+			c.discoveries = self.findDiscoveryCounts(selector);
 			c.deliveries = self.findDeliveryCounts(selector);
 			c.returns = self.findReturnCounts(selector);
 			c.recoveries = self.findRecoveryCounts(selector);
@@ -77,6 +79,7 @@ Stats.prototype = {
 			if(self.campaign_id != 'all') selector.campaign_id = self.campaign_id;
 			
 			day.date = date.name;
+			day.discoveries = self.findDiscoveryCounts(selector, date.selector); 
 			day.deliveries = self.findDeliveryCounts(selector, date.selector); 
 			day.returns = self.findReturnCounts(selector, date.selector);
 			day.recoveries = self.findRecoveryCounts(selector, date.selector);
@@ -87,6 +90,11 @@ Stats.prototype = {
 		return days;
 	},
 	
+	findDiscoveryCounts: function(selector, dateSelector) {
+		selector.status = {$gte: 0};
+		if(dateSelector) selector.discovered_at = dateSelector; 
+		return this._findCounts(selector);
+	},
 	findDeliveryCounts: function(selector, dateSelector) {
 		selector.status = {$gte: 1};
 		if(dateSelector) selector.delivered_at = dateSelector; 

@@ -38,13 +38,17 @@ ProspectModel = function(doc) {
 
 
 ProspectModel.prototype = {
-	statuses: ['discovered', 'delivered', 'returned', 'recovered'],
-	statuseClasses: ['danger', 'warning', 'info', 'success'],
+	statusNames: function() {
+		return ['discovered', 'delivered', 'returned', 'recovered'];
+	},
+	statusClassNames: function() {
+		return ['danger', 'warning', 'info', 'success'];
+	},
 	getStatus: function() {
-		return this.statuses[this.status];
+		return this.statusNames()[this.status];
 	},
 	getStatusClass: function() {
-		return this.statuseClasses[this.status];
+		return this.statusClassNames()[this.status];
 	},
 	
 	

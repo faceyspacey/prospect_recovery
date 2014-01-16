@@ -15,12 +15,12 @@ Meteor.publish("prospects", function (limit, campaignId) {
 Prospects.allow({
     insert: function(userId, doc) {
         doc.user_id = userId;
-        doc.created_at = new Date;
-        doc.updated_at = new Date;
+        doc.created_at = moment().toDate();
+        doc.updated_at = moment().toDate();
         return true;
     },
     update: function(userId, doc, fields, modifier) {
-        doc.updated_at = new Date;
+        doc.updated_at = moment().toDate();
         return doc.user_id == userId || Roles.userIsInRole(userId, ['admin']);
     },
     remove: function(userId, doc) {

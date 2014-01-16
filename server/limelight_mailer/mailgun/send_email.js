@@ -1,6 +1,5 @@
 Meteor.methods({
 	sendProspectEmail: function(prospect, campaign, testEmail) {
-		console.log(arguments);
 		var mailgun = new Mailgun(prospect, campaign);
 		mailgun.send(testEmail);
 	}
@@ -20,13 +19,19 @@ Mailgun = function(prospect, campaign) {
 
 
 Mailgun.prototype = {
-	send: function(testEmail) {
-		var email = testEmail || this.prospect.email;
-		
-		if(!isValidEmailBasic(email)) {
-			console.log('invalid email address', email);
-			return false;
+	send: function(testEmail) {	
+		if(testEmail) {
+			var email = testEmail;
 		}
+		else {
+			var email = this.prospect.email;
+			
+			if(!isValidEmailBasic(email)) {
+				console.log('invalid email address', email);
+				return false;
+			}
+		}
+		
 		
 		var self = this;
 
@@ -40,8 +45,11 @@ Mailgun.prototype = {
 					'text': this.tokenReplacer.getPlain()
 				}
 	    	}, function(error) {
-				if(error) console.log('MAILGUN SEND ERROR!', error);
+				if(error) {
+					console.log('MAILGUN SEND ERROR!', error, this.prospect);
+				}
 				else {
+					console.log('MAILGUN SEND SUCCESS!!', this.prospect);
 					Prospects.update(self.prospect._id, {
 							$set: {
 								status: 1, 
@@ -50,7 +58,7 @@ Mailgun.prototype = {
 							}
 						}, function() {});
 				}
-			});
+			}.bind(this));
 	}
 };
 

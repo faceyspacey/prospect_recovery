@@ -1,3 +1,10 @@
+Template.my_account.created = function() {
+	Deps.afterFlush(function() {
+		$('html,body').animate({scrollTop: 0}, 300, 'easeOutExpo');
+	});
+};
+
+
 Template.my_account.events({
 	'click #update_account_button': function() {
 			var email = $('#my_email').val(),
@@ -14,7 +21,7 @@ Template.my_account.events({
 					Meteor.users.update(Meteor.userId(), {
 						$set: {
 							emails: [{address: email}],
-							timezone: timezone
+							timezone: parseInt(timezone)
 						}
 					});
 					FlashMessages.sendSuccess('You Successfully updated your info.')

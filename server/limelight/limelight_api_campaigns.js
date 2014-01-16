@@ -36,7 +36,7 @@ LimelightApiCampaigns.prototype = {
 			campaigns = [];
 			
 		_.each(campaignIds, function(id, index) {
-			campaigns.push({id: id, name: campaignNames[index]});
+			campaigns.push({limelight_actual_campaign_id: parseInt(id), name: campaignNames[index]});
 		});
 		
 		console.log('limelight campaigns parsed', campaigns);
@@ -47,7 +47,7 @@ LimelightApiCampaigns.prototype = {
 			self = this;
 
 		_.each(campaigns, function(campaign) {
-			var id = parseInt(campaign.id);
+			var id = campaign.limelight_actual_campaign_id;
 			console.log(id,  self.user.highest_limelight_campaign_id, campaign);
 			
 			if(id > self.user.highest_limelight_campaign_id) {

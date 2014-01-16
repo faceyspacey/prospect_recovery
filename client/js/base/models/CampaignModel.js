@@ -9,7 +9,7 @@
  *  email_html                  			Str
  *	limelight_destination_campaign_id		Str
  *  minutes_delay                  			Int
- *  continue_Recovery                  		Bool
+ *  continue_recovery                  		Bool
  *  complete		                  		Bool
  *  approved		                  		Bool
  *  play			                  		Bool

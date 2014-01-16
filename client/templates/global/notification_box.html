@@ -1,0 +1,15 @@
+<template name="notification_box">
+	<div class="notification_box" style="bottom: -120px;" id="notification_{{_id}}">
+		<a href="{{getLink}}" target="_blank" class="btn btn-{{getStatusClass}} btn-xs notification_status">{{getStatus}}</a>
+		
+		<div class="notification_email">{{shorten email 32}}<div>
+		<div class="notification_subject">subject: {{shorten getSubject 128 }}<div>
+			
+		<div class="notification_subject">campaign: <i>{{shorten getCampaign.name 64 }}</i><div>
+			
+		<a href="{{getLink}}" target="_blank" class="notification_link">{{getCampaign.url}}</a>	
+		
+		<img src="/images/logo.png" />
+	</div>
+</template>
+

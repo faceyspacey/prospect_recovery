@@ -8,31 +8,33 @@ Meteor.methods({
 
 CustomerFinder = {
 	findAllCustomers: function() {
-		console.log('findAllCustomers');
-		
 		this.moment = moment();
 		
 		var users = Meteor.users.find({limelight_api_password: {$exists: true}}, {fields: {
 				_id: 1, 
 				limelight_api_username: 1,
 				limelight_api_password: 1,
-				limelight_api_domain: 1
-			}});
+				limelight_domain: 1,
+				timezone: 1
+			}}),
+			self = this;
 
 		users.forEach(function(user) {
-			this.limelightApi = new LimelightApi(user.limelight_api_username, user.limelight_api_password, user.limelight_api_domain);
-			this.findCustomers(now, user.timezone);
+			self.limelightApi = new LimelightApi(user.limelight_api_username, user.limelight_api_password, user.limelight_domain);
+			self.findCustomers(user._id, user.timezone);
 		});
 	},
-	findCustomers: function(nowMoment, timezone) {
+	findCustomers: function(userId, timezone) {
+		timezone = parseInt(timezone);
+		
 		try {
 			var params = {
 					campaign_id: 'all',
 					return_type: 'customer_view',
+					end_time: this.moment.zone(timezone).format('HH:mm:ss'), //now -- watch out, this.moment changes with calls to subtract()
+					start_time: this.moment.zone(timezone).subtract(1, 'minute').format('HH:mm:ss'), //1 minute ago				
+					end_date: this.moment.zone(timezone).endOf('day').subtract(0, 'day').format('MM/DD/YYYY'), 
 					start_date: this.moment.zone(timezone).startOf('day').subtract(0, 'day').format('MM/DD/YYYY'),
-					end_date: this.moment.zone(timezone).endOf('day').subtract(0, 'day').format('MM/DD/YYYY'),
-					start_time: this.moment.zone(timezone).subtract(1, 'minute').format('HH:mm:ss'),
-					end_time: this.moment.zone(timezone).format('HH:mm:ss'),
 					search_type: 'all'
 				},
 				self = this;
@@ -42,27 +44,21 @@ CustomerFinder = {
 					var content = response.content,
 						start = content.indexOf('&data='),
 						customerString = content.substring(start+6),
-						customerObjects = EJSON.parse(customerString),
-						customerId,
-						customers = [];
+						customObjects,
+						customerId;
 						
-					for(customerId in customerObjects) {
-						var customer = customerObjects[customerId]
-							email = customer.email;
-						
-						Prospects.update({email: email, status: {$gte: 2}}, {$set: {status: 3, recovered_at: moment().toDate(), not_via_link: true}}, 	
-							function(error, docCountUpdated) {
-								console.log('customer found', error, docCountUpdated);
-								if(!docCountUpdated) Prospects.remove({email: email, status: 0}, function() {});
-						});
-						
-						
-						customers.push(customer);
+					try {
+						customerObjects = EJSON.parse(customerString);
+						console.log('new customers found');
+					}
+					catch(error) {
+						console.log('no customers found for user_id: ' + userId, error);
+						return;
 					}
 					
-					console.log(customers);
+					for(customerId in customerObjects) self._updateProspect(customerObjects[customerId]);
 				}
-				else console.log('prospect_find ERROR!', error);
+				else console.log('api/customer_find ERROR!', error);
 			});
 			
 		}
@@ -71,5 +67,23 @@ CustomerFinder = {
 			return false;
 		}
 		return true;
+	},
+	_updateProspect: function(customer) {
+		customer.email = decodeURIComponent(customer.email); //it's weird that prospect_find does not need this;
+		console.log('new customer found!', customer);
+		
+		Prospects.update({email: customer.email, status: {$gte: 2}}, {$set: {
+			status: 3, 
+			recovered_at: moment().toDate(), 
+			updated_at: moment().toDate(), 
+			not_via_link: true
+		}}, function(error, docCountUpdated) {
+				if(docCountUpdated) console.log(error, 'customer found -- prospects /w recovered status:');
+				else {
+					 Prospects.remove({email: customer.email, status: 0}, function(error, docCountUpdated) {
+						console.log('customer found -- prospects removed:', docCountUpdated);
+					});
+				}
+		});
 	}
 };

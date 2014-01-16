@@ -9,12 +9,12 @@ Meteor.publish("limelight_campaigns", function () {
 LimelightCampaigns.allow({
     insert: function(userId, doc) {
         doc.user_id = userId;
-        doc.created_at = new Date;
-        doc.updated_at = new Date;
+        doc.created_at = moment().toDate();
+        doc.updated_at = moment().toDate();
         return true;
     },
     update: function(userId, doc, fields, modifier) {
-        doc.updated_at = new Date;
+        doc.updated_at = moment().toDate();
         return doc.user_id == userId || Roles.userIsInRole(userId, ['admin']);
     },
     remove: function(userId, doc) {
@@ -28,7 +28,11 @@ Meteor.methods({
 	setRecipientLimelightCampaigns: function(ids, campaignId) {
 		console.log('setRecipientLimelightCampaigns', ids, campaignId);
 		
-		LimelightCampaigns.update({recipient_campaign_id: campaignId}, {$set: {recipient_campaign_id: undefined}}, {multi: true});
+		LimelightCampaigns.update({recipient_campaign_id: campaignId}, {$set: {recipient_campaign_id: null}}, {multi: true});
 		LimelightCampaigns.update({_id: {$in: ids}}, {$set: {recipient_campaign_id: campaignId}}, {multi: true});
+	},
+	unsetLimelightCampaigns: function(campaignId) {
+		LimelightCampaigns.update({recipient_campaign_id: campaignId}, {$set: {recipient_campaign_id: null}}, {multi: true});
+		LimelightCampaigns.update({destination_campaign_id: campaignId}, {$set: {destination_campaign_id: null}}, {multi: true});
 	}
 });

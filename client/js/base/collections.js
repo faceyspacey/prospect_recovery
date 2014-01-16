@@ -35,8 +35,7 @@ Deps.autorun(function() {
 });
 
 
-//display notifications 
-Meteor.startup(function() {
+setupNotificationsObservation = function() {
 	Prospects.find({created_at: {$gt: moment().zone(Meteor.user().timezone).toDate()}}).observeChanges({
 		added: function(id, fields) {
 			console.log('prospect discovered', fields);
@@ -50,9 +49,11 @@ Meteor.startup(function() {
 			if(fields.status) Prospects.findOne(id).displayNotification();
 		}
 	});
+};
+
+Meteor.startup(function() {
+	if(Meteor.user()) setupNotificationsObservation();
 });
-
-
 
 
 Stats = new Meteor.Collection("stats");
@@ -60,18 +61,11 @@ Stats = new Meteor.Collection("stats");
 
 //auto run dashboard graph stats based on campaign, and chart days
 Deps.autorun(function() {
-	if(Router.current() && Router.current().route.name == 'dashboard') {
-		var campaignId = Session.get('chart_campaign_id') || 'all',
-			days = Session.get('chart_days') || 7;
+	var campaignId = Session.get('chart_campaign_id') || 'all',
+		days = Session.get('chart_days') || 7;
 
-		console.log('stats subscription autorun');
-		Meteor.subscribe('stats', campaignId, days);
-	}
-	else {
-		console.log('stats subscription turned off');
-		Meteor.subscribe('stats', null);
-	}
-	
+	console.log('stats subscription autorun');
+	Meteor.subscribe('stats', campaignId, days);	
 });
 
 Stats.find().observeChanges({

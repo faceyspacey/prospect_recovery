@@ -16,7 +16,7 @@
 				
 				  {{#if loading}}
 					<div style="height: 200px;">
-						<img src="/images/loading.gif" style="height: 100px;margin-top: 30px;margin-left: 100px" />
+						<img src="/images/loading.gif" style="height: 70px;margin-top: 60px;margin-left: 16px;" />
 					</div>
 				  {{else}}
 					<div class="form-group">
@@ -33,12 +33,10 @@
 		                <label>Limelight Password</label>
 		                <input id="limelight_password" type="password" class="form-control" placeholder="Password" value="{{currentUser.limelight_password}}">
 		              </div>
+					
+					  <a id="limelight_proceed" href="#" class="btn btn-primary btn-lg">PROCEED</a>
 				  {{/if}}
 				  
-
-
-	              <a id="limelight_proceed" href="#" class="btn btn-primary btn-lg">PROCEED</a>
-
 
 	            </form>
 	            </div>

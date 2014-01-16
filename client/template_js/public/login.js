@@ -3,6 +3,12 @@ Template.login.rendered = function() {
 	$('#login-dropdown-list .dropdown-menu').show();
 };
 
+
+Template.limelight_account_info.created = function() {
+	Session.set('loading_limelight_login', false);
+};
+
+
 Template.limelight_account_info.helpers({
 	loading: function() {
 		return Session.get('loading_limelight_login');
@@ -29,11 +35,8 @@ Template.limelight_account_info.events({
 			Session.set('loading_limelight_login', false);
 			return FlashMessages.sendError('That Limelight Domain is already in use. Only one user per domain please.');
 		}
-			
-			
-		Meteor.user().loginToLimelight(domain, username, password, function(success) {
-			Session.set('loading_limelight_login', false);
-		});
+				
+		Meteor.user().loginToLimelight(domain, username, password);
 	}
 });
 

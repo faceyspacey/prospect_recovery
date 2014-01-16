@@ -17,17 +17,34 @@ $(function() {
 		
 		
 		if($('img.lightbox_image.showing').length !== 0) {
-			$('img.lightbox_image.showing').animate({
+			$('img.lightbox_image.showing').animate({ //hide other lightboxes
 				top: -600,
 				opacity: 0
 			}, 550, 'easeInBack', function() {
 				displayLightbox(src, id);
 			});
 		}		
-		else displayLightbox(src, id);
-		
+		else displayLightbox(src, id);		
+	});
+	
+	$('body').live('click', function() {
+		if($('img.lightbox_image.showing').length !== 0) {
+			$('img.lightbox_image.showing').animate({
+				top: -600,
+				opacity: 0
+			});
+		}
 	});
 });
+
+
+
+Template.home.destroyed = function() {
+	$('img.lightbox_image.showing').animate({
+		top: -600,
+		opacity: 0
+	});
+};
 
 displayLightbox = function(src, id) {
 	if($('#'+id).length === 0) { //append the image if it doesn't exist yet

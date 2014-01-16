@@ -1,13 +1,19 @@
 Template.step_2.created = function() {
 	Meteor.user().updateLimelightCampaigns();
 	Deps.afterFlush(function() {
-		$('#campaign_step_2').animate({left: '0%'}, 800, 'easeOutBack');
+		Meteor.setTimeout(function() {
+			Template.step_2.is_created = true;
+			$('#campaign_step_2').animate({left: '0%'}, 800, 'easeOutBack');
+		}, 100);
 	});
 };
 
+Template.step_2.destroyed = function() {
+	Template.step_2.is_created = false;
+};
+
 Template.step_2.rendered = function() {
-	console.log('step 2 rendered');
-		$('#campaign_step_2').css({left: '0%'});
+	if(Template.step_2.is_created) $('#campaign_step_2').css({left: '0%'});
 }
 
 Template.step_2.helpers({
@@ -25,16 +31,19 @@ Template.step_2.helpers({
 Template.step_2.events({
 	'click .select_destination_campaign': function() {
 		var currentCampaign = CampaignModel.current(),
-			currentCampaignId = CampaignModel.current()._id;
+			currentCampaignId = CampaignModel.current()._id
+			oldDestinationCampaign = LimelightCampaigns.findOne({destination_campaign_id: currentCampaignId}),
+			oldDestinationId = oldDestinationCampaign ? oldDestinationCampaign._id : null;
 			
-		currentCampaign.limelight_destination_campaign_id = this._id;
-		currentCampaign.save();
+		console.log(oldDestinationId, oldDestinationCampaign);
 		
-		//remove old limelight campaign who the current campaign as destination
-		LimelightCampaigns.update({destination_campaign_id: currentCampaignId}, {$set: {destination_campaign_id: undefined}}, {multi: true});
+		if(oldDestinationId) LimelightCampaigns.update(oldDestinationId, {$set: {destination_campaign_id: null}});
 		
 		this.destination_campaign_id = currentCampaignId;
 		this.save();
+		
+		currentCampaign.limelight_destination_campaign_id = this._id;
+		currentCampaign.save();
 	},
 	'click #check_all': function(e) {
 		if($('#check_all').is(':checked')) $('input[type=checkbox]').prop('checked', true); 
@@ -54,6 +63,11 @@ Template.step_2.events({
 		
 		$('#campaign_step_2').animate({left: '-100%', opacity: 0}, 600, 'easeInBack', function() {
 			Router.go('update_campaign_step_3', {id: CampaignModel.current()._id});
+			Deps.afterFlush(function() {
+				Meteor.setTimeout(function() {
+					$('html,body').animate({scrollTop: 0}, 600, 'easeOutExpo');
+				}, 800);
+			});
 		});
 	}
 });
