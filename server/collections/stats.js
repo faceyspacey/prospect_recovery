@@ -1,5 +1,6 @@
 Meteor.publish("stats", function(campaignId, days) {
-	if(!campaignId) this.stop();
+	if(!campaignId) return this.stop();
+	if(!Meteor.users.findOne(this.userId)) return this.stop();
 	
   	var self = this,
 		userId = this.userId,
@@ -69,6 +70,8 @@ Stats.prototype = {
 		return campaigns;
 	},
 	getDayStats: function() {
+		if(this.days == 24 || this.days == 12) return this.getHourStats(); //yes, hacky. for now. 
+		
 		var days = [],
 			self = this;
 
@@ -79,6 +82,7 @@ Stats.prototype = {
 			if(self.campaign_id != 'all') selector.campaign_id = self.campaign_id;
 			
 			day.date = date.name;
+			day.end = date.end;
 			day.discoveries = self.findDiscoveryCounts(selector, date.selector); 
 			day.deliveries = self.findDeliveryCounts(selector, date.selector); 
 			day.returns = self.findReturnCounts(selector, date.selector);
@@ -88,6 +92,30 @@ Stats.prototype = {
 		});
 
 		return days;
+	},
+	getHourStats: function() {
+			var hours = [],
+				hourCount = this.days,
+				self = this;
+				
+
+			_.each(getHourSelectors(hourCount, this.timezone), function(date) {
+				var hour = {},
+					selector = {};
+
+				if(self.campaign_id != 'all') selector.campaign_id = self.campaign_id;
+
+				hour.date = date.name;
+				hour.end = date.end;
+				hour.discoveries = self.findDiscoveryCounts(selector, date.selector); 
+				hour.deliveries = self.findDeliveryCounts(selector, date.selector); 
+				hour.returns = self.findReturnCounts(selector, date.selector);
+				hour.recoveries = self.findRecoveryCounts(selector, date.selector);
+				hour.recoveryPercentage = Math.round(hour.recoveries / hour.deliveries * 100) || 0;
+				hours.push(hour);
+			});
+			
+			return hours;
 	},
 	
 	findDiscoveryCounts: function(selector, dateSelector) {

@@ -31,7 +31,7 @@ displayChart = function() {
 
 
 Template.widget_area_graph.created = function() {
-	Session.set('chart_days', 7);
+	Session.set('chart_days', 12);
 	Session.set('chart_campaign_id', 'all');
 };
 
@@ -102,6 +102,12 @@ Template.widget_area_graph.helpers({
 
 
 Template.widget_area_graph.events({
+	'click #chart_half_day': function() {
+		Session.set('chart_days', 12); //yes, it's a temporary hack we should eventually fix; i.e. set cycle type + count
+	},
+	'click #chart_day': function() {
+		Session.set('chart_days', 24); //yes, it's a temporary hack we should eventually fix; i.e. set cycle type + count
+	},
 	'click #chart_week': function() {
 		Session.set('chart_days', 7);
 	},

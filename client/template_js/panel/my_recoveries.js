@@ -18,6 +18,8 @@ Template.my_recoveries.helpers({
 		return Session.get('my_recoveries_campaign_id');
 	},
 	displayLoadMoreProspects: function() {
+		if(!Meteor.user()) return false;
+		
 		var prospectsCount = Meteor.user().prospectsCount(Session.get('my_recoveries_campaign_id')),
 			page = Session.get('prospects_page'),
 			limit = page * prospectsIncrementAmount;

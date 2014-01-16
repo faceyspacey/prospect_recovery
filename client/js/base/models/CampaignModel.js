@@ -57,14 +57,20 @@ CampaignModel.prototype = {
 	},
 	deliveries: function() {
 		if(!Stats.findOne()) return;
+		if(!Stats.findOne().campaigns[this._id]) return;
+		
 		return Stats.findOne().campaigns[this._id].deliveries;
 	},
 	returns: function() {
 		if(!Stats.findOne()) return;
+		if(!Stats.findOne().campaigns[this._id]) return;
+		
 		return Stats.findOne().campaigns[this._id].returns;
 	},
 	recoveries: function() {
 		if(!Stats.findOne()) return;
+		if(!Stats.findOne().campaigns[this._id]) return;
+		
 		return Stats.findOne().campaigns[this._id].recoveries;
 	}
 };

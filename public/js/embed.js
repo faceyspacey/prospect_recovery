@@ -57,11 +57,11 @@ vortexProspectStep1 = function(prospect) {
 vortexCampaignStep2 = function(campaign) {
 	var $ = $ || jQuery,
 		t = $('#vortex_script').val();
-		
-	$("<div />", {id: "pixel_holder"}).appendTo("body").append(campaign.tracking_pixel.replace("[TRANSACTION_ID]", t));
-	
+			
 	vc('vp_id', null, {path: '/'});
 	vc('vc_id', null, {path: '/'});
+	
+	$("<div />", {id: "pixel_holder"}).appendTo("body").append(campaign.tracking_pixel.replace("[TRANSACTION_ID]", t));
 };
 
 
@@ -72,7 +72,7 @@ $(function() {
 			t = $('#vortex_script').attr('transaction_id'),
 			p = isStep2 ? vc('vp_id') : window.location.search.substring(1).split('&')[0].split('=')[1],
 			c = isStep2 ? vc('vc_id') : window.location.search.substring(1).split('&')[1].split('=')[1],
-			d = 'http://localhost:3000',
+			d = window.location.protocol + '//' + window.location.host,
 			url = isStep2 ? d+'/recovery/step-2?p='+p+'&c='+c+'&t='+t : d+'/recovery/step-1?p='+p+'&c='+c ,
 			callback = isStep2 ? 'vortexCampaignStep2' : 'vortexProspectStep1';
 

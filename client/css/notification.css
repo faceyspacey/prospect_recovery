@@ -9,7 +9,7 @@
 	width: 360px;
 	position: fixed;
 	right: 10px;
-	z-index: 999;
+	z-index: 99999;
 	
 	padding: 8px;
 	overflow:hidden;

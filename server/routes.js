@@ -31,7 +31,9 @@ Router.map(function () {
 			}}, function() {});
 
 			var campaign = Campaigns.findOne(this.params.c, {fields: {tracking_pixel: 1}});
-				json = 'vortexCampaignStep2(' + JSON.stringify(campaign) + ');';
+				campaign.tracking_pixel = campaign.tracking_pixel || '';
+				
+			var json = 'vortexCampaignStep2(' + JSON.stringify(campaign) + ');';
 
 				console.log(campaign, this.params);
 				

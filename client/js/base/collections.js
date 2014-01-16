@@ -31,7 +31,9 @@ Deps.autorun(function() {
 		limit = page * prospectsIncrementAmount,
 		campaignId = Session.get('my_recoveries_campaign_id') || 'all';
 		
-	prospectsSub = Meteor.subscribe('prospects', limit, campaignId);
+	prospectsSub = Meteor.subscribe('prospects', limit, campaignId, function() {
+		setupNotificationsObservation();
+	});
 });
 
 
@@ -52,7 +54,7 @@ setupNotificationsObservation = function() {
 };
 
 Meteor.startup(function() {
-	if(Meteor.user()) setupNotificationsObservation();
+	//if(Meteor.user()) setupNotificationsObservation();
 });
 
 

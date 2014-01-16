@@ -25,8 +25,8 @@ loginCallback = function() {
 	//limelight is working.
 	console.log('logging in');
 	if(Meteor.user().limelightCredentialsWorking()) {
+		//setupNotificationsObservation();
 		Meteor.user().updateLimelightCampaigns();
-		setupNotificationsObservation();
 	}
 };
 
