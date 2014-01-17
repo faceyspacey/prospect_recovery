@@ -116,12 +116,11 @@
 }
 
 #site_image_drop_shadows .drop_shadow {
-	width: 320px;
-	height: 1px;
-	background: rgba(0, 0, 0, .42);
+	width: 348px;
+	height: 53px;
 	display: block;
-	box-shadow: 0px 0px 40px 7px black;
 	float:left;
-	margin-left: 25px;
+	margin-left: 0;
 	position: relative;
+	margin-top: -26px;
 }

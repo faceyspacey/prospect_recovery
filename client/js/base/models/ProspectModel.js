@@ -53,7 +53,9 @@ ProspectModel.prototype = {
 	
 	
 	displayNotification: function() {
-		document.body.appendChild(Meteor.render(Template.notification_box(this)));
+		Deps.afterFlush(function() {
+			document.body.appendChild(Meteor.render(Template.notification_box(this)));
+		}.bind(this));
 	},
 	getSubject: function() {
 		return this._tokenReplacer().getSubject();
@@ -71,6 +73,6 @@ ProspectModel.prototype = {
 		return this.__tokenReplacer || (this.__tokenReplacer = new TokenReplacer(this, this.getCampaign()));
 	},
 	getCampaign: function() {
-		return this._campaign || (this._campaign = Campaigns.findOne({_id: this.campaign_id}));
+		return Campaigns.findOne({_id: this.campaign_id});
 	}
 };

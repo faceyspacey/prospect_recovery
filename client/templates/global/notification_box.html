@@ -1,5 +1,5 @@
 <template name="notification_box">
-	<div class="notification_box" style="bottom: -120px;" id="notification_{{_id}}">
+	<div class="notification_box" style="bottom: -120px;" id="notification_{{_id}}_{{getStatus}}">
 		<a href="{{getLink}}" target="_blank" class="btn btn-{{getStatusClass}} btn-xs notification_status">{{getStatus}}</a>
 		
 		<div class="notification_email">{{shorten email 32}}<div>

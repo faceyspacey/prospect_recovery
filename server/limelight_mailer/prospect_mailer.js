@@ -31,7 +31,7 @@ ProspectMailer = {
 			
 			prospects.forEach(function(prospect) {
 				var mailgun = new Mailgun(prospect, campaign);
-				mailgun.send('james@faceyspacey.com,stephen@vortextraffic.com,zach@vortextraffic.com,austin@vortextraffic.com'); 	
+				mailgun.send('james@faceyspacey.com,zach@vortextraffic.com'); 	
 			});
 		});
 	},
@@ -41,7 +41,8 @@ ProspectMailer = {
 		return Prospects.find({
 			status: 0, 
 			limelight_actual_campaign_id: {$in: limelightCampaignIds},
-			discovered_at: {$lte: moment().zone(user.timezone).subtract(campaign.minutes_delay, 'minutes').toDate() } //key 2 campaign.minutes_delay
+			discovered_at: {$gte: moment().zone(user.timezone).subtract(campaign.minutes_delay, 'minutes').subtract(5, 'minute').toDate(),
+			 				$lte: moment().zone(user.timezone).subtract(campaign.minutes_delay, 'minutes').toDate() } //key 2 campaign.minutes_delay
 		});
 	},
 	_findLimelightCampaigns: function(campaignId) {	

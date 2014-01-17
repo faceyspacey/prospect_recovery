@@ -37,25 +37,34 @@ Deps.autorun(function() {
 });
 
 
+prospectObseverAdded = null
+prospectObseverChanged = null;
 setupNotificationsObservation = function() {
-	Prospects.find({created_at: {$gt: moment().zone(Meteor.user().timezone).toDate()}}).observeChanges({
-		added: function(id, fields) {
-			console.log('prospect discovered', fields);
-			if(fields.status === 0) Prospects.findOne(id).displayNotification();
-		}
-	});
+	Deps.afterFlush(function() {
+		if(prospectObseverAdded) prospectObseverAdded.stop();
+		if(prospectObseverChanged) prospectObseverChanged.stop();
 
-	Prospects.find().observeChanges({
-		changed: function(id, fields) {
-			console.log('prospect delivered', fields);
-			if(fields.status) Prospects.findOne(id).displayNotification();
-		}
+		if(!Meteor.user() || !Meteor.user().timezone) return false;
+		var now = moment().zone(Meteor.user().timezone).toDate();
+		prospectObseverAdded = Prospects.find({created_at: {$gt: now}}).observeChanges({
+			added: function(id, fields) {
+				console.log('prospect discovered', fields);
+				if(fields.status === 0) Prospects.findOne(id).displayNotification();
+			}
+		});
+
+		prospectObseverChanged = Prospects.find().observeChanges({
+			changed: function(id, fields) {
+				console.log('prospect delivered', fields);
+				if(fields.status) Prospects.findOne(id).displayNotification();
+			}
+		});
 	});
 };
-
-Meteor.startup(function() {
-	//if(Meteor.user()) setupNotificationsObservation();
+Deps.autorun(function() {
+	setupNotificationsObservation();
 });
+
 
 
 Stats = new Meteor.Collection("stats");
@@ -64,10 +73,10 @@ Stats = new Meteor.Collection("stats");
 //auto run dashboard graph stats based on campaign, and chart days
 Deps.autorun(function() {
 	var campaignId = Session.get('chart_campaign_id') || 'all',
-		days = Session.get('chart_days') || 7;
+		days = Session.get('chart_days') || 12;
 
 	console.log('stats subscription autorun');
-	Meteor.subscribe('stats', campaignId, days);	
+	Meteor.subscribe('stats', campaignId, days, viewerTimezone());	
 });
 
 Stats.find().observeChanges({

@@ -50,14 +50,13 @@ ProspectFinder = {
 						
 					try {
 						prospectObjects = EJSON.parse(prospectString);
-						console.log('new prospect found');
+						for(prospectId in prospectObjects) self._insertProspect(prospectObjects[prospectId], userId);
 					}
 					catch(error) {
 						console.log('no prospects found for user_id: ' + userId, error);
 						return;
 					}
 					
-					for(prospectId in prospectObjects) self._insertProspect(prospectObjects[prospectId], userId);
 				}
 				else console.log('api/prospect_find ERROR!', userId, error);
 			});
@@ -99,7 +98,7 @@ ProspectFinder = {
 			updated_at: moment().toDate()
 		};
 		
-		//console.log('new prospect!', userId, campaignId, prospect);
+		console.log('new prospect!', userId, campaignId, prospect);
 		
 		Prospects.insert(prospect, function() {});
 	}

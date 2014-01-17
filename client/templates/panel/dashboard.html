@@ -72,9 +72,9 @@
 		
 		  {{#isolate}}
              <ul class="nav nav-pills">
-			   <li class="{{active_pill 12}}" id="chart_half_day"><a href="#" id="chart_week">Half Day</a></li>
-			   <li class="{{active_pill 24}}" id="chart_day"><a href="#" id="chart_week">Today</a></li>
-               <li class="{{active_pill 7}}" id="chart_week"><a href="#" id="chart_week">Week</a></li>
+			   <li class="{{active_pill 12}}" id="chart_half_day"><a href="#">Half Day</a></li>
+			   <li class="{{active_pill 24}}" id="chart_day"><a href="#">Today</a></li>
+               <li class="{{active_pill 7}}" id="chart_week"><a href="#">Week</a></li>
                <li class="{{active_pill 14}}" id="chart_2_weeks"><a href="#">2 Weeks</a></li>
 			   <li class="{{active_pill 30}}" id="chart_month"><a href="#">Month</a></li>
              </ul>
@@ -94,7 +94,7 @@
                          <span class="changed-value" style="{{upDownColor}}">{{upDownValue}}%</span>
                        </div>
 
-                       <div class="value-sub">Average of {{averageDeliveriesPerDay}} Emails Per Day</div>
+                       <div class="value-sub">Average of {{averageDeliveries}} Emails Per {{periodName}}</div>
 
                      </div>
                    </div>

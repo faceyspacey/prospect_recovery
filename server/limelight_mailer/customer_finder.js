@@ -49,14 +49,13 @@ CustomerFinder = {
 						
 					try {
 						customerObjects = EJSON.parse(customerString);
-						console.log('new customers found');
+						for(customerId in customerObjects) self._updateProspect(customerObjects[customerId]);
 					}
 					catch(error) {
 						console.log('no customers found for user_id: ' + userId, error);
 						return;
 					}
-					
-					for(customerId in customerObjects) self._updateProspect(customerObjects[customerId]);
+									
 				}
 				else console.log('api/customer_find ERROR!', error);
 			});

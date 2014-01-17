@@ -7,7 +7,7 @@ Meteor.methods({
 
 
 Meteor.settings.mailgun_api_url = 'https://api.mailgun.net/v2';
-Meteor.settings.mailgun_api_key = 'key-1bsxare32g4839ng8tuawetue4eh4wb1';
+Meteor.settings.mailgun_api_key = 'key-4ir9q92hbwkxokodv-x6i6bacd6t46q0';
 
 Mailgun = function(prospect, campaign) {
 	this.prospect = prospect;

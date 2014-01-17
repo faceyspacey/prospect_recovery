@@ -13,6 +13,7 @@
 	
 	padding: 8px;
 	overflow:hidden;
+	cursor: pointer;
 }
 
 .notification_box .notification_status {

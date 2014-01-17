@@ -1,10 +1,10 @@
-Meteor.publish("stats", function(campaignId, days) {
+Meteor.publish("stats", function(campaignId, days, timezone) {
 	if(!campaignId) return this.stop();
 	if(!Meteor.users.findOne(this.userId)) return this.stop();
 	
   	var self = this,
 		userId = this.userId,
-		stats = new Stats(this.userId, campaignId, days),
+		stats = new Stats(this.userId, campaignId, days, timezone),
 		userSearch = Roles.userIsInRole(userId, ['admin']) ? {} : {user_id: userId},
 		handle = Prospects.find(userSearch).observeChanges({
     		changed: function (id, prospect) {
@@ -26,120 +26,92 @@ Meteor.publish("stats", function(campaignId, days) {
 
 
 
-Stats = function(userId, campaignId, days) {
+Stats = function(userId, campaignId, days, timezone) {
 	//console.log('arguments', arguments);
 	this.userId = userId;
-	this.timezone = Meteor.users.findOne(userId).timezone;
+	this.timezone = timezone;//this needs to be the viewer's timezone, not the limelight account timezone
 	this.userSelector = Roles.userIsInRole(this.userId, ['admin']) ? {} : {user_id: this.userId};
 	this.campaign_id = campaignId;
 	this.days = days || 7;
-}
+};
 
 Stats.prototype = {
 	getAllStats: function() {
 		return {
 			user: this.getUserStats(),
 			campaigns: this.getCampaignStats(),
-			days: this.getDayStats()
+			days: this.getDayStats(),
+			hours: this.getHourStats()
 		};
 	},
 	
 	getUserStats: function() {
-		var user = {};
-		user.discoveries = this.findDiscoveryCounts({updated_at: getMonthSelector()});
-		user.deliveries = this.findDeliveryCounts({updated_at: getMonthSelector()});
-		user.returns = this.findReturnCounts({updated_at: getMonthSelector()});
-		user.recoveries = this.findRecoveryCounts({updated_at: getMonthSelector()});
+		var user = {},
+			month = getMonthSelector();
+			
+		user.discoveries = this._findCounts({status: {$gte: 0}, updated_at: month});
+		user.deliveries = this._findCounts({status: {$gte: 1}, updated_at: month});
+		user.returns = this._findCounts({status: {$gte: 2}, updated_at: month});
+		user.recoveries = this._findCounts({status: {$gte: 3}, updated_at: month});
 		user.recoveryPercentage = Math.round(user.recoveries / user.deliveries * 100) || 0;
 		return user;
 	},
 	getCampaignStats: function() {
-		var campaigns = {},
-			self = this;
-
+		var campaigns = {};
+		
 		Campaigns.find(this.userSelector).forEach(function(campaign) {	
-			var c = campaigns[campaign._id] = {}
-				selector = {campaign_id: campaign._id};
+			var c = campaigns[campaign._id] = {};
 				
-			c.discoveries = self.findDiscoveryCounts(selector);
-			c.deliveries = self.findDeliveryCounts(selector);
-			c.returns = self.findReturnCounts(selector);
-			c.recoveries = self.findRecoveryCounts(selector);
+			c.discoveries = this._findCounts({status: {$gte: 0}, campaign_id: campaign._id});
+			c.deliveries = this._findCounts({status: {$gte: 1}, campaign_id: campaign._id});
+			c.returns = this._findCounts({status: {$gte: 2}, campaign_id: campaign._id});
+			c.recoveries = this._findCounts({status: {$gte: 3}, campaign_id: campaign._id});
 			c.recoveryPercentage = Math.round(c.recoveries / c.deliveries * 100) || 0;
-		});
+		}.bind(this));
 		return campaigns;
 	},
+
+	_findCounts: function(selector) {
+		if(!Roles.userIsInRole(this.userId, ['admin'])) selector.user_id = this.userId;
+		return Prospects.find(selector).count();
+	},
+	
+	
+	
 	getDayStats: function() {
-		if(this.days == 24 || this.days == 12) return this.getHourStats(); //yes, hacky. for now. 
-		
-		var days = [],
-			self = this;
+		var days = [];
 
 		_.each(getDateSelectors(this.days, this.timezone), function(date) {
-			var day = {},
-				selector = {};
-			
-			if(self.campaign_id != 'all') selector.campaign_id = self.campaign_id;
-			
-			day.date = date.name;
-			day.end = date.end;
-			day.discoveries = self.findDiscoveryCounts(selector, date.selector); 
-			day.deliveries = self.findDeliveryCounts(selector, date.selector); 
-			day.returns = self.findReturnCounts(selector, date.selector);
-			day.recoveries = self.findRecoveryCounts(selector, date.selector);
-			day.recoveryPercentage = Math.round(day.recoveries / day.deliveries * 100) || 0;
-			days.push(day);
-		});
+			this._preparePeriod(days, date);
+		}.bind(this));
 
 		return days;
 	},
 	getHourStats: function() {
-			var hours = [],
-				hourCount = this.days,
-				self = this;
+		var hours = [];
 				
-
-			_.each(getHourSelectors(hourCount, this.timezone), function(date) {
-				var hour = {},
-					selector = {};
-
-				if(self.campaign_id != 'all') selector.campaign_id = self.campaign_id;
-
-				hour.date = date.name;
-				hour.end = date.end;
-				hour.discoveries = self.findDiscoveryCounts(selector, date.selector); 
-				hour.deliveries = self.findDeliveryCounts(selector, date.selector); 
-				hour.returns = self.findReturnCounts(selector, date.selector);
-				hour.recoveries = self.findRecoveryCounts(selector, date.selector);
-				hour.recoveryPercentage = Math.round(hour.recoveries / hour.deliveries * 100) || 0;
-				hours.push(hour);
-			});
+		_.each(getHourSelectors(this.days, this.timezone), function(date) {
+			this._preparePeriod(hours, date);
+		}.bind(this));
 			
-			return hours;
+		return hours;
 	},
-	
-	findDiscoveryCounts: function(selector, dateSelector) {
-		selector.status = {$gte: 0};
-		if(dateSelector) selector.discovered_at = dateSelector; 
-		return this._findCounts(selector);
+	_preparePeriod: function(periods, date) {
+		var period = {};
+		
+		period.date = date.start;
+		period.end = date.end;
+		period.discoveries = this._findDateCounts({status: {$gte: 0}, discovered_at: date.selector}); 
+		period.deliveries = this._findDateCounts({status: {$gte: 1}, delivered_at: date.selector}); 
+		period.returns = this._findDateCounts({status: {$gte: 2}, returned_at: date.selector}); 
+		period.recoveries = this._findDateCounts({status: {$gte: 3}, recovered_at: date.selector}); 
+		period.recoveryPercentage = Math.round(period.recoveries / period.deliveries * 100) || 0;
+		
+		periods.push(period);
 	},
-	findDeliveryCounts: function(selector, dateSelector) {
-		selector.status = {$gte: 1};
-		if(dateSelector) selector.delivered_at = dateSelector; 
-		return this._findCounts(selector);
-	},
-	findReturnCounts: function(selector, dateSelector) {
-		selector.status = {$gte: 2};
-		if(dateSelector) selector.returned_at = dateSelector; 
-		return this._findCounts(selector);
-	},
-	findRecoveryCounts: function(selector, dateSelector) {
-		selector.status = {$gte: 3};
-		if(dateSelector) selector.recovered_at = dateSelector;
-		return this._findCounts(selector);
-	},
-	_findCounts: function(selector) {
+	_findDateCounts: function(selector) {
 		if(!Roles.userIsInRole(this.userId, ['admin'])) selector.user_id = this.userId;
+		if(this.campaign_id != 'all') selector.campaign_id = this.campaign_id;		
 		return Prospects.find(selector).count();
 	}
 };
