@@ -24,7 +24,7 @@ displayChart = function() {
 			xLabelFormat: function(date) {
 				return isHours() ? moment(date).format('ha') : moment(date).format('M/D');
 			},
-		    lineColors: ["#f9c1c1", '#FFDB75', "#c1daf9", "#16a085", "#2c3e50", "#1abc9c", "#34495e", "#9b59b6", "#e74c3c"]
+		    lineColors: ["#f9c1c1", '#FFDB75', "#5E9AE4", "#16a085", "#2c3e50", "#1abc9c", "#34495e", "#9b59b6", "#e74c3c"]
 		  };
 
 		if($('#areachart').length !== 0) Morris.Area(morris_area_options);
