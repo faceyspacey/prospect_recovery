@@ -40,9 +40,14 @@ Handlebars.registerHelper('breadCrumbs', function() {
 	return '<li><a href="#">'+route.replace(/_/g, ' ')+'</a></li>';
 });
 
-Handlebars.registerHelper('todaysDiscoveries', function() {
+Handlebars.registerHelper('todaysDeliveries', function() {
 	if(!Stats.findOne()) return 0;
-	return Stats.findOne().days[0].discoveries;
+	return Stats.findOne().days[0].deliveries;
+});
+
+Handlebars.registerHelper('todaysRecoveries', function() {
+	if(!Stats.findOne()) return 0;
+	return Stats.findOne().days[0].recoveries;
 });
 
 
@@ -61,7 +66,6 @@ Handlebars.registerHelper('shorten', function(text, maxChars) {
 	return shortenText(text, maxChars);
 });
 
-
 Handlebars.registerHelper('timezones', function() {
 	return [
 		{offset: 5, name: 'EST +5'},
@@ -73,4 +77,13 @@ Handlebars.registerHelper('timezones', function() {
 
 Handlebars.registerHelper('selectedTimezone', function() {
 	return this.offset == Meteor.user().timezone ? 'selected="selected"' : '';
-})
+});
+
+
+Handlebars.registerHelper('session', function(key) {
+	return Session.get(key);
+});
+
+Handlebars.registerHelper('collection', function(name) {
+	return Model.collection(name).find();
+});

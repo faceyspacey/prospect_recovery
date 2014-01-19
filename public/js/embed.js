@@ -68,8 +68,9 @@ vortexCampaignStep2 = function(campaign) {
 $(function() {
 	try {
 		var $ = $ || jQuery,
-			isStep2 = vc('vp_id') || false,
 			t = $('#vortex_script').attr('transaction_id'),
+			isTransaction = t && t != 'TRANSACTION_ID' ? true : false,
+			isStep2 = (vc('vp_id') && isTransaction) || false,
 			p = isStep2 ? vc('vp_id') : window.location.search.substring(1).split('&')[0].split('=')[1],
 			c = isStep2 ? vc('vc_id') : window.location.search.substring(1).split('&')[1].split('=')[1],
 			d = window.location.protocol + '//' + window.location.host,

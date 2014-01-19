@@ -1,7 +1,7 @@
 Model = {
 	errors: {},
-	collection: function(){
-		switch(this.collectionName) {
+	collection: function(name){
+		switch(name || this.collectionName) {
             	case 'Users':           return Meteor.users;
             	case 'Campaigns':       return Campaigns;
 				case 'LimelightCampaigns':       return LimelightCampaigns;
@@ -23,9 +23,9 @@ Model = {
 	},
 	save: function(){
 		var attributes = this.getMongoAttributes();
-		return this.upsert(attributes);	
+		return this._upsert(attributes);	
     },
-	upsert: function(attributes) {
+	_upsert: function(attributes) {
 		if(this._id) return this.update(attributes);
 		else return this.insert(attributes);
 	},

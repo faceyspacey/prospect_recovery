@@ -1,10 +1,9 @@
-Meteor.publish("stats", function(campaignId, days, timezone) {
+Meteor.publish("stats", function(userId, campaignId, days, timezone) {
 	if(!campaignId) return this.stop();
 	if(!Meteor.users.findOne(this.userId)) return this.stop();
 	
   	var self = this,
-		userId = this.userId,
-		stats = new Stats(this.userId, campaignId, days, timezone),
+		stats = new Stats(userId, campaignId, days, timezone),
 		userSearch = Roles.userIsInRole(userId, ['admin']) ? {} : {user_id: userId},
 		handle = Prospects.find(userSearch).observeChanges({
     		changed: function (id, prospect) {

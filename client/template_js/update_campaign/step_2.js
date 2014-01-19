@@ -25,6 +25,9 @@ Template.step_2.helpers({
 	},
 	displayRadioButton: function() {
 		return !this.isDestinationCampaign() || this._id == CampaignModel.current().limelight_destination_campaign_id;
+	},
+	cleanCampaignName: function() {
+		return decodeURIComponent(this.name.replace(/\+/g, ' '));
 	}
 });
 

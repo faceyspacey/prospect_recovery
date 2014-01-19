@@ -72,7 +72,6 @@
 		
 		  {{#isolate}}
              <ul class="nav nav-pills">
-			   <li class="{{active_pill 12}}" id="chart_half_day"><a href="#">Half Day</a></li>
 			   <li class="{{active_pill 24}}" id="chart_day"><a href="#">Today</a></li>
                <li class="{{active_pill 7}}" id="chart_week"><a href="#">Week</a></li>
                <li class="{{active_pill 14}}" id="chart_2_weeks"><a href="#">2 Weeks</a></li>
@@ -85,13 +84,14 @@
                  <div class="row">
 
 				{{#isolate}}
+				{{#with stats}}
                    <div class="col-lg-4 col-md-5 col-sm-6 bordered">
                      <div class="value-block value-bigger changed-up some-left-padding">
 
                        <div class="value-self">
                          {{totalDeliveries}}
                          <span class="changed-icon"><i class="icon-caret-{{upDown}}"></i></span>
-                         <span class="changed-value" style="{{upDownColor}}">{{upDownValue}}%</span>
+                         <span class="changed-value" style="{{upDownColor}}">{{upDownValue}}</span>
                        </div>
 
                        <div class="value-sub">Average of {{averageDeliveries}} Emails Per {{periodName}}</div>
@@ -102,7 +102,7 @@
 
                    <div class="col-lg-2 col-md-3 visible-md visible-lg bordered">
                      <div class="value-block text-center">
-                       <div class="value-self">{{totalReturns}}</div>
+					   <div class="value-self">{{totalReturns}} <span class="value-sub">{{totalReturnsPercentage}}%</span></div>
                        <div class="value-sub">Total Returns</div>
                      </div>
                    </div>
@@ -110,7 +110,7 @@
 
                    <div class="col-lg-2 bordered visible-lg">
                      <div class="value-block text-center">
-                       <div class="value-self">{{totalRecoveries}}</div>
+                       <div class="value-self">{{totalRecoveries}} <span class="value-sub">{{totalRecoveryPercentage}}%</span></div>
                        <div class="value-sub">Total Recoveries</div>
                      </div>
                    </div>
@@ -124,7 +124,7 @@
 							{{/each}}
 					 </select>
                    </div>
-
+				{{/with}}
 				{{/isolate}}
 
                  </div>

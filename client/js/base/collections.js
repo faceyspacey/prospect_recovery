@@ -18,6 +18,8 @@ Prospects = new Meteor.Collection("prospects", {
     transform: function (doc) { return new ProspectModel(doc); }
 });
 
+
+
 usersSub = Meteor.subscribe('users');
 campaignsSub = Meteor.subscribe('campaigns');
 limelightCampaignsSub = Meteor.subscribe('limelight_campaigns');
@@ -67,8 +69,9 @@ Deps.autorun(function() {
 
 
 
-Stats = new Meteor.Collection("stats");
-
+Stats = new Meteor.Collection("stats", {
+    transform: function (doc) { return new StatsModel(doc); }
+});
 
 //auto run dashboard graph stats based on campaign, and chart days
 Deps.autorun(function() {
@@ -76,7 +79,7 @@ Deps.autorun(function() {
 		days = Session.get('chart_days') || 12;
 
 	console.log('stats subscription autorun');
-	Meteor.subscribe('stats', campaignId, days, viewerTimezone());	
+	Meteor.subscribe('stats', Meteor.userId(), campaignId, days, viewerTimezone());	
 });
 
 Stats.find().observeChanges({

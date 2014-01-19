@@ -48,19 +48,9 @@ Template.step_3.events({
 			return;
 		}
 				
-		//set back data from fields
-		campaign.email_subject = $('#campaign_email_subject').val();
-		campaign.email_html = $('#campaign_email_html').val();
-		campaign.email_plain = $('#campaign_email_plain').val();	
-		campaign.name = $('#campaign_name').val();
-		campaign.url = $('#campaign_url').val();
-		campaign.from_email = $('#campaign_email').val();
-		campaign.domain = campaign.getDomain();
-		campaign.from_name = $('#from_name').val();
-		campaign.minutes_delay = parseInt($('#email_delay').val());
-		campaign.continue_recovery = $('#continue_recovery').is(':checked');
+		prepCampaignFields(campaign);
 		campaign.complete = true;
-		campaign.play = true;
+
 			
 		//create mailgun domains only if not created before
 		var campaignWithDomain = Campaigns.findOne({domain: campaign.domain, mailgun_dkim_hostname: {$not: undefined}});
@@ -90,8 +80,27 @@ Template.step_3.events({
 		Router.go('my_campaigns');
 	},
 	'click #edit_limelight_campaigns': function() {
+		var campaign = CampaignModel.current();
+		prepCampaignFields(campaign);
+		campaign.save();
+		
 		$('#campaign_step_3').animate({left: '-100%'}, 800, 'easeInBack', function() {
 			Router.go('update_campaign_step_2', {id: CampaignModel.current()._id});
 		});
 	}
 });
+
+
+prepCampaignFields = function(campaign) {
+	campaign.email_subject = $('#campaign_email_subject').val();
+	campaign.email_html = $('#campaign_email_html').val();
+	campaign.email_plain = $('#campaign_email_plain').val();	
+	campaign.name = $('#campaign_name').val();
+	campaign.url = $('#campaign_url').val();
+	campaign.from_email = $('#campaign_email').val();
+	campaign.domain = campaign.getDomain();
+	campaign.from_name = $('#from_name').val();
+	campaign.minutes_delay = parseInt($('#email_delay').val());
+	campaign.continue_recovery = $('#continue_recovery').is(':checked');
+	campaign.play = true;
+}

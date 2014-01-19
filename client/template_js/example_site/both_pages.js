@@ -1,12 +1,14 @@
 Template.page_1.created = function() {
 	Deps.afterFlush(function() {
-		appendEmbedScriptToHead();
+		embedScript();
+		$('#vortex_script').attr('transaction_id', 'TRANSACTION_ID');
 	});
 }
 
 Template.page_2.created = function() {
 	Deps.afterFlush(function() {
-		appendEmbedScriptToHead();
+		embedScript();
+		$('#vortex_script').attr('transaction_id', '1092834030');
 
 		setTimeout(function() {
 			var iframe = $('#pixel_holder').html();
@@ -22,12 +24,11 @@ Template.page_2.created = function() {
 
 
 
-appendEmbedScriptToHead = function() {
+embedScript = function() {
 	var script = document.createElement( 'script' );
 	script.type = 'text/javascript';
 	script.src = getCurrentHost()+"/js/embed.js";
 	script.id = 'vortex_script';
-	script.transaction_id = 'TRANSACTION_ID';
-	
+	script.transaction_id = 'TRANSACTION_ID';	
 	document.getElementsByTagName('head')[0].appendChild(script);
 }

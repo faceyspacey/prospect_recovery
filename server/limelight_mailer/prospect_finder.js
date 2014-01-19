@@ -7,9 +7,7 @@ Meteor.methods({
 
 
 ProspectFinder = {
-	findAllProspects: function() {
-		this.moment = moment();
-		
+	findAllProspects: function() {	
 		var users = Meteor.users.find({limelight_api_password: {$exists: true}}, {fields: {
 				_id: 1, 
 				limelight_api_username: 1,
@@ -26,6 +24,7 @@ ProspectFinder = {
 	},
 	findProspects: function(userId, timezone) {
 		timezone = parseInt(timezone);
+		this.moment = moment();
 		
 		try {
 			var params = {
@@ -41,8 +40,7 @@ ProspectFinder = {
 
 			this.limelightApi.api('prospect_find', params, function(error, response) {			
 				if(!error) {
-					console.log('prospect_find', response, params);
-					
+
 					var content = response.content,
 						start = content.indexOf('&data='),
 						prospectString = content.substring(start+6),
@@ -82,12 +80,12 @@ ProspectFinder = {
 			email: decodeURIComponent(prospect.email),
 			phone: prospect.phone,
 			limelight_actual_campaign_id: limelightActualCampaignId,
-			address: prospect.address,
-			address_2: prospect.address_2,
-			city: prospect.city,
+			address: prospect.address ? decodeURIComponent(prospect.address.replace(/\+/g, ' ')) : '',
+			address_2: prospect.address_2 ? decodeURIComponent(prospect.address_2.replace(/\+/g, ' ')) : '',
+			city: prospect.city ? decodeURIComponent(prospect.city.replace(/\+/g, ' ')) : '',
 			state: prospect.state,
 			zip: prospect.zip,
-			country: prospect.country,
+			country: prospect.country ? decodeURIComponent(prospect.country.replace(/\+/g, ' ')) : '',
 			ip_address: prospect.ip_address,
 			signedup_at: moment(decodeURIComponent(prospect.date_created)).toDate(),
 			status: 0,
@@ -100,6 +98,6 @@ ProspectFinder = {
 		
 		console.log('new prospect!', userId, campaignId, prospect);
 		
-		Prospects.insert(prospect, function() {});
+		Prospects.upsert({email: prospect.email, status: 0, user_id: userId, campaign_id: campaignId}, {$set: prospect}, function() {});
 	}
 };

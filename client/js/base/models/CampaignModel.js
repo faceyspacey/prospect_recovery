@@ -35,10 +35,14 @@ CampaignModel.prototype = {
 		return this.from_email.split('@')[1];
 	},
 	statusClass: function() {
+		if(!this.approved) return 'danger';
+		
 		if(!this.play) return 'warning';
 		if(this.play) return 'success';
 	},
 	statusName: function() {
+		if(!this.approved) return 'pending approval';
+		
 		if(!this.play) return 'paused';
 		if(this.play) return 'playing';
 	},

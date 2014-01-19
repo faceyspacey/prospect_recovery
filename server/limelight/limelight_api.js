@@ -12,11 +12,6 @@ LimelightApi = function(username, password, domain) {
 };
 
 LimelightApi.prototype = {
-	setAuthCredentials: function(username, password, domain) {
-		this.username = username;
-		this.password = password;
-		this.domain = domain;
-	},
 	api: function(method, data, callback) {
 		data = _.isObject(data) ? data : {};	
 			
@@ -25,11 +20,7 @@ LimelightApi.prototype = {
 		data.method = method;
 		
 		if(callback) HTTP.post(this.domain+'/admin/membership.php', {params: data}, callback);
-		else {
-			var response = HTTP.post(this.domain+'/admin/membership.php', {params: data});
-			console.log(this.domain+'/admin/membership.php', data, method, response);
-			return response;
-		}
+		else return HTTP.post(this.domain+'/admin/membership.php', {params: data});
 	}
 };
 

@@ -34,7 +34,7 @@ displayChart = function() {
 
 
 Template.widget_area_graph.created = function() {
-	Session.set('chart_days', 12);
+	Session.set('chart_days', 24);
 	Session.set('chart_campaign_id', 'all');
 };
 
@@ -57,6 +57,8 @@ Template.widget_area_graph.helpers({
 	totalDeliveries: function() {
 		if(!Stats.findOne()) return 0;
 		
+		if(Session.equals('chart_days', 24)) return Stats.findOne().days[0].deliveries;
+		
 		return _.reduce(getPeriods(), function(memo, period) {
 			return memo + period.deliveries;
 		}, 0);
@@ -68,6 +70,17 @@ Template.widget_area_graph.helpers({
 			return memo + period.returns;
 		}, 0);
 	},
+	totalReturnsPercentage: function() {
+		var returns = _.reduce(getPeriods(), function(memo, period) {
+				return memo + period.returns;
+				}, 0),
+			deliveries = _.reduce(getPeriods(), function(memo, period) {
+					return memo + period.deliveries;
+				}, 0);
+
+			if(deliveries === 0 || returns === 0) return 0;
+			return percentage(returns, deliveries);
+	},
 	totalRecoveries: function() {
 		if(!Stats.findOne()) return 0;
 		
@@ -75,31 +88,44 @@ Template.widget_area_graph.helpers({
 			return memo + period.recoveries;
 		}, 0);
 	},
+	totalRecoveryPercentage: function() {
+		var recoveries = _.reduce(getPeriods(), function(memo, period) {
+				return memo + period.recoveries;
+				}, 0),
+			deliveries = _.reduce(getPeriods(), function(memo, period) {
+					return memo + period.deliveries;
+				}, 0);
+			
+			if(deliveries === 0 || recoveries === 0) return 0;
+			return percentage(recoveries, deliveries);
+	},
 	upDown: function() {
 		if(!Stats.findOne()) return 0;
 		
-		var up = getPeriods()[1].deliveries >= getPeriods()[2].deliveries;
+		var up = this.deliveryCount(1) >= this.deliveryCount(2);
 		return up ? 'up' : 'down';
 	},
 	upDownColor: function() {
 		if(!Stats.findOne()) return 0;
 		
-		var up = getPeriods()[1].deliveries >= getPeriods()[2].deliveries;
+		var up = this.deliveryCount(1) >= this.deliveryCount(2);
 		return up ? '' : 'background-color: rgb(235, 132, 132)';
 	},
 	upDownValue: function() {
 		if(!Stats.findOne()) return 0;
 
-		var today = getPeriods()[1].deliveries,
-			yesterday = getPeriods()[2].deliveries,
-			percent = (today/yesterday * 100);
+		var current = this.deliveryCount(1),
+			last = this.deliveryCount(2),
+			percent = (current/last * 100);
 
-		if(yesterday === 0) return '+100';
+		if(last === 0 && current === 0) return '----';
+		if(last === 0) return '+100%';
+		if(last === current) return '+0%';
 		
-		if(today >= yesterday) percent = percent - 100;
+		if(current > last) percent = percent - 100;
 		else percent = 100 - percent;
 
-		return (today >= yesterday ? '+' : '-') + Math.round(percent);
+		return (current > last ? '+' : '-') + Math.round(percent) + '%';
 	},
 	periodName: function() {
 		return isHours() ? 'hour' : 'day';

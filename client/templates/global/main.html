@@ -77,7 +77,13 @@
 	        		<div class="content-inner content-inner-grey">	
 	          			{{>page_header}}
 						{{>breadcrumbs}}
-		
+						
+						<div id="on_off" style="position: absolute;top: 87px;right: 24px;z-index: 100;">
+							<a id="notification_off" href="#" class="btn btn-xs btn-{{notifSelected 'off'}}" style="float:right;">OFF</a>
+							<a id="notification_on" href="#" class="btn btn-xs btn-{{notifSelected 'on'}}" style="float:right;">ON</a>
+							<div style="float:right; margin-right:5px; margin-top: 2px;">NOTIFICATIONS:</div>
+						</div>
+						
 	          			<div class="main-content" style="overflow:hidden; min-height:650px;">
 							{{> flashMessages}}
 	            			{{yield}}

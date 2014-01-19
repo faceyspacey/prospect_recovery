@@ -5,9 +5,11 @@
 		<i class="icon-table"></i> 
 		Select Limelight Campaigns 	
 		
-		<a id="create_new_limelight_campaign" href="{{currentUser.createLimelightCampaignUrl}}" target="_blank" class="btn btn-primary btn-lg" style="float:right; position: relative; top: -16px; margin-left: 6px;">Create New Limelight Campaign</a>
+		<a href="#" class="btn btn-primary btn-lg next-step" style="float:right; position: relative; top: -16px; margin-left: 6px;">NEXT STEP</a>
 		
-		<a id="refresh_list" class="btn btn-primary btn-lg" style="float:right; position: relative; top: -16px;">Refresh List</a>
+		<a id="create_new_limelight_campaign" href="{{currentUser.createLimelightCampaignUrl}}" target="_blank" class="btn btn-primary btn-lg" style="float:right; position: relative; top: -16px; margin-left: 6px; background-color:rgb(73, 108, 153);">Create New Limelight Campaign</a>
+		
+		<a id="refresh_list" class="btn btn-primary btn-lg" style="float:right; position: relative; top: -16px;background-color:rgb(73, 108, 153);">Refresh List</a>
 		
 		
 	  </h3>
@@ -41,7 +43,7 @@
 								{{/if}}
 						  </td>
 		                  <td>{{limelight_actual_campaign_id}}</td>
-						  <td>{{name}}</td>
+						  <td>{{cleanCampaignName}}</td>
 
 		                  <td>
 		                    <a href="{{url}}" target="_blank">open in limelight</a>

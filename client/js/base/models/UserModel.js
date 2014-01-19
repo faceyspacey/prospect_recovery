@@ -31,7 +31,10 @@ UserModel.prototype = {
 		return this.emails[0].address;
 	},
 	totalCampaigns: function() {
-		return Campaigns.find({user_id: this._id, complete: true}).count();
+		return this.isAdmin() ? Campaigns.find({complete: true}).count() : Campaigns.find({user_id: this._id, complete: true}).count();
+	},
+	isAdmin: function() {
+		return Roles.userIsInRole(this._id, ['admin']);
 	},
 	limelightCredentialsWorking: function() {
 		return this.limelight_login_configured;

@@ -52,6 +52,7 @@ LimelightApiCampaigns.prototype = {
 			
 			if(id > self.user.highest_limelight_campaign_id) {
 				campaign.user_id = self.user._id;
+				campaign.name = decodeURIComponent(campaign.name);
 				LimelightCampaigns.insert(campaign);
 				
 				if(id > highestId) highestId = id;

@@ -7,9 +7,7 @@ Meteor.methods({
 
 
 CustomerFinder = {
-	findAllCustomers: function() {
-		this.moment = moment();
-		
+	findAllCustomers: function() {		
 		var users = Meteor.users.find({limelight_api_password: {$exists: true}}, {fields: {
 				_id: 1, 
 				limelight_api_username: 1,
@@ -26,6 +24,7 @@ CustomerFinder = {
 	},
 	findCustomers: function(userId, timezone) {
 		timezone = parseInt(timezone);
+		this.moment = moment();
 		
 		try {
 			var params = {

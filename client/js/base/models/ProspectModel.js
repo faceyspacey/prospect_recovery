@@ -53,6 +53,8 @@ ProspectModel.prototype = {
 	
 	
 	displayNotification: function() {
+		if(Session.equals('notifications_on_off', 'off')) return;
+		
 		Deps.afterFlush(function() {
 			document.body.appendChild(Meteor.render(Template.notification_box(this)));
 		}.bind(this));
