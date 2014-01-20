@@ -57,6 +57,9 @@ TokenReplacer.prototype = {
 		return this.subject;		
 	},
 	getLink: function() { 
+		return this.campaign.url + '?p='+this.prospect._id+'&c='+this.campaign._id;
+	},
+	getLinkTestingPurposes: function() { 
 		return this.campaign.url + '?p='+this.prospect._id+'&c='+this.campaign._id + " <br /> <br />-------- <br /> TEMP TEST URL: " + Meteor.absoluteUrl('example/page-1') + '?p='+this.prospect._id+'&c='+this.campaign._id + ' <br />--------';
 	}
 }
