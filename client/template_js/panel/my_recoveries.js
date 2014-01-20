@@ -44,8 +44,8 @@ Template.my_recoveries.events({
 	},
 	'click .undo': function() {
 		COOKIE('vp_id', null, {path: '/'});
-		this.status = 1;
-		this.delivered_at = moment().toDate();
+		this.status = 0;
+		this.delivered_at = null;
 		this.returned_at = null;
 		this.recovered_at = null;
 		this.save();

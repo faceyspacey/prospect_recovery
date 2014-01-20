@@ -3,14 +3,12 @@ Template.notification_box.created = function() {
 		id = 'notification_'+self._id + '_' + self.getStatus();
 		
 	Deps.afterFlush(function() {	
-		setTimeout(function() {
-			NotificationBox.changePageTitle(self);
-			NotificationBox.raise();
-			
-			$('#'+id).on('click', function() {
-				NotificationBox.hide(id);
-			});
-		},50);
+		NotificationBox.raise();
+		NotificationBox.changePageTitle(self);
+		
+		$('#'+id).on('click', function() {
+			NotificationBox.hide(id);
+		});
 		
 		
 		setTimeout(function() {

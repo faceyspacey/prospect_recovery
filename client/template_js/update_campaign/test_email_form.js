@@ -17,7 +17,15 @@ Template.test_email.rendered = function() {
 
 Template.test_email.events({
 	'click .next-step': function() {
-		var prospect = new ProspectModel();
+		var prospect = new ProspectModel(),
+			testEmail = $('#test_email').val();
+	
+		if(!isValidEmailBasic(testEmail)) {
+			FlashMessages.sendError("Where do you want this test email to go? Please fill out the final field at the bottom.", {hideDelay: 10000});
+			$('html,body').animate({scrollTop: 0}, 500, 'easeOutExpo');
+			return;
+		}
+		
 		
 		prospect.first_name = $('.vortex_first_name').val();
 		prospect.last_name = $('.vortex_last_name').val();
@@ -44,7 +52,7 @@ Template.test_email.events({
 		
 		if($('.send_to_test_page').is(':checked')) campaign.url = getCurrentHost() + '/example/page-1';
 		
-		Meteor.call('sendProspectEmail', prospect, campaign, Meteor.user().getEmail());
+		Meteor.call('sendProspectEmail', prospect, campaign, testEmail);
 		
 		
 		$('#test_email_form').animate({left: '100%', opacity: 0}, 600, 'easeInBack', function() {

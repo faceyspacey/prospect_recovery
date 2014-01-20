@@ -41,6 +41,7 @@ Deps.autorun(function() {
 
 prospectObseverAdded = null
 prospectObseverChanged = null;
+notificationBuffer = [];
 setupNotificationsObservation = function() {
 	Deps.afterFlush(function() {
 		if(prospectObseverAdded) prospectObseverAdded.stop();
@@ -51,14 +52,14 @@ setupNotificationsObservation = function() {
 		prospectObseverAdded = Prospects.find({created_at: {$gt: now}}).observeChanges({
 			added: function(id, fields) {
 				console.log('prospect discovered', fields);
-				if(fields.status === 0) Prospects.findOne(id).displayNotification();
+				if(fields.status === 0) notificationBuffer.push(id);//Prospects.findOne(id).displayNotification();
 			}
 		});
 
 		prospectObseverChanged = Prospects.find().observeChanges({
 			changed: function(id, fields) {
 				console.log('prospect delivered', fields);
-				if(fields.status) Prospects.findOne(id).displayNotification();
+				if(fields.status) notificationBuffer.push(id); //Prospects.findOne(id).displayNotification();
 			}
 		});
 	});
@@ -66,6 +67,12 @@ setupNotificationsObservation = function() {
 Deps.autorun(function() {
 	setupNotificationsObservation();
 });
+
+//im doing this because when notifications appear at the same time, they get fucked up
+setInterval(function() {
+	if(notificationBuffer.length > 0) Prospects.findOne(notificationBuffer.pop()).displayNotification();
+}, 500);
+
 
 
 
