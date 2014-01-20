@@ -46,13 +46,14 @@ Stats.prototype = {
 	
 	getUserStats: function() {
 		var user = {},
-			month = getMonthSelector();
+			month = getMonthSelector(this.timezone);
 			
 		user.discoveries = this._findCounts({status: {$gte: 0}, updated_at: month});
 		user.deliveries = this._findCounts({status: {$gte: 1}, updated_at: month});
 		user.returns = this._findCounts({status: {$gte: 2}, updated_at: month});
 		user.recoveries = this._findCounts({status: {$gte: 3}, updated_at: month});
 		user.recoveryPercentage = Math.round(user.recoveries / user.deliveries * 100) || 0;
+		user.returnsPercentage = Math.round(user.returns / user.deliveries * 100) || 0;
 		return user;
 	},
 	getCampaignStats: function() {

@@ -7,52 +7,54 @@
 <template name="widget_metric_boxes">
 	<div class="widget">
 
-	              <h3 class="section-title first-title"><i class="icon-tasks"></i> Overview for the Month</h3>
+	              <h3 class="section-title first-title"><i class="icon-tasks"></i> Overview for {{currentMonthName}}</h3>
 	              <div class="row">
 		
 	                <div class="col-lg-3 col-md-4 col-sm-6 text-center" style="width:25%; padding:4px">
-	                  <div class="widget-content-blue-wrapper changed-up">
+	                  <div class="widget-content-blue-wrapper changed-up" style="background-color: #F3B7B7;">
 	                    <div class="widget-content-blue-inner padded">
-	                      <div class="pre-value-block"><i class="icon-dashboard"></i> Total Emails</div>
+	                      <div class="pre-value-block"><i class="icon-power-off"></i> Total Discoveries</div>
 	                      <div class="value-block">
-	                        <div class="value-self">{{stats.user.deliveries}}</div>
-	                        <div class="value-sub">Past 30 Days</div>
+	                        <div class="value-self">{{stats.user.discoveries}}</div>
+	                        <div class="value-sub">This Month</div>
 	                      </div>
 	                      <span class="dynamicsparkline"><canvas width="84" height="19" style="display: inline-block; width: 84px; height: 19px; vertical-align: top;"></canvas></span>
 	                    </div>
 	                  </div>
 	                </div>
 	                <div class="col-lg-3 col-md-4 col-sm-6 text-center" style="width:25%; padding:4px">
-	                  <div class="widget-content-blue-wrapper changed-up">
+	                  <div class="widget-content-blue-wrapper changed-up" style="background-color: #F5EEA2;">
 	                    <div class="widget-content-blue-inner padded">
-	                      <div class="pre-value-block"><i class="icon-user"></i> Total Returns</div>
+	                      <div class="pre-value-block"><i class="icon-envelope"></i> Total Deliveries</div>
 	                      <div class="value-block">
-	                        <div class="value-self">{{stats.user.returns}}</div>
-	                        <div class="value-sub">Past 30 Days</div>
+	                        <div class="value-self">{{stats.user.deliveries}}</div>
+	                        <div class="value-sub">This Month</div>
 	                      </div>
 	                      <span class="dynamicsparkline"><canvas width="84" height="19" style="display: inline-block; width: 84px; height: 19px; vertical-align: top;"></canvas></span>
 	                    </div>
 	                  </div>
 	                </div>
 	                <div class="col-lg-3 col-md-4 col-sm-6 text-center hidden-md" style="width:25%; padding:4px">
-	                  <div class="widget-content-blue-wrapper changed-up">
+	                  <div class="widget-content-blue-wrapper changed-up" style="background-color:#A2E4EE;">
 	                    <div class="widget-content-blue-inner padded">
-	                      <div class="pre-value-block"><i class="icon-signin"></i> Total Recoveries</div>
+	                      <div class="pre-value-block"><i class="icon-user"></i> Total Returns</div>
 	                      <div class="value-block">
-	                        <div class="value-self">{{stats.user.recoveries}}</div>
-	                        <div class="value-sub">Past 30 Days</div>
+	                        <div class="value-self">{{stats.user.returns}}</div>
+	                        <div class="value-sub">This Month</div>
+							<div class="value-sub">Return Percentage: {{stats.user.returnsPercentage}}%</div>
 	                      </div>
 	                      <span class="dynamicsparkline"><canvas width="84" height="19" style="display: inline-block; width: 84px; height: 19px; vertical-align: top;"></canvas></span>
 	                    </div>
 	                  </div>
 	                </div>
 	                <div class="col-lg-3 col-md-4 col-sm-6 text-center" style="width:25%; padding:4px">
-	                  <div class="widget-content-blue-wrapper changed-up">
+	                  <div class="widget-content-blue-wrapper changed-up" style="background-color:#5EF77C;">
 	                    <div class="widget-content-blue-inner padded">
-	                      <div class="pre-value-block"><i class="icon-money"></i> Recovery %</div>
+	                      <div class="pre-value-block"><i class="icon-share-sign"></i> Total Recoveries</div>
 	                      <div class="value-block">
-	                        <div class="value-self">{{stats.user.recoveryPercentage}}%</div>
-	                        <div class="value-sub">Past 30 Days</div>
+	                        <div class="value-self">{{stats.user.recoveries}}</div>
+	                        <div class="value-sub">This Month</div>
+							<div class="value-sub">Recovery Percentage: {{stats.user.recoveryPercentage}}%</div>
 	                      </div>
 	                      <span class="dynamicbars"><canvas width="79" height="19" style="display: inline-block; width: 79px; height: 19px; vertical-align: top;"></canvas></span>
 	                    </div>

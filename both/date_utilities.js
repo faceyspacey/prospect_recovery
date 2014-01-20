@@ -12,10 +12,10 @@ getDateSelectors = function(endDay, timezone) {
 }
 
 
-getMonthSelector = function() {
+getMonthSelector = function(timezone) {
 	return {
-		$gte: startOfDay(29, 5).toDate(),
-		$lt: endOfDay(0, 5).toDate()
+		$gte: moment().zone(timezone).startOf('month').toDate(), //startOfDay(29, 5).toDate(),
+		$lt: moment().zone(timezone).endOf('day').toDate() //endOfDay(0, 5).toDate()
 	}
 };
 

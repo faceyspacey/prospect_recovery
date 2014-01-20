@@ -87,3 +87,8 @@ Handlebars.registerHelper('session', function(key) {
 Handlebars.registerHelper('collection', function(name) {
 	return Model.collection(name).find();
 });
+
+
+Handlebars.registerHelper('currentMonthName', function(name) {
+	return moment().format("MMMM");
+});

@@ -1,8 +1,8 @@
-Template.notification_box.created = function() {
+Template.notification_box.created = function() {	
 	var self = this.data,
 		id = 'notification_'+self._id + '_' + self.getStatus();
-	
-	Deps.afterFlush(function() {
+		
+	Deps.afterFlush(function() {	
 		setTimeout(function() {
 			NotificationBox.changePageTitle(self);
 			NotificationBox.raise();
@@ -11,11 +11,12 @@ Template.notification_box.created = function() {
 				NotificationBox.hide(id);
 			});
 		},50);
+		
+		
+		setTimeout(function() {
+			NotificationBox.hide(id);
+		}, 5000);
 	});
-	
-	setTimeout(function() {
-		NotificationBox.hide(id);
-	}, 5000);
 };
 
 

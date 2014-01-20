@@ -44,13 +44,18 @@ ProspectModel.prototype = {
 	statusClassNames: function() {
 		return ['danger', 'warning', 'info', 'success'];
 	},
+	icons: function() {
+		return ['power-off', 'envelope', 'user', 'share-sign'];
+	},
 	getStatus: function() {
 		return this.statusNames()[this.status];
 	},
 	getStatusClass: function() {
 		return this.statusClassNames()[this.status];
 	},
-	
+	iconClass: function() {
+		return this.icons()[this.status];
+	},
 	
 	displayNotification: function() {
 		if(Session.equals('notifications_on_off', 'off')) return;

@@ -21,7 +21,7 @@
             <tr>
               <th>Email</th>
               <th>Campaign</th>
-		   	  <th style="width:124px;">Date/Time</th>
+		   	  <th style="width:128px;">Date/Time</th>
 			  <th style="width:88px;">Status</th>
 			<th style="width:52px;">Test</th>
             </tr>
@@ -34,7 +34,7 @@
 					  <td><a href="/campaign/update/step-3/{{campaign_id}}">{{getCampaign.name}}</a></td>
 					
 					  <td>{{time 'updated_at'}}</td>
-	                  <td><span class="label label-{{getStatusClass}}">{{getStatus}}</span></td>
+	                  <td><span class="label label-{{getStatusClass}}"><i class="icon-{{iconClass}}"></i> {{getStatus}}</span></td>
 					  <td>
 						{{#if canBeTested}}
 							<a href="/example/page-1?p={{_id}}&c={{campaign_id}}" target="_blank" title="Click to Test visiting the link this prospect receives via email. It will affect your stats so you can verify, but you can undo it." onclick="alert('Careful. You are about to follow the link the prospect received via email. Doing this affects your stats. Click the resulting UNDO button to turn the stats back.')" class="btn btn-default btn-xs test">TEST</a>
