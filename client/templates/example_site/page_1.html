@@ -9,7 +9,7 @@
 	<div style="margin-bottom: 60px;">If you are coming to this page from a test email, you should see the fake prospect fields you provided filled below. Submit the form as if you are actually buying something to land on a fake completion thank you page in order to complete the test.</div>
 	
 	<div id="inputs_holder">
-			<form action="/example/page-2">
+			<form action="/example/page-2/{{session 'p'}}/{{session 'c'}}">
 				<label>First Name</label><input class="vortex_first_name" placeholder="&lt;input class=&quot;vortex_first_name&quot; /&gt;"> <div style="clear:both;"></div>
 				<label>Last Name</label><input class="vortex_last_name" placeholder="&lt;input class=&quot;vortex_last_name&quot; /&gt;"> <div style="clear:both;"></div>
 				<label>Email</label><input class="vortex_email" placeholder="&lt;input class=&quot;vortex_email&quot; /&gt;"> <div style="clear:both;"></div>

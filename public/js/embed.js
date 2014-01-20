@@ -69,8 +69,7 @@ $(function() {
 	try {
 		var $ = $ || jQuery,
 			t = $('#vortex_script').attr('transaction_id'),
-			isTransaction = t && t != 'TRANSACTION_ID' ? true : false,
-			isStep2 = (vc('vp_id') && isTransaction) || false,
+			isStep2 = t && t != 'TRANSACTION_ID' ? true : false,
 			p = isStep2 ? vc('vp_id') : window.location.search.substring(1).split('&')[0].split('=')[1],
 			c = isStep2 ? vc('vc_id') : window.location.search.substring(1).split('&')[1].split('=')[1],
 			d = window.location.protocol + '//' + window.location.host,

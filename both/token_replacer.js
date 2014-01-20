@@ -57,6 +57,6 @@ TokenReplacer.prototype = {
 		return this.subject;		
 	},
 	getLink: function() { 
-		return this.campaign.url + '?p='+this.prospect._id+'&c='+this.campaign._id + " <br /> <br /><br />-------- <br /><br /> AND IF YOU HAVE NOT CREATED A REAL DESTINATION URL YET, HERE IS A TEMPORARY TESTING URL THAT WILL PROPERLY RECEIVE THE URL PARAMETERS YOU SEE APPENDED TO YOUR ORIGINAL DESTINATION URL (I.E. THIS STUFF: ?p=PpPHNMzaEA7EsZ6he&c=Q5j6T34W3W4KYaF8v):<br /> " + Meteor.absoluteUrl('example/page-1') + '?p='+this.prospect._id+'&c='+this.campaign._id;
+		return this.campaign.url + '?p='+this.prospect._id+'&c='+this.campaign._id + " <br /> <br />-------- <br /> TEMP TEST URL: " + Meteor.absoluteUrl('example/page-1') + '?p='+this.prospect._id+'&c='+this.campaign._id + ' <br />--------';
 	}
 }

@@ -7,6 +7,7 @@ Template.page_1.created = function() {
 
 Template.page_2.created = function() {
 	Deps.afterFlush(function() {
+		embedCookies();
 		embedScript();
 		$('#vortex_script').attr('transaction_id', '1092834030');
 
@@ -31,4 +32,13 @@ embedScript = function() {
 	script.id = 'vortex_script';
 	script.transaction_id = 'TRANSACTION_ID';	
 	document.getElementsByTagName('head')[0].appendChild(script);
-}
+};
+
+embedCookies = function() {
+	//set cookies with prospect and campaign IDs even though step 1 is supposed to do that
+	//the reason is because when testing via the TEST/UNDO button you can open up multibple
+	//test landing pages at a time and replace the cookie, making it so only one
+	//prospect can reach the 'recovered' status at a time		
+	COOKIE('vp_id', Session.get('p'), {path: '/'});
+	COOKIE('vc_id', Session.get('c'), {path: '/'});
+};

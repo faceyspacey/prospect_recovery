@@ -166,10 +166,22 @@ Router.map(function () {
 	/** EXAMPLE SITE **/
 	this.route('page_1', {
     	path: '/example/page-1',
+		before: function() {
+			Session.set('p', this.params.p);
+			Session.set('c', this.params.c);
+		},
 		controller: ExampleSiteController
   	});
 	this.route('page_2', {
     	path: '/example/page-2',
+		controller: ExampleSiteController
+  	});
+	this.route('page_2', {
+    	path: '/example/page-2/:p/:c',
+		before: function() {
+			Session.set('p', this.params.p);
+			Session.set('c', this.params.c);
+		},
 		controller: ExampleSiteController
   	});
 });

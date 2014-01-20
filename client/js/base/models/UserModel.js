@@ -109,7 +109,8 @@ UserModel.prototype = {
 	
 	
 	limelightCampaigns: function() {
-		return LimelightCampaigns.find({user_id: this._id}, {sort: {limelight_actual_campaign_id: -1}});
+		if(Roles.userIsInRole(this._id, ['admin'])) return LimelightCampaigns.find({}, {sort: {limelight_actual_campaign_id: -1}});
+		else return LimelightCampaigns.find({user_id: this._id}, {sort: {limelight_actual_campaign_id: -1}});
 	},
 	createLimelightCampaignUrl: function() {
 		return this.limelight_domain + '/admin/campaign/profile.php';

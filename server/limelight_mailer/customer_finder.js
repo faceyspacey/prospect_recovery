@@ -70,13 +70,13 @@ CustomerFinder = {
 		customer.email = decodeURIComponent(customer.email); //it's weird that prospect_find does not need this;
 		console.log('new customer found!', customer);
 		
-		Prospects.update({email: customer.email, status: {$gte: 2}}, {$set: {
+		Prospects.update({email: customer.email, status: {$gte: 1}}, {$set: {
 			status: 3, 
 			recovered_at: moment().toDate(), 
 			updated_at: moment().toDate(), 
 			not_via_link: true
 		}}, function(error, docCountUpdated) {
-				if(docCountUpdated) console.log(error, 'customer found -- prospects /w recovered status:');
+				if(docCountUpdated) console.log(error, 'customer found -- prospects /w recovered status: ', docCountUpdated);
 				else {
 					 Prospects.remove({email: customer.email, status: 0}, function(error, docCountUpdated) {
 						console.log('customer found -- prospects removed:', docCountUpdated);
