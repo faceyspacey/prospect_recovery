@@ -40,6 +40,6 @@ LimelightCampaignModel.prototype = {
 		return Meteor.users.findOne(this.user_id);
 	},
 	url: function() {
-		return this.user().limelight_domain +'/admin/campaign/profile.php?id='+this.id;
+		return this.user().limelight_domain +'/admin/campaign/profile.php?id='+this.limelight_actual_campaign_id;
 	}
 };

@@ -61,23 +61,22 @@ CampaignModel.prototype = {
 	approvalText: function() {
 		return this.approved ? 'disapprove' : 'approve';
 	},
+	discoveries: function() {
+		return this.statsReady() ? Stats.findOne().campaigns[this._id].discoveries || 0 : 0;
+	},
 	deliveries: function() {
-		if(!Stats.findOne()) return;
-		if(!Stats.findOne().campaigns[this._id]) return;
-		
-		return Stats.findOne().campaigns[this._id].deliveries;
+		return this.statsReady() ? Stats.findOne().campaigns[this._id].deliveries || 0 : 0;
 	},
 	returns: function() {
-		if(!Stats.findOne()) return;
-		if(!Stats.findOne().campaigns[this._id]) return;
-		
-		return Stats.findOne().campaigns[this._id].returns;
+		return this.statsReady() ? Stats.findOne().campaigns[this._id].returns || 0 : 0;
 	},
-	recoveries: function() {
-		if(!Stats.findOne()) return;
-		if(!Stats.findOne().campaigns[this._id]) return;
-		
-		return Stats.findOne().campaigns[this._id].recoveries;
+	recoveries: function() {	
+		return this.statsReady() ? Stats.findOne().campaigns[this._id].recoveries || 0 : 0;
+	},
+	statsReady: function() {
+		if(!Stats.findOne()) return false;
+		if(!Stats.findOne().campaigns[this._id]) return false;
+		return true;
 	}
 };
 

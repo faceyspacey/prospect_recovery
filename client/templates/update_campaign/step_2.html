@@ -27,7 +27,7 @@
 				</th>
               <th>ID</th>
               <th>Limelight Campaign</th>
-			  <th>Open in Limelight</th>
+			  <th>Open in Lime Light</th>
               <th style="width: 170px;">Destination Campaign</th>
             </tr>
           </thead>
@@ -43,7 +43,11 @@
 								{{/if}}
 						  </td>
 		                  <td>{{limelight_actual_campaign_id}}</td>
-						  <td>{{cleanCampaignName}}</td>
+						  <td>{{name}}
+							{{#if currentUser.isAdmin}}
+								<br /><span style="font-size: 12px;">Lime Light Account: <i>{{user.limelight_domain}}</i></span>
+							{{/if}}
+							</td>
 
 		                  <td>
 		                    <a href="{{url}}" target="_blank">open in Lime Light</a>

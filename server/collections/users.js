@@ -18,3 +18,10 @@ Meteor.users.allow({
     },
 	fetch: ['_id']
 });
+
+
+Meteor.methods({
+	domainInUse: function(domain) {
+		return Meteor.users.findOne({limelight_domain: domain, _id: {$ne: Meteor.userId()}}) ? true : false;
+	}
+});

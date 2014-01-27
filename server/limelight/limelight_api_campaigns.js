@@ -52,13 +52,13 @@ LimelightApiCampaigns.prototype = {
 		_.each(campaigns, function(campaign, id) {
 			if(id > self.user.highest_limelight_campaign_id) { //if newly found lime light campaign
 				campaign.user_id = self.user._id;
-				campaign.name = decodeURIComponent(campaign.name);
+				campaign.name = self.prepName(campaign.name);
 				LimelightCampaigns.insert(campaign);
 				
 				if(id > highestId) highestId = id; //prepare highest id for storage in user model
 			}
-			else if(ourLLcampaigns[id] && ourLLcampaigns[id].name != decodeURIComponent(campaign.name)) { //update changed limelight campaign names
-				LimelightCampaigns.update(ourLLcampaigns[id]._id, {$set: {name: decodeURIComponent(campaign.name)}});
+			else if(ourLLcampaigns[id] && ourLLcampaigns[id].name != self.prepName(campaign.name)) { //update changed limelight campaign names
+				LimelightCampaigns.update(ourLLcampaigns[id]._id, {$set: {name: self.prepName(campaign.name)}});
 			}
 		});
 		
@@ -71,5 +71,9 @@ LimelightApiCampaigns.prototype = {
 		_.each(ourLLcampaigns, function(ourLLcampaign, id) {
 			if(!LLcampaigns[id]) LimelightCampaigns.remove(ourLLcampaign._id); //campaign doesn't exist in Lime Light anymore.
 		});
+	},
+	prepName: function(name) {
+		return decodeURIComponent(name.replace(/\+/g, ' ')); //i need to implement this some time.
 	}
 };
+

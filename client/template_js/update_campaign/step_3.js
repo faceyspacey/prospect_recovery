@@ -60,6 +60,12 @@ Template.step_3.events({
 			campaign.mailgun_dkim_value = campaignWithDomain.mailgun_dkim_value;
 		}
 		
+		//when we reset the site, we can't get this from mailgun domain create endpoint cuz its already created
+		if(campaign.domain == 'vortexmailer.com') {
+			campaign.mailgun_dkim_hostname = 'mx._domainkey.vortexmailer.com';
+			campaign.mailgun_dkim_value = 'k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBiRlMsWFsb1oR7v1IfwOMv1Pqk7kziXpWI8Y2lmrAdMF3RKyakzUKR8IlU7g4v1sTiC9kAsjzW31dYgTIq7VI6ihxbP6GRBKyO0NJxCv6TSP0DRx6I8eNGjkLW5F4Mixy1EXKMfu8PG8bsRnNMUr42kEyTMf5adcEs351GmCQ1wIDAQAB';
+		}
+		
 		//booya
 		campaign.save();
 		

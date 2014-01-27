@@ -30,13 +30,15 @@ Template.limelight_account_info.events({
 		}
 		
 		
-		var alreadyDomain = Meteor.users.findOne({limelight_domain: domain, _id: {$not: Meteor.userId()}});
-		if(alreadyDomain) {
-			Session.set('loading_limelight_login', false);
-			return FlashMessages.sendError('That Limelight Domain is already in use. Only one user per domain please.');
-		}
-				
-		Meteor.user().loginToLimelight(domain, username, password);
+		Meteor.call('domainInUse', domain, function(error, inUse) {
+			if(error) return FlashMessages.sendError('Something is wrong with the domain you entered.'); 
+			
+			if(inUse) {
+				Session.set('loading_limelight_login', false);
+				return FlashMessages.sendError('That Limelight Domain is already in use. Only one user per domain please.');
+			}
+			else Meteor.user().loginToLimelight(domain, username, password);
+		}); 
 	}
 });
 
