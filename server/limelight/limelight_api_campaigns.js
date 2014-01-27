@@ -33,10 +33,11 @@ LimelightApiCampaigns.prototype = {
 		
 		var campaignIds = response[0].split(','),
 			campaignNames = response[1].split(',')
-			campaigns = [];
+			campaigns = {};
 			
 		_.each(campaignIds, function(id, index) {
-			campaigns.push({limelight_actual_campaign_id: parseInt(id), name: campaignNames[index]});
+			id = parseInt(id);
+			campaigns[id] = {limelight_actual_campaign_id: id, name: campaignNames[index]};
 		});
 		
 		console.log('limelight campaigns parsed', campaigns);
@@ -46,20 +47,29 @@ LimelightApiCampaigns.prototype = {
 		var highestId = this.user.highest_limelight_campaign_id,
 			self = this;
 
-		_.each(campaigns, function(campaign) {
-			var id = campaign.limelight_actual_campaign_id;
-			console.log(id,  self.user.highest_limelight_campaign_id, campaign);
-			
-			if(id > self.user.highest_limelight_campaign_id) {
+		var ourLLcampaigns = _.indexBy(LimelightCampaigns.find({user_id: this.user._id}).fetch(), 'limelight_actual_campaign_id');
+		
+		_.each(campaigns, function(campaign, id) {
+			if(id > self.user.highest_limelight_campaign_id) { //if newly found lime light campaign
 				campaign.user_id = self.user._id;
 				campaign.name = decodeURIComponent(campaign.name);
 				LimelightCampaigns.insert(campaign);
 				
-				if(id > highestId) highestId = id;
+				if(id > highestId) highestId = id; //prepare highest id for storage in user model
+			}
+			else if(ourLLcampaigns[id] && ourLLcampaigns[id].name != decodeURIComponent(campaign.name)) { //update changed limelight campaign names
+				LimelightCampaigns.update(ourLLcampaigns[id]._id, {$set: {name: decodeURIComponent(campaign.name)}});
 			}
 		});
 		
 		if(highestId > this.user.highest_limelight_campaign_id) 
 			Meteor.users.update(this.user._id, {$set: {highest_limelight_campaign_id: highestId}});
+			
+		this._removeDeletedCampaigns(ourLLcampaigns, campaigns);
+	},
+	_removeDeletedCampaigns: function(ourLLcampaigns, LLcampaigns) {
+		_.each(ourLLcampaigns, function(ourLLcampaign, id) {
+			if(!LLcampaigns[id]) LimelightCampaigns.remove(ourLLcampaign._id); //campaign doesn't exist in Lime Light anymore.
+		});
 	}
 };

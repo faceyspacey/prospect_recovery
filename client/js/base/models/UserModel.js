@@ -136,15 +136,15 @@ UserModel.prototype = {
 
 
 UserModel.successes = {
-	loginToLimelight: 'Successfully logged into Limelight on your behalf.',
-	createLimelightApiAccount: 'Successfully created your Vortex Limelight API Key!',
-	updateLimelightCampaignsMessage: "Successfully synced your Limelight campaigns!!",
-	loginComplete: 'Limelight CRM Fully Synced! Welcome to VORTEX CONVERT!!!'
+	loginToLimelight: 'Successfully logged into Lime Light on your behalf.',
+	createLimelightApiAccount: 'Successfully created your Vortex Lime Light API Key!',
+	updateLimelightCampaignsMessage: "Successfully synced your Lime Light campaigns!!",
+	loginComplete: 'Lime Light CRM Fully Synced! Welcome to VORTEX CONVERT!!!'
 };
 
 
 UserModel.errors = {
-	loginToLimelight: 'We were unable to login to Limelight on your behalf. If you are sure your login credentials are correct, please report error code 01 to support@vortexconvert.com.',
-	createLimelightApiAccount: 'We were unable to create a Limelight API account on your behalf. Please report error code 02 to support@vortexconvert.com.',
-	updateLimelightCampaignsMessage: 'There is something wrong with limelight. We failed to pull in your latest Limelight campaigns. Please report error code 03 to support@vortextconvert.com.'
+	loginToLimelight: 'We were unable to login to Lime Light on your behalf. If you are sure your login credentials are correct, please report error code 01 to support@vortexconvert.com.',
+	createLimelightApiAccount: 'We were unable to create a Lime Light API account on your behalf. Please report error code 02 to support@vortexconvert.com.',
+	updateLimelightCampaignsMessage: 'There is something wrong with Lime Light. We failed to pull in your latest Lime Light campaigns. Please report error code 03 to support@vortextconvert.com.'
 };

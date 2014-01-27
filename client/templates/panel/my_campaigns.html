@@ -10,27 +10,25 @@
             <tr>
               <th>Name</th>
               <th>URL</th>
-              <th title="Email Deliveries" style="width: 50px;">Dels</th>
-		   	  <th title="Prospect Returns" style="width: 50px;">Rets</th>
-			  <th title="Prospect/Customer Recoveries" style="width: 50px;">Recs</th>
-		   	  <th>Status</th>
-              <th style="width: 170px;">Actions</th>
+              <th title="Email Deliveries / Prospect Returns / Customer Recoveries" style="width: 50px;">Stats*</th>
+		   	  <th style="width: 126px;">Status</th>
+              <th style="width: 166px;">Actions</th>
             </tr>
           </thead>
           <tbody>
            
 				{{#each campaigns}}
 					<tr>
-	                  <td><a href="/campaign/update/step-3/{{_id}}"> {{name}}</a></td>
-	                  <td>{{url}}</td>
+	                  <td style="width: 180px;"><a href="/campaign/update/step-3/{{_id}}"> {{name}}</a></td>
+	                  <td style="max-width: 250px;word-wrap: break-word;">{{url}}</td>
 					
-	                  <td class="text-right" id="deliveries_{{_id}}">{{deliveries}}</td>
-					  <td class="text-right" id="returns_{{_id}}">{{returns}}</td>
-					  <td class="text-right" id="recoveries_{{_id}}">{{recoveries}}</td>
+	                  <td class="text-right">
+							{{deliveries}}/{{returns}}/{{recoveries}}
+					  </td>
 					
 	                  <td><span class="label label-{{statusClass}}">{{statusName}}</span></td>
 	
-	                  <td class="text-right">				
+	                  <td class="text-right" style="width: 166px;">				
 						<a href="#" class="btn btn-default btn-xs pause_play"><i class="icon-{{statusText}}"></i></a>
 	                    <a href="/campaign/update/step-3/{{_id}}" class="btn btn-default btn-xs"><i class="icon-pencil"></i> edit</a>
 						<a href="/campaign/test/{{_id}}" class="btn btn-info btn-xs"><i class="icon-envelope"></i> test</a>
@@ -42,6 +40,9 @@
            
           </tbody>
         </table>
+
+		<p><i>*NOTE: Stats include: delivered emails / returned prospects / recovered customers.</i></p>
+			
         </div>
       </div>
     </div>

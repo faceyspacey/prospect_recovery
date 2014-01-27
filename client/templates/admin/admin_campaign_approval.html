@@ -10,10 +10,9 @@
             <tr>
 			  <th>Client</th>
               <th>Campaign Name</th>
-              <th>URL</th>
 
 		   	  <th>Approved</th>
-              <th style="width: 198px;">Actions</th>
+              <th style="width: 194px;">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -22,11 +21,10 @@
 					<tr>
 					  <td>{{user.getEmail}}</td>
 	                  <td><a href="/campaign/update/step-3/{{_id}}"> {{name}}</a></td>
-	                  <td>{{url}}</td>
 					
 	                  <td><span class="label label-{{approvalClass}}">{{approvalName}}</span></td>
 	
-	                  <td class="text-right">
+	                  <td class="text-right" style="width:194px;">
 						<a href="/campaign/admin/dns/{{_id}}" class="btn btn-default btn-xs dns"><i class="icon-wrench"></i> dns</a>
 						<a href="/campaign/admin/pixel/{{_id}}"  class="btn btn-default btn-xs pixel"><i class="icon-dollar"></i> pixel</a>
 						

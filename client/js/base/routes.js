@@ -28,7 +28,9 @@ ExampleSiteController = RouteController.extend({
 PanelController = RouteController.extend({
 	layoutTemplate: 'main_layout',
 
-  	before: function () {	
+  	before: function () {
+		if(!this.ready()) return;
+		
 		Session.set('current_page', this.route.name);	
 		if(!this.template) this.template = this.route.name;
 
@@ -48,7 +50,9 @@ PanelController = RouteController.extend({
 		this.render();
 	},
 	after: function () {},
-	waitOn: function () {}
+	waitOn: function () {
+		return campaignsSub;
+	}
 });
 
 Router.map(function () {
@@ -61,6 +65,11 @@ Router.map(function () {
 	this.route('faq', {
     	path: '/faq',
 		template: 'faq',
+		controller: PublicController
+  	});
+	this.route('faq_private', {
+    	path: '/faq-private',
+		template: 'faq_private',
 		controller: PublicController
   	});
 
@@ -100,7 +109,13 @@ Router.map(function () {
 
 	this.route('my_campaigns', {
     	path: '/my-campaigns',
-		controller: PanelController
+		controller: PanelController,
+		before: function() {
+			Campaigns.find({complete: false, user_id: Meteor.userId()}).forEach(function(campaign) {
+				campaign.update({limelight_destination_campaign_id: null});
+				Meteor.call('unsetLimelightCampaigns', campaign._id);
+			});
+		}
   	});
 
 	this.route('update_campaign_step_1', {

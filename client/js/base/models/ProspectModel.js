@@ -81,5 +81,8 @@ ProspectModel.prototype = {
 	},
 	getCampaign: function() {
 		return Campaigns.findOne({_id: this.campaign_id});
+	},
+	getDeliveryMinutesLapsed: function() {
+		if(this.delivered_at) return ((this.delivered_at - this.discovered_at)/(1000 * 60) + '').substring(0, 4) + ' minutes';
 	}
 };

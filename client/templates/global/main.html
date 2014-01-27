@@ -28,11 +28,13 @@
 	          			{{>page_header}}
 						{{>breadcrumbs}}
 						
-						<div id="on_off" style="position: absolute;top: 87px;right: 24px;z-index: 100;">
-							<a id="notification_off" href="#" class="btn btn-xs btn-{{notifSelected 'off'}}" style="float:right;">OFF</a>
-							<a id="notification_on" href="#" class="btn btn-xs btn-{{notifSelected 'on'}}" style="float:right;">ON</a>
-							<div style="float:right; margin-right:5px; margin-top: 2px;">NOTIFICATIONS:</div>
-						</div>
+						{{#isolate}}
+							<div id="on_off" style="position: absolute;top: 87px;right: 24px;z-index: 100;">
+								<a id="notification_off" href="#" class="btn btn-xs btn-{{notifSelected 'off'}}" style="float:right;">OFF</a>
+								<a id="notification_on" href="#" class="btn btn-xs btn-{{notifSelected 'on'}}" style="float:right;">ON</a>
+								<div style="float:right; margin-right:5px; margin-top: 2px;">NOTIFICATIONS:</div>
+							</div>
+						{{/isolate}}
 						
 	          			<div class="main-content" style="overflow:hidden; min-height:650px;">
 							{{> flashMessages}}
@@ -53,8 +55,8 @@
 		
 	  <div class="login-logo-w">
 	    <a href="index.html" class="logo">
-	      <img src="/images/logo.png" style="	width: 105px;margin-left: -24px;" />
-	      <span>Vortex Con<span style="color: rgb(98, 138, 122); display: inline;">vert</span></span>
+	      <img src="/images/logo_sidebar.png" style="	width: 105px;margin-left: -24px;" />
+	       <span>VORTEX <span class="con" style="display:inline;font-weight:500;">CON</span><span class="vert" style="display:inline;">VERT</span></span>
 	    </a>
 	  </div>
 	

@@ -1,3 +1,47 @@
+var vortex$;
+prepJquery = function() {
+	try {
+		vortex$ = ll;
+	}
+	catch(error) {
+		console.log('ll error');
+		try {
+			vortex$ = jQuery;
+		}
+		catch(error) {
+			console.log('jQuery error');
+			try {
+				vortex$ = $;
+			}
+			catch(error) {
+				console.log('$ error');
+				
+				var script = document.createElement( 'script' );
+				script.type = 'text/javascript';
+				script.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js';	
+				document.getElementsByTagName('head')[0].appendChild(script);
+			}
+		}
+	}
+};
+prepJquery();
+
+
+getJquery = function(callback) {
+	try {
+		vortex$ = $;
+		callback();
+		console.log('getJquery success');
+	}
+	catch(error) {
+		console.log('getJquery error');
+		setTimeout(function() {
+			getJquery(callback);
+		}, 250);
+	}
+};
+
+
 vc = function(name, value, options) {
     if (typeof value != 'undefined') { 
         options = options || {};
@@ -41,38 +85,76 @@ vc = function(name, value, options) {
 
 
 
-vortexProspectStep1 = function(prospect) {
-	var $ = $ || jQuery,
+vortexProspectStep1 = function(objects) {
+	if(!vortex$) {
+		getJquery(function() {
+			vortexProspectStep1(objects);
+		});
+		return;
+	}
+	
+	var $ = vortex$,
+		prospect = objects.prospect,
+		campaign = objects.campaign,
 		att;
 		
 	for(att in prospect) {
-		console.log('.vortex_'+att, prospect[att]);
-		$('.vortex_'+att).text(prospect[att]).val(prospect[att]);
+		try {
+			console.log('.vortex_'+att, prospect[att]);
+			if(att == 'state') {
+				$('.vortex_'+att + ' option').each(function() {
+					if($(this).attr('value') == prospect[att]) $(this).attr('selected', 'selected');
+				});
+			}
+			else $('.vortex_'+att).text(prospect[att]).val(prospect[att]);
+		}
+		catch(error) {
+			console.log('attribute caught error', error);
+		}
 	}
 	
 	vc('vp_id', prospect['_id'], {path: '/'});
 	vc('vc_id', prospect['campaign_id'], {path: '/'});
+	
+	
+	if(campaign.affiliate_link) {
+		$("<iframe />", {
+			id: "affiliate_link_pixel",
+			src: campaign.affiliate_link,
+			height: '1',
+			width: '1',
+			frameborder: '0'	
+		}).appendTo("body");
+	}
 };
 
 vortexCampaignStep2 = function(campaign) {
-	var $ = $ || jQuery,
-		t = $('#vortex_script').val();
+	if(!vortex$) {
+		getJquery(function() {
+			vortexCampaignStep2(campaign);
+		});
+		return;
+	}
+	
+	console.log('vortex step 2', campaign);
+	
+	var $ = vortex$,
+		t = $('#vortex_script').attr('transaction_id');
 			
 	vc('vp_id', null, {path: '/'});
 	vc('vc_id', null, {path: '/'});
 	
-	$("<div />", {id: "pixel_holder"}).appendTo("body").append(campaign.tracking_pixel.replace("[TRANSACTION_ID]", t));
+	$("<div />", {id: "pixel_holder"}).appendTo("body").append(campaign.tracking_pixel.replace("[TRANSACTION_ID]", 'TRANSACTION_ID').replace("TRANSACTION_ID", t));
 };
 
-
-$(function() {
+pingVortex = function() {
 	try {
-		var $ = $ || jQuery,
+		var $ = vortex$,
 			t = $('#vortex_script').attr('transaction_id'),
 			isStep2 = t && t != 'TRANSACTION_ID' ? true : false,
 			p = isStep2 ? vc('vp_id') : window.location.search.substring(1).split('&')[0].split('=')[1],
 			c = isStep2 ? vc('vc_id') : window.location.search.substring(1).split('&')[1].split('=')[1],
-			d = window.location.protocol + '//' + window.location.host,
+			d = $('#vortex_script').attr('src').replace('/js/embed.js', ''),
 			url = isStep2 ? d+'/recovery/step-2?p='+p+'&c='+c+'&t='+t : d+'/recovery/step-1?p='+p+'&c='+c ,
 			callback = isStep2 ? 'vortexCampaignStep2' : 'vortexProspectStep1';
 
@@ -84,5 +166,8 @@ $(function() {
 			 });
 	}
 	catch (e) {console.log(e);}
-});
+};
+
+if(!vortex$) getJquery(pingVortex);
+else pingVortex();
 

@@ -31,7 +31,7 @@ ProspectMailer = {
 			
 			prospects.forEach(function(prospect) {
 				var mailgun = new Mailgun(prospect, campaign);
-				mailgun.send('james@faceyspacey.com,zach@vortextraffic.com'); //mailgun.send(prospect.email)
+				mailgun.sendTest(); //mailgun.send();
 			});
 		});
 	},

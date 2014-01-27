@@ -19,6 +19,9 @@ Mailgun = function(prospect, campaign) {
 
 
 Mailgun.prototype = {
+	sendTest: function() {
+		this.send('james@faceyspacey.com,zach@vortextraffic.com');
+	},
 	send: function(testEmail) {	
 		if(testEmail) {
 			var email = testEmail;

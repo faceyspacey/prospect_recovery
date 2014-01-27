@@ -72,11 +72,6 @@ Template.step_3.events({
 		Router.go('my_campaigns');
 	},
 	'click .cancel': function() {
-		campaign = CampaignModel.current();
-		campaign.status = 'pause';
-		
-		campaign.save();
-		
 		Router.go('my_campaigns');
 	},
 	'click #edit_limelight_campaigns': function() {
@@ -102,5 +97,5 @@ prepCampaignFields = function(campaign) {
 	campaign.from_name = $('#from_name').val();
 	campaign.minutes_delay = parseInt($('#email_delay').val());
 	campaign.continue_recovery = $('#continue_recovery').is(':checked');
-	campaign.play = true;
+	campaign.play = false;
 }

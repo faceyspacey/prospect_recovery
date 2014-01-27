@@ -64,7 +64,7 @@ Model = {
 	},
 	isMongoAttribute: function(prop) {
 		if(_.isFunction(this[prop])) return false;
-		if(prop == '_id' || prop == 'errors' || prop == '_local') return false;
+		if(prop == '_id' || prop == 'errors' || prop == '_local' || prop == 'defaultValues' || prop == 'collectionName') return false;
 		return true;
 	},
 	time: function(field) {

@@ -33,7 +33,12 @@
 	                  <td>{{email}}</td>
 					  <td><a href="/campaign/update/step-3/{{campaign_id}}">{{getCampaign.name}}</a></td>
 					
-					  <td>{{time 'updated_at'}}</td>
+					  <td>{{time 'discovered_at'}} 
+						{{#if delivered_at}} 
+							<br />DELIVERED AT:</br /> {{time 'delivered_at'}}
+							<br />TIME LAPSED:</br /> {{getDeliveryMinutesLapsed}}
+						{{/if}}
+					</td>
 	                  <td><span class="label label-{{getStatusClass}}"><i class="icon-{{iconClass}}"></i> {{getStatus}}</span></td>
 					  <td>
 						{{#if canBeTested}}

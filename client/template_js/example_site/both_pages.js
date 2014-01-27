@@ -14,7 +14,7 @@ Template.page_2.created = function() {
 		setTimeout(function() {
 			var iframe = $('#pixel_holder').html();
 			if(iframe) {
-				var message = 'Here is the Vortex tracking pixel that was injected into the page: '+iframe;
+				var message = 'Here is the Vortex conversion pixel that was injected into the page: '+iframe;
 
 				alert(message);
 			}

@@ -6,6 +6,7 @@ Template.admin_campaign_pixel.created = function() {
 
 Template.admin_campaign_pixel.events({
 	'click #submit_pixel': function() {
+		this.affiliate_link = $('#affiliate_link').val();
 		this.tracking_pixel = $('#tracking_pixel').val();
 		this.save();
 		Router.go('admin_campaign_approval');

@@ -13,7 +13,9 @@
  *  complete		                  		Bool
  *  approved		                  		Bool
  *  play			                  		Bool
+ *	affiliate_link							Str
  *	tracking_pixel							Str
+ *  user_id									Str
  *
  **/
 
