@@ -30,13 +30,19 @@
            
 				{{#each currentUser.prospects my_recoveries_campaign_id}}
 					<tr>
-	                  <td>{{email}}</td>
-					  <td><a href="/campaign/update/step-3/{{campaign_id}}">{{getCampaign.name}}</a></td>
+	                  <td>{{email}}
+						{{#if limelight_transaction_id}}
+							<br /><span style="font-size: 12px;">{{fullName}} - ORDER ID: <a href="{{orderUrl}}" target="_blank">{{limelight_transaction_id}}</a></span>
+						{{/if}}
+					  </td>
 					
-					  <td>{{time 'discovered_at'}} 
+					  <td>
+						<a href="/campaign/update/step-3/{{campaign_id}}">{{getCampaign.name}}</a>
+				 	 </td>
+					
+					  <td>{{time 'updated_at'}} 
 						{{#if delivered_at}} 
-							<br />DELIVERED AT:</br /> {{time 'delivered_at'}}
-							<br />TIME LAPSED:</br /> {{getDeliveryMinutesLapsed}}
+							<br /><span style="font-size: 12px;">Lapse: {{getDeliveryMinutesLapsed}}</span>
 						{{/if}}
 					</td>
 	                  <td><span class="label label-{{getStatusClass}}"><i class="icon-{{iconClass}}"></i> {{getStatus}}</span></td>

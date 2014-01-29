@@ -38,6 +38,16 @@ ProspectModel = function(doc) {
 
 
 ProspectModel.prototype = {
+	fullName: function() {
+		return this.first_name + ' ' + this.last_name;
+	},
+	user: function() {
+		return Meteor.users.findOne(this.user_id);
+	},
+	orderUrl: function() {
+		return this.user().limelight_domain +'/admin/orders.php?show_details=show_details&show_folder=view_all&fromPost=1&act=&page=0&show_by_id='+this.limelight_transaction_id;
+	},
+	
 	statusNames: function() {
 		return ['discovered', 'delivered', 'returned', 'recovered'];
 	},
@@ -83,6 +93,6 @@ ProspectModel.prototype = {
 		return Campaigns.findOne({_id: this.campaign_id});
 	},
 	getDeliveryMinutesLapsed: function() {
-		if(this.delivered_at) return ((this.delivered_at - this.discovered_at)/(1000 * 60) + '').substring(0, 4) + ' minutes';
+		if(this.delivered_at) return ((this.delivered_at - this.discovered_at)/(1000 * 60) + '').substring(0, 3) + ' min';
 	}
 };

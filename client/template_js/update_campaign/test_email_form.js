@@ -42,11 +42,11 @@ Template.test_email.events({
 		prospect.discovered_at = moment().toDate();
 		prospect.created_at = moment().toDate();
 		prospect.updated_at = moment().toDate();
-		prospect.user_id = Meteor.userId();
 
 		var campaign = CampaignModel.current();
-		
+
 		prospect.campaign_id = campaign._id;
+		prospect.user_id = campaign.user_id;
 		prospect.save();
 		
 		

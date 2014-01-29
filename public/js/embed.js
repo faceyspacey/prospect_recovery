@@ -42,6 +42,13 @@ getJquery = function(callback) {
 };
 
 
+getParameterByName = function(url, name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(url);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+};
+
 vc = function(name, value, options) {
     if (typeof value != 'undefined') { 
         options = options || {};
@@ -113,9 +120,6 @@ vortexProspectStep1 = function(objects) {
 		}
 	}
 	
-	vc('vp_id', prospect['_id'], {path: '/'});
-	vc('vc_id', prospect['campaign_id'], {path: '/'});
-	
 	
 	if(campaign.affiliate_link) {
 		$("<iframe />", {
@@ -126,6 +130,9 @@ vortexProspectStep1 = function(objects) {
 			frameborder: '0'	
 		}).appendTo("body");
 	}
+	
+	vc('vp_id', prospect['_id'], {path: '/'});
+	vc('vc_id', prospect['campaign_id'], {path: '/'});
 };
 
 vortexCampaignStep2 = function(campaign) {
@@ -139,23 +146,25 @@ vortexCampaignStep2 = function(campaign) {
 	console.log('vortex step 2', campaign);
 	
 	var $ = vortex$,
-		t = $('#vortex_script').attr('transaction_id');
-			
+		t = getParameterByName(window.location.search, 'order_id')
+		pixel = campaign.tracking_pixel.replace("[TRANSACTION_ID]", 'TRANSACTION_ID').replace("TRANSACTION_ID", t);
+
+	$("<div />", {id: "pixel_holder"}).appendTo("body").append(pixel);
+	
 	vc('vp_id', null, {path: '/'});
 	vc('vc_id', null, {path: '/'});
-	
-	$("<div />", {id: "pixel_holder"}).appendTo("body").append(campaign.tracking_pixel.replace("[TRANSACTION_ID]", 'TRANSACTION_ID').replace("TRANSACTION_ID", t));
 };
 
 pingVortex = function() {
 	try {
 		var $ = vortex$,
-			t = $('#vortex_script').attr('transaction_id'),
-			isStep2 = t && t != 'TRANSACTION_ID' ? true : false,
+			t = getParameterByName(window.location.search, 'order_id'),
+			cuid = getParameterByName(window.location.search, 'Customer_Id') || 'TEST_CUSTOMER',
+			isStep2 = vc('vp_id') ? true : false,
 			p = isStep2 ? vc('vp_id') : window.location.search.substring(1).split('&')[0].split('=')[1],
 			c = isStep2 ? vc('vc_id') : window.location.search.substring(1).split('&')[1].split('=')[1],
-			d = $('#vortex_script').attr('src').replace('/js/embed.js', ''),
-			url = isStep2 ? d+'/recovery/step-2?p='+p+'&c='+c+'&t='+t : d+'/recovery/step-1?p='+p+'&c='+c ,
+			d = $('script[src$="/js/embed.js"]').attr('src').replace('/js/embed.js', ''),
+			url = isStep2 ? d+'/recovery/step-2?p='+p+'&c='+c+'&t='+t +'&cuid='+cuid : d+'/recovery/step-1?p='+p+'&c='+c ,
 			callback = isStep2 ? 'vortexCampaignStep2' : 'vortexProspectStep1';
 
 		$.ajax({

@@ -192,10 +192,11 @@ Router.map(function () {
 		controller: ExampleSiteController
   	});
 	this.route('page_2', {
-    	path: '/example/page-2/:p/:c',
+    	path: '/example/page-2/:p/:c/:order_id',
 		before: function() {
 			Session.set('p', this.params.p);
 			Session.set('c', this.params.c);
+			Session.set('order_id', this.params.order_id);
 		},
 		controller: ExampleSiteController
   	});

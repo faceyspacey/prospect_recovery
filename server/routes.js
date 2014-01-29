@@ -21,7 +21,7 @@ Router.map(function () {
 			this.response.writeHead(200, {'Content-Type': 'application/json'});
 	      	this.response.end(json);
 	
-			//if(campaign.continue_recovery) continueRecovery(this.params.p, this.params.c);
+			if(campaign.continue_recovery) continueRecovery(this.params.p, this.params.c);
     	}
   	});
 
@@ -32,7 +32,8 @@ Router.map(function () {
     	action: function () {
 			Prospects.update(this.params.p, {$set: {
 				status: 3, 
-				transaction_id: this.params.t, 
+				limelight_transaction_id: this.params.t, 
+				limelight_customer_id: this.params.cuid, 
 				recovered_at: moment().toDate(),
 				updated_at: moment().toDate()
 			}}, function() {});
@@ -54,8 +55,15 @@ var continueRecovery = function(p, c) {
 	setTimeout(function() {
 		var prospect = Prospects.findOne(p);
 		if(prospect.status < 3) {
+			c.email_subject = 'LAST CHANCE: ' + c.email_subject;
 			var mailgun = new Mailgun(prospect, Campaigns.findOne(c));
 			mailgun.sendTest(); //mailgun.send();
 		}
-	}, campaign.minutes_delay * 60 * 1000);
+	}, 10 * 60 * 1000);
 };
+
+Meteor.methods({
+	continueRecovery: function(p, c) {
+		continueRecovery(p, c);
+	}
+});

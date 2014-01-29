@@ -70,7 +70,7 @@ CustomerFinder = {
 		customer.email = decodeURIComponent(customer.email); //it's weird that prospect_find does not need this;
 		console.log('new customer found!', customer);
 		
-		Prospects.update({email: customer.email, status: {$gte: 2}}, {$set: {
+		Prospects.update({email: customer.email, status: 2}, {$set: {
 			status: 3, 
 			recovered_at: moment().toDate(), 
 			updated_at: moment().toDate(), 

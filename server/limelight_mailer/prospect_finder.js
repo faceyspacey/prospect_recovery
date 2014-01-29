@@ -98,6 +98,6 @@ ProspectFinder = {
 		
 		console.log('new prospect!', userId, campaignId, prospect);
 		
-		Prospects.upsert({email: prospect.email, status: 0, user_id: userId, campaign_id: campaignId}, {$set: prospect}, function() {});
+		Prospects.upsert({email: prospect.email, status: 0}, {$set: prospect}, function() {});
 	}
 };
