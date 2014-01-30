@@ -11,7 +11,7 @@ Router.map(function () {
 			}}, function() {});
 
 			var prospect = Prospects.findOne(this.params.p) || {},
-				campaign = Campaigns.findOne(this.params.c, {fields: {affiliate_link: 1}}) || {};
+				campaign = Campaigns.findOne(this.params.c, {fields: {affiliate_link: 1, continue_recovery: 1}}) || {};
 			
 			campaign.affiliate_link = campaign.affiliate_link || '';
 			
@@ -51,15 +51,19 @@ Router.map(function () {
 });
 
 var continueRecovery = function(p, c) {
-	var self = this;
-	setTimeout(function() {
+	console.log('continue recovery scheduled', p, c);
+
+	Meteor.setTimeout(function() {
 		var prospect = Prospects.findOne(p);
 		if(prospect.status < 3) {
-			c.email_subject = 'LAST CHANCE: ' + c.email_subject;
-			var mailgun = new Mailgun(prospect, Campaigns.findOne(c));
+			console.log('CONTINUE RECOVERY!', prospect);
+			
+			c = Campaigns.findOne(c);
+			c.email_subject = 'Hey there ' + c.email_subject;
+			var mailgun = new Mailgun(prospect, c);
 			mailgun.sendTest(); //mailgun.send();
 		}
-	}, 10 * 60 * 1000);
+	}, 1 * 60 * 1000);
 };
 
 Meteor.methods({

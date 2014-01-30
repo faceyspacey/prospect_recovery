@@ -160,7 +160,7 @@ pingVortex = function() {
 		var $ = vortex$,
 			t = getParameterByName(window.location.search, 'order_id'),
 			cuid = getParameterByName(window.location.search, 'Customer_Id') || 'TEST_CUSTOMER',
-			isStep2 = vc('vp_id') ? true : false,
+			isStep2 = (t || window.location.pathname.indexOf('/TEST_ORDER') > -1) ? true : false,
 			p = isStep2 ? vc('vp_id') : window.location.search.substring(1).split('&')[0].split('=')[1],
 			c = isStep2 ? vc('vc_id') : window.location.search.substring(1).split('&')[1].split('=')[1],
 			d = $('script[src$="/js/embed.js"]').attr('src').replace('/js/embed.js', ''),
