@@ -146,7 +146,8 @@ vortexCampaignStep2 = function(campaign) {
 	console.log('vortex step 2', campaign);
 	
 	var $ = vortex$,
-		t = getParameterByName(window.location.search, 'order_id')
+		winLo = window.location,
+		t = getParameterByName(winLo.search, 'order_id') || (winLo.pathname.indexOf('/TEST_ORDER') > -1 ? 'TEST_ORDER' : ''),
 		pixel = campaign.tracking_pixel.replace("[TRANSACTION_ID]", 'TRANSACTION_ID').replace("TRANSACTION_ID", t);
 
 	$("<div />", {id: "pixel_holder"}).appendTo("body").append(pixel);
@@ -158,12 +159,14 @@ vortexCampaignStep2 = function(campaign) {
 pingVortex = function() {
 	try {
 		var $ = vortex$,
-			t = getParameterByName(window.location.search, 'order_id'),
+			winLo = window.location,
+			t = getParameterByName(winLo.search, 'order_id') || (winLo.pathname.indexOf('/TEST_ORDER') > -1 ? 'TEST_ORDER' : ''),
 			cuid = getParameterByName(window.location.search, 'Customer_Id') || 'TEST_CUSTOMER',
-			isStep2 = (t || window.location.pathname.indexOf('/TEST_ORDER') > -1) ? true : false,
-			p = isStep2 ? vc('vp_id') : window.location.search.substring(1).split('&')[0].split('=')[1],
-			c = isStep2 ? vc('vc_id') : window.location.search.substring(1).split('&')[1].split('=')[1],
-			d = $('script[src$="/js/embed.js"]').attr('src').replace('/js/embed.js', ''),
+			isStep2 = (getParameterByName(winLo.search, 'order_id') || winLo.pathname.indexOf('/TEST_ORDER') > -1) ? true : false,
+			p = isStep2 ? vc('vp_id') : winLo.search.substring(1).split('&')[0].split('=')[1],
+			c = isStep2 ? vc('vc_id') : winLo.search.substring(1).split('&')[1].split('=')[1],
+			sc = $('script[src$="/js/embed.js"]'),
+			d = sc.length > 0 ? sc.attr('src').replace('/js/embed.js', '') || 'http://www.vortexconvert.com',
 			url = isStep2 ? d+'/recovery/step-2?p='+p+'&c='+c+'&t='+t +'&cuid='+cuid : d+'/recovery/step-1?p='+p+'&c='+c ,
 			callback = isStep2 ? 'vortexCampaignStep2' : 'vortexProspectStep1';
 
