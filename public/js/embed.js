@@ -166,7 +166,7 @@ pingVortex = function() {
 			p = isStep2 ? vc('vp_id') : winLo.search.substring(1).split('&')[0].split('=')[1],
 			c = isStep2 ? vc('vc_id') : winLo.search.substring(1).split('&')[1].split('=')[1],
 			sc = $('script[src$="/js/embed.js"]'),
-			d = sc.length > 0 ? sc.attr('src').replace('/js/embed.js', '') || 'http://www.vortexconvert.com',
+			d = sc.length > 0 ? sc.attr('src').replace('/js/embed.js', '') || window.location.protocol+'//www.vortexconvert.com',
 			url = isStep2 ? d+'/recovery/step-2?p='+p+'&c='+c+'&t='+t +'&cuid='+cuid : d+'/recovery/step-1?p='+p+'&c='+c ,
 			callback = isStep2 ? 'vortexCampaignStep2' : 'vortexProspectStep1';
 
